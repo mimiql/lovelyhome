@@ -1,7 +1,6 @@
 package org.csu.lovelyhome.service.impl;
 
 import org.csu.lovelyhome.entity.User;
-import org.csu.lovelyhome.mapper.UserExtMapper;
 import org.csu.lovelyhome.mapper.UserMapper;
 import org.csu.lovelyhome.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -22,10 +21,9 @@ import java.util.List;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
 
     @Autowired
-    private UserExtMapper userExtMapper;
+    private UserMapper UserMapper;
 
-    @Override
     public List<String> getAllPhoneList() {
-        return userExtMapper.getAllPhoneList();
+        return UserMapper.getAllPhoneList();
     }
 }

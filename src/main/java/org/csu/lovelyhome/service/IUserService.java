@@ -14,5 +14,4 @@ import java.util.List;
  * @since 2019-08-29
  */
 public interface IUserService extends IService<User> {
-    List<String> getAllPhoneList();
 }

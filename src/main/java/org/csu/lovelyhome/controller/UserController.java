@@ -55,13 +55,18 @@ public class UserController {
         if(phoneList.contains(phone)){
             return "该手机号已注册！";
         }else{
-//            session.getAttribute("RANDOMCODEKEY")
-            if(imageCheckCode.equals("151"))
+            if(imageCheckCode.equals(session.getAttribute("RANDOMCODEKEY")))
                 return "注册成功！";
             else{
                 return "验证码错误！";
             }
         }
+    }
+
+    @GetMapping("/{user_id}")
+    public User user(@PathVariable("user_id") int user_id){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<User>().eq("user_id", user_id);
+        return userService.getOne(queryWrapper);
     }
 }
 
