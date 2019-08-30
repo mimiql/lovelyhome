@@ -11,8 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author louyy
- * @date Created on 2019/8/27
+ * @date Created on 2019/8/29
  */
 public class MybatisPlusGenerator {
     public static void main(String[] args) {
