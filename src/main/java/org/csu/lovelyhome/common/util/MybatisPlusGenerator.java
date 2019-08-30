@@ -1,4 +1,4 @@
-package org.csu.lovelyhome.util;
+package org.csu.lovelyhome.common.util;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
