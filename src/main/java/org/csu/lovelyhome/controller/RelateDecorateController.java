@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
  * </p>
  *
  * @author lqm
- * @since 2019-08-29
+ * @since 2019-08-31
  */
 @RestController
-@RequestMapping("/relate-decorate")
+@RequestMapping("/lovelyhome/relate-decorate")
 public class RelateDecorateController {
 
 }

@@ -1,6 +1,8 @@
 package org.csu.lovelyhome.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 
 /**
@@ -9,7 +11,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author lqm
- * @since 2019-08-29
+ * @since 2019-08-31
  */
 @TableName("relate_question")
 public class RelateQuestion implements Serializable {
@@ -19,6 +21,7 @@ public class RelateQuestion implements Serializable {
     /**
      * 提问与回复关系id
      */
+    @TableId(value = "relate_id", type = IdType.AUTO)
     private Integer relateId;
 
     /**

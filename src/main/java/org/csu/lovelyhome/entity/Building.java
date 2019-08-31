@@ -11,7 +11,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author lqm
- * @since 2019-08-29
+ * @since 2019-08-31
  */
 @TableName("building")
 public class Building implements Serializable {
@@ -67,7 +67,7 @@ public class Building implements Serializable {
     /**
      * 描述
      */
-    private String describe;
+    private String desc;
 
     /**
      * 状态：1在售 0售完 2删除
@@ -152,12 +152,12 @@ public class Building implements Serializable {
         this.floorNumber = floorNumber;
     }
 
-    public String getDescribe() {
-        return describe;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setDescribe(String describe) {
-        this.describe = describe;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
     public Integer getStatus() {
@@ -188,7 +188,7 @@ public class Building implements Serializable {
         ", floorsSpace=" + floorsSpace +
         ", price=" + price +
         ", floorNumber=" + floorNumber +
-        ", describe=" + describe +
+        ", desc=" + desc +
         ", status=" + status +
         ", userId=" + userId +
         "}";

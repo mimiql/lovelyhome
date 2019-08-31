@@ -12,7 +12,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author lqm
- * @since 2019-08-29
+ * @since 2019-08-31
  */
 @TableName("collection")
 public class Collection implements Serializable {

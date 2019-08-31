@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author lqm
- * @since 2019-08-29
+ * @since 2019-08-31
  */
 @Service
 public class CollectionServiceImpl extends ServiceImpl<CollectionMapper, Collection> implements ICollectionService {

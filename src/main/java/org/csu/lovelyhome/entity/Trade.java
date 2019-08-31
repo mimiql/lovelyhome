@@ -11,7 +11,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author lqm
- * @since 2019-08-29
+ * @since 2019-08-31
  */
 @TableName("trade")
 public class Trade implements Serializable {

@@ -11,7 +11,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author lqm
- * @since 2019-08-29
+ * @since 2019-08-31
  */
 @TableName("huxing")
 public class Huxing implements Serializable {
@@ -65,7 +65,7 @@ public class Huxing implements Serializable {
     private String picture;
 
     /**
-     * 1正在出售，2正在出租 0已卖或已售
+     * 1正在出售，0已下架
      */
     private Integer status;
 
@@ -88,6 +88,11 @@ public class Huxing implements Serializable {
      * 用户id
      */
     private Integer useId;
+
+    /**
+     * 标签
+     */
+    private String tag;
 
 
     public Integer getHuxingId() {
@@ -202,6 +207,14 @@ public class Huxing implements Serializable {
         this.useId = useId;
     }
 
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
     @Override
     public String toString() {
         return "Huxing{" +
@@ -219,6 +232,7 @@ public class Huxing implements Serializable {
         ", describe=" + describe +
         ", buildingId=" + buildingId +
         ", useId=" + useId +
+        ", tag=" + tag +
         "}";
     }
 }

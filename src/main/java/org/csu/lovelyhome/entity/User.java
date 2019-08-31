@@ -12,7 +12,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author lqm
- * @since 2019-08-29
+ * @since 2019-08-31
  */
 @TableName("user")
 public class User implements Serializable {
@@ -26,14 +26,19 @@ public class User implements Serializable {
     private Integer userId;
 
     /**
-     * 用户名
+     * 电话
      */
-    private String name;
+    private String phone;
 
     /**
      * 密码
      */
     private String password;
+
+    /**
+     * 用户名
+     */
+    private String name;
 
     /**
      * 昵称
@@ -45,11 +50,6 @@ public class User implements Serializable {
      */
     @TableField("Id_card")
     private String idCard;
-
-    /**
-     * 电话
-     */
-    private String phone;
 
     /**
      * 邮箱
@@ -65,12 +65,12 @@ public class User implements Serializable {
         this.userId = userId;
     }
 
-    public String getName() {
-        return name;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getPassword() {
@@ -79,6 +79,14 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getNick() {
@@ -97,14 +105,6 @@ public class User implements Serializable {
         this.idCard = idCard;
     }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -117,11 +117,11 @@ public class User implements Serializable {
     public String toString() {
         return "User{" +
         "userId=" + userId +
-        ", name=" + name +
+        ", phone=" + phone +
         ", password=" + password +
+        ", name=" + name +
         ", nick=" + nick +
         ", idCard=" + idCard +
-        ", phone=" + phone +
         ", email=" + email +
         "}";
     }
