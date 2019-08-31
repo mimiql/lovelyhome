@@ -21,7 +21,7 @@ public class MybatisPlusGenerator {
         globalConfig.setOutputDir(System.getProperty("user.dir") + "/src/main/java");
         globalConfig.setAuthor("lqm");
         globalConfig.setOpen(false);
-//        globalConfig.setFileOverride(true);//全局覆盖
+        globalConfig.setFileOverride(true);//全局覆盖
         DataSourceConfig dataSourceConfig = new DataSourceConfig();
         dataSourceConfig.setUrl("jdbc:mysql://127.0.0.1:3306/lovelyhome?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&verifyServerCertificate=false&useSSL=false");
         dataSourceConfig.setDriverName("com.mysql.cj.jdbc.Driver");

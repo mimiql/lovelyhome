@@ -25,9 +25,9 @@ public class Trade implements Serializable {
     private Integer tradeId;
 
     /**
-     * 户型id
+     * 被购买对象id
      */
-    private Integer huixngId;
+    private Integer objectId;
 
     /**
      * 户型所属楼层
@@ -58,12 +58,12 @@ public class Trade implements Serializable {
         this.tradeId = tradeId;
     }
 
-    public Integer getHuixngId() {
-        return huixngId;
+    public Integer getObjectId() {
+        return objectId;
     }
 
-    public void setHuixngId(Integer huixngId) {
-        this.huixngId = huixngId;
+    public void setObjectId(Integer objectId) {
+        this.objectId = objectId;
     }
 
     public Integer getLevel() {
@@ -102,7 +102,7 @@ public class Trade implements Serializable {
     public String toString() {
         return "Trade{" +
         "tradeId=" + tradeId +
-        ", huixngId=" + huixngId +
+        ", objectId=" + objectId +
         ", level=" + level +
         ", seller=" + seller +
         ", buyer=" + buyer +

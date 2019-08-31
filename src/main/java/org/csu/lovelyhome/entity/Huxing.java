@@ -57,7 +57,12 @@ public class Huxing implements Serializable {
     /**
      * 均价
      */
-    private Double price;
+    private Double avePrice;
+
+    /**
+     * 总价
+     */
+    private Double totalPrice;
 
     /**
      * 户型图片
@@ -77,7 +82,7 @@ public class Huxing implements Serializable {
     /**
      * 描述
      */
-    private String describe;
+    private String desc;
 
     /**
      * 楼盘id
@@ -151,12 +156,20 @@ public class Huxing implements Serializable {
         this.floorSpace = floorSpace;
     }
 
-    public Double getPrice() {
-        return price;
+    public Double getAvePrice() {
+        return avePrice;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    public void setAvePrice(Double avePrice) {
+        this.avePrice = avePrice;
+    }
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public String getPicture() {
@@ -183,12 +196,12 @@ public class Huxing implements Serializable {
         this.remain = remain;
     }
 
-    public String getDescribe() {
-        return describe;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setDescribe(String describe) {
-        this.describe = describe;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
     public Integer getBuildingId() {
@@ -225,11 +238,12 @@ public class Huxing implements Serializable {
         ", toiletNum=" + toiletNum +
         ", bathroomNum=" + bathroomNum +
         ", floorSpace=" + floorSpace +
-        ", price=" + price +
+        ", avePrice=" + avePrice +
+        ", totalPrice=" + totalPrice +
         ", picture=" + picture +
         ", status=" + status +
         ", remain=" + remain +
-        ", describe=" + describe +
+        ", desc=" + desc +
         ", buildingId=" + buildingId +
         ", useId=" + useId +
         ", tag=" + tag +

@@ -31,14 +31,19 @@ public class Collection implements Serializable {
     private Integer userId;
 
     /**
-     * 户型id
+     * 被收藏对象id
      */
-    private Integer huxingId;
+    private Integer objectId;
 
     /**
      * 收藏时间
      */
     private LocalDateTime time;
+
+    /**
+     * 收藏类型：1楼盘 2户型 3出租房 4装修方案
+     */
+    private String type;
 
 
     public Integer getCollectId() {
@@ -57,12 +62,12 @@ public class Collection implements Serializable {
         this.userId = userId;
     }
 
-    public Integer getHuxingId() {
-        return huxingId;
+    public Integer getObjectId() {
+        return objectId;
     }
 
-    public void setHuxingId(Integer huxingId) {
-        this.huxingId = huxingId;
+    public void setObjectId(Integer objectId) {
+        this.objectId = objectId;
     }
 
     public LocalDateTime getTime() {
@@ -73,13 +78,22 @@ public class Collection implements Serializable {
         this.time = time;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         return "Collection{" +
         "collectId=" + collectId +
         ", userId=" + userId +
-        ", huxingId=" + huxingId +
+        ", objectId=" + objectId +
         ", time=" + time +
+        ", type=" + type +
         "}";
     }
 }

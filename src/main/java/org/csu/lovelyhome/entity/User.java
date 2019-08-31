@@ -3,6 +3,7 @@ package org.csu.lovelyhome.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 
@@ -55,6 +56,32 @@ public class User implements Serializable {
      * 邮箱
      */
     private String email;
+
+    /**
+     * 性别 1男 2女
+     */
+    private String sex;
+
+    /**
+     * 出生日期
+     */
+    private LocalDateTime brithdata;
+
+    /**
+     * 微信账号
+     */
+    private String wechatNum;
+
+    /**
+     * QQ账号
+     */
+    @TableField("QQ_num")
+    private String qqNum;
+
+    /**
+     * 地址
+     */
+    private String address;
 
 
     public Integer getUserId() {
@@ -113,6 +140,46 @@ public class User implements Serializable {
         this.email = email;
     }
 
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public LocalDateTime getBrithdata() {
+        return brithdata;
+    }
+
+    public void setBrithdata(LocalDateTime brithdata) {
+        this.brithdata = brithdata;
+    }
+
+    public String getWechatNum() {
+        return wechatNum;
+    }
+
+    public void setWechatNum(String wechatNum) {
+        this.wechatNum = wechatNum;
+    }
+
+    public String getQqNum() {
+        return qqNum;
+    }
+
+    public void setQqNum(String qqNum) {
+        this.qqNum = qqNum;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -123,6 +190,11 @@ public class User implements Serializable {
         ", nick=" + nick +
         ", idCard=" + idCard +
         ", email=" + email +
+        ", sex=" + sex +
+        ", brithdata=" + brithdata +
+        ", wechatNum=" + wechatNum +
+        ", qqNum=" + qqNum +
+        ", address=" + address +
         "}";
     }
 }

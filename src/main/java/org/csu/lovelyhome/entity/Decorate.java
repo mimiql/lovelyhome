@@ -45,6 +45,11 @@ public class Decorate implements Serializable {
     private Double budget;
 
     /**
+     * 房间数
+     */
+    private Integer rooms;
+
+    /**
      * 房间类型1套房2居室3客厅4厨房5浴室6卫生间7阳台
      */
     private Integer roomType;
@@ -52,7 +57,7 @@ public class Decorate implements Serializable {
     /**
      * 描述
      */
-    private String describe;
+    private String desc;
 
     /**
      * 设计师名字
@@ -105,6 +110,14 @@ public class Decorate implements Serializable {
         this.budget = budget;
     }
 
+    public Integer getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(Integer rooms) {
+        this.rooms = rooms;
+    }
+
     public Integer getRoomType() {
         return roomType;
     }
@@ -113,12 +126,12 @@ public class Decorate implements Serializable {
         this.roomType = roomType;
     }
 
-    public String getDescribe() {
-        return describe;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setDescribe(String describe) {
-        this.describe = describe;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
     public String getDesignerName() {
@@ -145,8 +158,9 @@ public class Decorate implements Serializable {
         ", style=" + style +
         ", floorSpace=" + floorSpace +
         ", budget=" + budget +
+        ", rooms=" + rooms +
         ", roomType=" + roomType +
-        ", describe=" + describe +
+        ", desc=" + desc +
         ", designerName=" + designerName +
         ", designerPhone=" + designerPhone +
         "}";
