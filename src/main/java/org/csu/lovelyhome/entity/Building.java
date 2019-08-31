@@ -67,7 +67,7 @@ public class Building implements Serializable {
     /**
      * 描述
      */
-    private String desc;
+    private String description;
 
     /**
      * 状态：1在售 0售完 2删除
@@ -152,12 +152,12 @@ public class Building implements Serializable {
         this.floorNumber = floorNumber;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Integer getStatus() {
@@ -188,7 +188,7 @@ public class Building implements Serializable {
         ", floorsSpace=" + floorsSpace +
         ", price=" + price +
         ", floorNumber=" + floorNumber +
-        ", desc=" + desc +
+        ", desc=" + description +
         ", status=" + status +
         ", userId=" + userId +
         "}";

@@ -82,7 +82,7 @@ public class Huxing implements Serializable {
     /**
      * 描述
      */
-    private String desc;
+    private String description;
 
     /**
      * 楼盘id
@@ -196,12 +196,12 @@ public class Huxing implements Serializable {
         this.remain = remain;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Integer getBuildingId() {
@@ -243,7 +243,7 @@ public class Huxing implements Serializable {
         ", picture=" + picture +
         ", status=" + status +
         ", remain=" + remain +
-        ", desc=" + desc +
+        ", description=" + description +
         ", buildingId=" + buildingId +
         ", useId=" + useId +
         ", tag=" + tag +

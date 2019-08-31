@@ -114,7 +114,7 @@ public class House implements Serializable {
     /**
      * 描述
      */
-    private String desc;
+    private String description;
 
     /**
      * 用户ID
@@ -163,7 +163,7 @@ public class House implements Serializable {
     private Integer wifi;
 
     /**
-     * 衣柜 
+     * 衣柜
      */
     private Integer wardrobe;
 
@@ -322,12 +322,12 @@ public class House implements Serializable {
         this.status = status;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Integer getUserId() {
@@ -447,7 +447,7 @@ public class House implements Serializable {
         ", price=" + price +
         ", picture=" + picture +
         ", status=" + status +
-        ", desc=" + desc +
+        ", description=" + description +
         ", userId=" + userId +
         ", tv=" + tv +
         ", fridge=" + fridge +

@@ -57,7 +57,7 @@ public class Decorate implements Serializable {
     /**
      * 描述
      */
-    private String desc;
+    private String description;
 
     /**
      * 设计师名字
@@ -126,12 +126,12 @@ public class Decorate implements Serializable {
         this.roomType = roomType;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getDesignerName() {
@@ -160,7 +160,7 @@ public class Decorate implements Serializable {
         ", budget=" + budget +
         ", rooms=" + rooms +
         ", roomType=" + roomType +
-        ", desc=" + desc +
+        ", description=" + description +
         ", designerName=" + designerName +
         ", designerPhone=" + designerPhone +
         "}";

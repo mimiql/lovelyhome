@@ -1,9 +1,14 @@
 package org.csu.lovelyhome.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.csu.lovelyhome.entity.Decorate;
+import org.csu.lovelyhome.service.IDecorateService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 /**
  * <p>
@@ -15,7 +20,18 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/lovelyhome/decorate")
+@CrossOrigin
 public class DecorateController {
+    @Autowired
+    private IDecorateService decorateService;
 
+    @GetMapping("/all")
+    public PageInfo<Decorate> decorations(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
+        PageHelper.startPage(pageNum,5);
+        List<Decorate> buildingList = decorateService.list();
+        PageInfo<Decorate> pageInfo = new PageInfo<Decorate>(buildingList);
+
+        return pageInfo;
+    }
 }
 
