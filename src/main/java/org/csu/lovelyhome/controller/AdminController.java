@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2019-08-31
  */
 @RestController
-@RequestMapping("/lovelyhome/admin")
+@RequestMapping("/admin")
 public class AdminController {
 
 }
