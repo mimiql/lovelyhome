@@ -20,7 +20,7 @@ import java.util.List;
  * @since 2019-08-31
  */
 @RestController
-@RequestMapping("/lovelyhome/building")
+@RequestMapping("/building")
 @CrossOrigin
 public class BuildingController {
     @Autowired

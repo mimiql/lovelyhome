@@ -3,9 +3,11 @@ package org.csu.lovelyhome.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
+
+import java.time.LocalDate;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -65,7 +67,7 @@ public class User implements Serializable {
     /**
      * 出生日期
      */
-    private LocalDateTime brithdata;
+    private Date brithdate;
 
     /**
      * 微信账号
@@ -148,12 +150,12 @@ public class User implements Serializable {
         this.sex = sex;
     }
 
-    public LocalDateTime getBrithdata() {
-        return brithdata;
+    public Date getBrithdate() {
+        return brithdate;
     }
 
-    public void setBrithdata(LocalDateTime brithdata) {
-        this.brithdata = brithdata;
+    public void setBrithdate(Date brithdate) {
+        this.brithdate = brithdate;
     }
 
     public String getWechatNum() {
@@ -191,7 +193,7 @@ public class User implements Serializable {
         ", idCard=" + idCard +
         ", email=" + email +
         ", sex=" + sex +
-        ", brithdata=" + brithdata +
+        ", brithdate=" + brithdate +
         ", wechatNum=" + wechatNum +
         ", qqNum=" + qqNum +
         ", address=" + address +

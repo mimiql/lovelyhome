@@ -3,6 +3,8 @@ package org.csu.lovelyhome.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import org.csu.lovelyhome.base.BaseController;
+import org.csu.lovelyhome.base.Response;
 import org.csu.lovelyhome.entity.User;
 import org.csu.lovelyhome.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +22,9 @@ import java.util.List;
  * @since 2019-08-31
  */
 @RestController
-@RequestMapping("/lovelyhome/user")
+@RequestMapping("/user")
 @CrossOrigin
-public class UserController {
+public class UserController extends BaseController {
     @Autowired
     private UserServiceImpl userService;
 
@@ -61,9 +63,9 @@ public class UserController {
     }
 
     @GetMapping("/{user_id}")
-    public User user(@PathVariable("user_id") int user_id){
+    public Response user(@PathVariable("user_id") int user_id){
         QueryWrapper<User> queryWrapper = new QueryWrapper<User>().eq("user_id", user_id);
-        return userService.getOne(queryWrapper);
+        return success(userService.getOne(queryWrapper));
     }
 }
 

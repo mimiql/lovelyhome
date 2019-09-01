@@ -12,12 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @CrossOrigin
+@RequestMapping("/verification")
 public class VerificationController {
 
     /**
      * 生成验证码
      */
-    @RequestMapping(value = "/verification")
+    @RequestMapping(value = "/")
     public void verification(HttpServletRequest request, HttpServletResponse response) {
         try {
             response.setContentType("image/jpeg");//设置相应类型,告诉浏览器输出的内容为图片
