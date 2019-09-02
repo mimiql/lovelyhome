@@ -1,6 +1,5 @@
 package org.csu.lovelyhome.controller;
 
-
 import com.alibaba.fastjson.JSONObject;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
