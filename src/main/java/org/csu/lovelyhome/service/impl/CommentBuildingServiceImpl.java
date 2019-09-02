@@ -6,6 +6,8 @@ import org.csu.lovelyhome.service.ICommentBuildingService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  * 楼盘评论及回复记录表 服务实现类
@@ -16,5 +18,4 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class CommentBuildingServiceImpl extends ServiceImpl<CommentBuildingMapper, CommentBuilding> implements ICommentBuildingService {
-
 }

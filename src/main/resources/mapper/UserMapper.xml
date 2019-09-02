@@ -4,4 +4,46 @@
     <select id="getAllPhoneList" resultType="java.lang.String">
         SELECT PHONE FROM USER
     </select>
+    <select id="getCollectionBuildingByUserId" parameterType="java.lang.Integer" resultType="org.csu.lovelyhome.entity.Building">
+        SELECT * FROM BUILDING WHERE BUILDING_ID IN (SELECT OBJECT_ID FROM COLLECTION WHERE USER_ID = #{userId}) TYPE = 1
+    </select>
+    <select id="getCollectionHuxingByUserId" parameterType="java.lang.Integer" resultType="org.csu.lovelyhome.entity.Huxing">
+        SELECT * FROM Huxing WHERE HUXING_ID IN (SELECT OBJECT_ID FROM COLLECTION WHERE USER_ID = #{userId}) TYPE = 2
+    </select>
+    <select id="getCollectionHouseByUserId" parameterType="java.lang.Integer" resultType="org.csu.lovelyhome.entity.House">
+        SELECT * FROM HOUSE WHERE HOUSE_ID IN (SELECT OBJECT_ID FROM COLLECTION WHERE USER_ID = #{userId}) TYPE = 3
+    </select>
+    <select id="getCollectionDecorateByUserId" parameterType="java.lang.Integer" resultType="org.csu.lovelyhome.entity.Decorate">
+        SELECT * FROM DECORATE WHERE DECORATE_ID IN (SELECT OBJECT_ID FROM COLLECTION WHERE USER_ID = #{userId}) TYPE = 4
+    </select>
+    <select id="getPublishHouseByUserId" resultType="org.csu.lovelyhome.entity.House">
+        SELECT * FROM HOUSE WHERE USER_ID = #{user_id} AND STATUS != 2
+    </select>
+    <select id="getHousesByUserIdAndStatus" resultType="org.csu.lovelyhome.entity.House">
+        SELECT * FROM HOUSE WHERE USER_ID = #{user_id} AND STATUS = #{status}
+    </select>
+    <select id="getQuestionByUserId" parameterType="java.lang.Integer" resultType="org.csu.lovelyhome.entity.Question">
+        SELECT * FROM QUESTION WHERE USER_ID = #{user_id} AND TYPE = 1
+    </select>
+    <select id="getQuestionResponsesByUserId" parameterType="java.lang.Integer" resultType="org.csu.lovelyhome.entity.Question">
+        SELECT * FROM QUESTION WHERE USER_ID = #{user_id} AND TYPE = 0
+    </select>
+    <select id="getCommentBuildingByUserId" parameterType="java.lang.Integer" resultType="org.csu.lovelyhome.entity.CommentBuilding">
+        SELECT * FROM COMMENT_BUILDING WHERE USER_ID = #{user_id} AND TYPE = 1
+    </select>
+    <select id="getCommentDecorateByUserId" parameterType="java.lang.Integer" resultType="org.csu.lovelyhome.entity.CommentDecorate">
+         SELECT * FROM COMMENT_DECORATE WHERE USER_ID = #{user_id} AND TYPE = 1
+    </select>
+    <select id="getBrowsingBuildingByUserId" parameterType="java.lang.Integer" resultType="org.csu.lovelyhome.entity.Building">
+        SELECT * FROM BUILDING WHERE BUILDING_ID IN (SELECT OBJECT_ID FROM BROWSE WHERE USER_ID = #{user_id})
+    </select>
+    <select id="getBrowsingHuxingByUserId" parameterType="java.lang.Integer" resultType="org.csu.lovelyhome.entity.Huxing">
+        SELECT * FROM HUXING WHERE HUXING_ID IN (SELECT OBJECT_ID FROM BROWSE WHERE USER_ID = #{user_id})
+    </select>
+    <select id="getBrowsingHouseByUserId" parameterType="java.lang.Integer" resultType="org.csu.lovelyhome.entity.House">
+        SELECT * FROM HOUSE WHERE HOUSE_ID IN (SELECT OBJECT_ID FROM BROWSE WHERE USER_ID = #{user_id})
+    </select>
+    <select id="getBrowsingDecorateByUserId" parameterType="java.lang.Integer" resultType="org.csu.lovelyhome.entity.Decorate">
+        SELECT * FROM DECORATE WHERE DECORATE_ID IN (SELECT OBJECT_ID FROM BROWSE WHERE USER_ID = #{user_id})
+    </select>
 </mapper>
