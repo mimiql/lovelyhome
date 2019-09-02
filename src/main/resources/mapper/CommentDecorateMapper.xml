@@ -2,4 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.csu.lovelyhome.mapper.CommentDecorateMapper">
 
+    <!--<insert id="insert1" useGeneratedKeys="true" keyProperty="id" parameterType = "org.csu.lovelyhome.entity.CommentDecorate">-->
+    <!--insert into comment_decorate (user_id,content,type,decorate_id)-->
+    <!--value (#{user_id},#{content},#{type},#{decorate_id})-->
+	<!--</insert>-->
+
 </mapper>

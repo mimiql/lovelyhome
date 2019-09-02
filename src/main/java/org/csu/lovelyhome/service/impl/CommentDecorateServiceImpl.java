@@ -4,6 +4,7 @@ import org.csu.lovelyhome.entity.CommentDecorate;
 import org.csu.lovelyhome.mapper.CommentDecorateMapper;
 import org.csu.lovelyhome.service.ICommentDecorateService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,4 +18,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class CommentDecorateServiceImpl extends ServiceImpl<CommentDecorateMapper, CommentDecorate> implements ICommentDecorateService {
 
+    @Autowired
+    private CommentDecorateMapper commentDecorateMapper;
+
+    @Override
+    public int insert(CommentDecorate commentDecorate) {
+        int id = commentDecorateMapper.insert(commentDecorate);
+        return id;
+    }
 }

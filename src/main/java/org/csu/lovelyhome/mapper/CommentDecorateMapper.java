@@ -12,5 +12,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2019-08-31
  */
 public interface CommentDecorateMapper extends BaseMapper<CommentDecorate> {
+//    int insert1(CommentDecorate commentDecorate);
 
 }
