@@ -216,6 +216,7 @@ public class DecorateController extends BaseController {
         wrapper.eq("", decorateId).eq("type",1 );
         List<Question> questions = questionService.list(wrapper);
         return success(questions);
+
     }
 
     @ApiOperation(value = "获取装修方案提问回复", notes = "根据提问ID获取提问回复")
