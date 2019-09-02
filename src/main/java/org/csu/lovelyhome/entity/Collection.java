@@ -43,7 +43,7 @@ public class Collection implements Serializable {
     /**
      * 收藏类型：1楼盘 2户型 3出租房 4装修方案
      */
-    private String type;
+    private Integer type;
 
 
     public Integer getCollectId() {
@@ -78,11 +78,11 @@ public class Collection implements Serializable {
         this.time = time;
     }
 
-    public String getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.csu.lovelyhome.entity.*;
+import org.csu.lovelyhome.pojo.param.FiltBuildingParam;
 import org.csu.lovelyhome.service.impl.BuildingServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -72,9 +73,26 @@ public class BuildingController {
         return pageInfo;
     }
 
+    @GetMapping("/filterBuildings")
+    public PageInfo<Building> filterBuildings(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum, @RequestBody FiltBuildingParam filtBuildingParam){
+        PageHelper.startPage(pageNum,5);
+        List<Building> buildingList = buildingService.getAllBuildingsByCondition(filtBuildingParam);
+        PageInfo<Building> pageInfo = new PageInfo<Building>(buildingList);
+
+        return pageInfo;
+    }
+
     @GetMapping("/buildingNames/{buildingNameKeyWords}")
     public List<String> buildingNames(@PathVariable("buildingNameKeyWords") String buildingNameKeyWords) {
         return buildingService.getBuildingNamesByKeyWords(buildingNameKeyWords);
+    }
+
+    @GetMapping("/buildings/{keyWords}")
+    public List<Building> buildings(@PathVariable("keyWords") String keyWords){
+        QueryWrapper<Building> queryWrapper = new QueryWrapper<Building>();
+        queryWrapper.like("name", keyWords).or().like("province", keyWords).or().like("city", keyWords)
+        .or().like("district", keyWords).or().like("street", keyWords);
+        return buildingService.list(queryWrapper);
     }
 
     @GetMapping("/{building_Id}/buildingDetail")

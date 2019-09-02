@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.csu.lovelyhome.entity.*;
 import org.csu.lovelyhome.mapper.*;
+import org.csu.lovelyhome.pojo.param.FiltBuildingParam;
 import org.csu.lovelyhome.service.IBuildingService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -143,5 +144,9 @@ public class BuildingServiceImpl extends ServiceImpl<BuildingMapper, Building> i
         buildingDetail.setAllNumsOfQuestion(numList);
 
         return buildingDetail;
+    }
+
+    public List<Building> getAllBuildingsByCondition(FiltBuildingParam filtBuildingParam){
+        return buildingMapper.getAllBuildingsByCondition(filtBuildingParam);
     }
 }
