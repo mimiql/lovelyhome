@@ -30,7 +30,7 @@ import java.util.List;
  * @since 2019-08-31
  */
 @RestController
-@RequestMapping("/lovelyhome/user")
+@RequestMapping("/user")
 @CrossOrigin
 public class UserController extends BaseController {
 

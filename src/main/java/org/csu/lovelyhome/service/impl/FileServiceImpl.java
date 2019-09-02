@@ -3,7 +3,6 @@ package org.csu.lovelyhome.service.impl;
 import com.aliyun.oss.*;
 import com.aliyun.oss.model.CannedAccessControlList;
 import com.aliyun.oss.model.CreateBucketRequest;
-import com.aliyun.oss.model.PutObjectRequest;
 import com.aliyun.oss.model.PutObjectResult;
 import org.csu.lovelyhome.config.ConstantConfig;
 import org.csu.lovelyhome.service.FileService;

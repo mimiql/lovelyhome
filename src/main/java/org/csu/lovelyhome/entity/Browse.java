@@ -28,7 +28,7 @@ public class Browse implements Serializable {
     /**
      * 用户id
      */
-    private Integer useId;
+    private Integer userId;
 
     /**
      * 被浏览对象id
@@ -54,12 +54,12 @@ public class Browse implements Serializable {
         this.browseId = browseId;
     }
 
-    public Integer getUseId() {
-        return useId;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUseId(Integer useId) {
-        this.useId = useId;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public Integer getObjectId() {
@@ -90,7 +90,7 @@ public class Browse implements Serializable {
     public String toString() {
         return "Browse{" +
         "browseId=" + browseId +
-        ", useId=" + useId +
+        ", userId=" + userId +
         ", objectId=" + objectId +
         ", time=" + time +
         ", type=" + type +

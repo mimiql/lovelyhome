@@ -12,5 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2019-08-31
  */
 public interface ICommentDecorateService extends IService<CommentDecorate> {
-
+    public int insert(CommentDecorate commentDecorate);
 }
