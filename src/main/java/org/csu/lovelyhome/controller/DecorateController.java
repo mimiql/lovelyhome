@@ -1,6 +1,8 @@
 package org.csu.lovelyhome.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.extension.parsers.ITableNameHandler;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
@@ -8,14 +10,18 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.csu.lovelyhome.base.BaseController;
 import org.csu.lovelyhome.base.Response;
+import org.csu.lovelyhome.config.ConstantConfig;
+import org.csu.lovelyhome.entity.CommentDecorate;
 import org.csu.lovelyhome.entity.Decorate;
+import org.csu.lovelyhome.entity.Question;
+import org.csu.lovelyhome.entity.RelateDecorate;
 import org.csu.lovelyhome.pojo.param.FiltDecorateParam;
-import org.csu.lovelyhome.service.FileService;
-import org.csu.lovelyhome.service.IDecorateService;
+import org.csu.lovelyhome.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,7 +41,16 @@ public class DecorateController extends BaseController {
     private IDecorateService decorateService;
     @Autowired
     private FileService fileService;
-
+    @Autowired
+    private ICommentDecorateService commentDecorateService;
+    @Autowired
+    private IQuestionService questionService;
+    @Autowired
+    private IRelateDecorateService relateDecorateService;
+    @Autowired
+    private IRelateQuestionService relateQuestionService;
+    @Autowired
+    private ConstantConfig constantConfig;
     @GetMapping("/all")
     public Response decorations(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
         PageHelper.startPage(pageNum,5);
@@ -44,7 +59,7 @@ public class DecorateController extends BaseController {
         return success(pageInfo);
     }
 
-    @ApiOperation(value = "查询",notes = "根据筛选条件查询装修方案")
+    @ApiOperation(value = "筛选查询",notes = "根据筛选条件查询装修方案")
     @GetMapping("/filt")
     public Response decorations(@RequestBody FiltDecorateParam param){
         PageHelper.startPage(param.getPageNum(), param.getPageSize());
@@ -77,10 +92,11 @@ public class DecorateController extends BaseController {
             wrapper.eq("room_type", roomType);
         }
         List<Decorate> decorates = decorateService.list(wrapper);
-        return success(decorates);
+        PageInfo<Decorate> pageInfo = new PageInfo<Decorate>(decorates);
+        return success(pageInfo);
     }
 
-    @ApiOperation(value = "上次图片",notes = "上次图片，可多张图片一起上传")
+    @ApiOperation(value = "上传图片",notes = "上传图片，可多张图片一起上传")
     @PostMapping("/pictures")
     public Response uploadPictures( @RequestParam("picture") List<MultipartFile> files){
         String picture = null;
@@ -90,8 +106,11 @@ public class DecorateController extends BaseController {
                     String filename = file.getOriginalFilename();
                     if (!"".equals(filename.trim())){
                         System.out.println("file size:" + file.getSize());
-                        String uploadUrl = fileService.uploadPicture(file);
-                        picture += uploadUrl + " ";
+                        String uploadUrl = constantConfig.getPREFIX() + fileService.uploadPicture(file);
+                        if(picture != null){
+                            picture += uploadUrl + " ";
+                        }else picture = uploadUrl +" ";
+
                     }
                 }
             }catch (Exception ex){
@@ -111,7 +130,7 @@ public class DecorateController extends BaseController {
         if (decorate1 != null) {
             return fail("该装修方案已经存在");
         } else if (decorateService.save(decorate)) {
-            return success();
+            return success("添加成功");
         }
         return fail("添加失败");
     }
@@ -119,10 +138,10 @@ public class DecorateController extends BaseController {
     @ApiOperation(value = "修改",notes = "修改装修方案")
     @PostMapping("/modification/{id}")
     public Response updateDecoration(@RequestBody Decorate decorate,@PathVariable int id) {
-        QueryWrapper<Decorate> wrapper = new QueryWrapper<>();
+        UpdateWrapper<Decorate> wrapper = new UpdateWrapper<>();
         wrapper.eq("decorate_id", id);
-        if (decorateService.updateById(decorate)) {
-            return success();
+        if (decorateService.update(decorate, wrapper)) {
+            return success("修改成功");
         }
         return fail("修改失败");
     }
@@ -152,6 +171,7 @@ public class DecorateController extends BaseController {
         Decorate decorate  = decorateService.getById(id);
         decorate.setStatus(0);
         decorateService.updateById(decorate);
+
         return success();
     }
 
@@ -162,6 +182,49 @@ public class DecorateController extends BaseController {
         decorate.setStatus(1);
         decorateService.updateById(decorate);
         return success();
+    }
+
+    @ApiOperation(value = "获取装修方案评论", notes = "根据装修方案ID获取评论")
+    @GetMapping("/comment/{decorateId}")
+    public Response getCommentByDecorateId(@PathVariable int decorateId){
+        QueryWrapper<CommentDecorate> wrapper = new QueryWrapper<>();
+        wrapper.eq("comment_id", decorateId).eq("type",1 );
+        List<CommentDecorate> commentDecorates = commentDecorateService.list(wrapper);
+        return success(commentDecorates);
+    }
+
+    @ApiOperation(value = "获取装修方案评论回复", notes = "根据评论ID获取评论回复")
+    @GetMapping("/commentReply/{comment_id}")
+    public Response getCommentReplyByDecorateId(@PathVariable int comment_id){
+        QueryWrapper<RelateDecorate> wrapper = new QueryWrapper<>();
+        wrapper.eq("comment_id", comment_id);
+        List<RelateDecorate> relateDecorates = relateDecorateService.list(wrapper);
+        List<CommentDecorate> commentDecorates = new ArrayList<>();
+        for (RelateDecorate relateDecorate : relateDecorates){
+            CommentDecorate commentDecorate = commentDecorateService.getById(relateDecorate.getResponseId());
+            if(commentDecorate != null){
+                commentDecorates.add(commentDecorate);
+            }
+        }
+        return success(commentDecorates);
+    }
+
+    @ApiOperation(value = "获取装修方案提问", notes = "根据装修方案ID获取提问")
+    @GetMapping("/question/{decorateId}")
+    public Response getQuestionByDecorateId(@PathVariable int decorateId){
+        QueryWrapper<Question> wrapper = new QueryWrapper<>();
+        wrapper.eq("", decorateId).eq("type",1 );
+        List<Question> questions = questionService.list(wrapper);
+        return success(questions);
+    }
+
+    @ApiOperation(value = "获取装修方案提问回复", notes = "根据提问ID获取提问回复")
+    @GetMapping("/questionReply/{questionId}")
+    public Response getQuestionReplyByDecorateId(@PathVariable int questionId){
+        QueryWrapper<Question> wrapper = new QueryWrapper<>();
+        wrapper.eq("question_id", questionId).eq("type",2);
+        List<Question> questions = questionService.list(wrapper);
+        return success(questions);
     }
 
 }

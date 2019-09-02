@@ -34,6 +34,10 @@ public class RelateQuestion implements Serializable {
      */
     private Integer responseId;
 
+    /**
+     * 类型：1楼盘 2装修方案
+     */
+    private Integer type;
 
     public Integer getRelateId() {
         return relateId;
@@ -59,12 +63,21 @@ public class RelateQuestion implements Serializable {
         this.responseId = responseId;
     }
 
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         return "RelateQuestion{" +
         "relateId=" + relateId +
         ", questionId=" + questionId +
         ", responseId=" + responseId +
+        ", type" +  type +
         "}";
     }
 }

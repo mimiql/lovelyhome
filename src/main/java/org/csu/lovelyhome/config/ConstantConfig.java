@@ -17,6 +17,8 @@ public class ConstantConfig {
     private String BUCKETNAME;
     @Value("${filehost}")
     private String FILEHOST;
+    @Value("${prefix}")
+    private String PREFIX;
 
     public String getENDPOINT() {
         return ENDPOINT;
@@ -56,5 +58,13 @@ public class ConstantConfig {
 
     public void setFILEHOST(String FILEHOST) {
         this.FILEHOST = FILEHOST;
+    }
+
+    public String getPREFIX() {
+        return PREFIX;
+    }
+
+    public void setPREFIX(String PREFIX) {
+        this.PREFIX = PREFIX;
     }
 }
