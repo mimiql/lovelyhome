@@ -1,20 +1,21 @@
 package org.csu.lovelyhome.controller;
 
-
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.csu.lovelyhome.base.BaseController;
 import org.csu.lovelyhome.base.Response;
 import org.csu.lovelyhome.entity.Decorate;
-import org.csu.lovelyhome.pojo.param.DecorationParam;
+import org.csu.lovelyhome.pojo.param.FiltDecorateParam;
 import org.csu.lovelyhome.service.FileService;
 import org.csu.lovelyhome.service.IDecorateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.List;
 
 /**
@@ -28,6 +29,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/decorate")
 @CrossOrigin
+@Api(value = "装修方案相关API",description = "装修模块")
 public class DecorateController extends BaseController {
     @Autowired
     private IDecorateService decorateService;
@@ -42,9 +44,46 @@ public class DecorateController extends BaseController {
         return success(pageInfo);
     }
 
+    @ApiOperation(value = "查询",notes = "根据筛选条件查询装修方案")
+    @GetMapping("/filt")
+    public Response decorations(@RequestBody FiltDecorateParam param){
+        PageHelper.startPage(param.getPageNum(), param.getPageSize());
+        QueryWrapper<Decorate> wrapper = new QueryWrapper<>();
+        if (!StringUtils.isEmpty(param.getStyle())){
+            wrapper.like("style", "%"+param.getStyle()+"%");
+        }
+        Double minFloorSpace = param.getMinFloorSpace();
+        Double maxFloorSpace = param.getMaxFloorSpace();
+        if (minFloorSpace != 0){
+            wrapper.ge("floor_space", minFloorSpace);
+        }
+        if (maxFloorSpace != 0){
+            wrapper.le("floor_space", maxFloorSpace);
+        }
+        Double minBudget = param.getMinBudget();
+        Double maxBudget = param.getMaxBudget();
+        if (minBudget != 0){
+            wrapper.ge("budget", minBudget);
+        }
+        if (maxBudget != 0){
+            wrapper.le("budget", maxBudget);
+        }
+        Integer rooms = param.getRooms();
+        if (rooms != 0){
+            wrapper.eq("rooms", rooms);
+        }
+        Integer roomType = param.getRoomType();
+        if (roomType != 0){
+            wrapper.eq("room_type", roomType);
+        }
+        List<Decorate> decorates = decorateService.list(wrapper);
+        return success(decorates);
+    }
+
+    @ApiOperation(value = "上次图片",notes = "上次图片，可多张图片一起上传")
     @PostMapping("/pictures")
-    public Response uploadPictures( @RequestParam("pictures") List<MultipartFile> files){
-        String pictures = null;
+    public Response uploadPictures( @RequestParam("picture") List<MultipartFile> files){
+        String picture = null;
         for(MultipartFile file : files){
             try {
                 if(file != null){
@@ -52,17 +91,78 @@ public class DecorateController extends BaseController {
                     if (!"".equals(filename.trim())){
                         System.out.println("file size:" + file.getSize());
                         String uploadUrl = fileService.uploadPicture(file);
-                        pictures += uploadUrl + " ";
+                        picture += uploadUrl + " ";
                     }
                 }
             }catch (Exception ex){
                 ex.printStackTrace();
             }
         }
+        return success(picture);
+    }
+
+    @ApiOperation(value = "新增",notes = "新增装修方案")
+    @PostMapping("/")
+    public Response newDecoration(@RequestBody Decorate decorate) {
+        //但两个装修方案的所有图片都相同时，代表两个装修方案是一样的，不能重复插入
+        QueryWrapper<Decorate> wrapper = new QueryWrapper<>();
+        wrapper.eq("picture", decorate.getPicture());
+        Decorate decorate1 = decorateService.getOne(wrapper);
+        if (decorate1 != null) {
+            return fail("该装修方案已经存在");
+        } else if (decorateService.save(decorate)) {
+            return success();
+        }
+        return fail("添加失败");
+    }
+
+    @ApiOperation(value = "修改",notes = "修改装修方案")
+    @PostMapping("/modification/{id}")
+    public Response updateDecoration(@RequestBody Decorate decorate,@PathVariable int id) {
+        QueryWrapper<Decorate> wrapper = new QueryWrapper<>();
+        wrapper.eq("decorate_id", id);
+        if (decorateService.updateById(decorate)) {
+            return success();
+        }
+        return fail("修改失败");
+    }
+
+    @ApiOperation(value = "删除",notes = "删除装修方案")
+    @PostMapping("/cancel/{id}")
+    public Response cancelDecoration(@PathVariable int id) {
+        if (decorateService.removeById(id)) {
+            return success();
+        }
+        return fail("删除失败");
+    }
+
+    @ApiOperation(value = "查询",notes = "根据ID查询装修方案")
+    @GetMapping("/{id}")
+    public Response getDecoration(@PathVariable int id){
+        Decorate decorate  = decorateService.getById(id);
+        if (decorate == null){
+            return fail("该装修方案不存在");
+        }
+        return success(decorate);
+    }
+
+    @ApiOperation(value = "冻结",notes = "冻结装修方案")
+    @PostMapping("/freeze/{id}")
+    public Response freezeDecoration(@PathVariable int id){
+        Decorate decorate  = decorateService.getById(id);
+        decorate.setStatus(0);
+        decorateService.updateById(decorate);
         return success();
     }
 
-//    @PostMapping("/")
-//    public Response newDecoration(@RequestBody DecorationParam decorationParam)
+    @ApiOperation(value = "解冻",notes = "解冻装修方案")
+    @PostMapping("/unfreeze/{id}")
+    public Response unfreezeDecoration(@PathVariable int id){
+        Decorate decorate  = decorateService.getById(id);
+        decorate.setStatus(1);
+        decorateService.updateById(decorate);
+        return success();
+    }
+
 }
 

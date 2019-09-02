@@ -69,6 +69,10 @@ public class Decorate implements Serializable {
      */
     private String designerPhone;
 
+    /**
+     *状态：1已发布 0已冻结
+     */
+    private Integer status;
 
     public Integer getDecorateId() {
         return decorateId;
@@ -150,6 +154,14 @@ public class Decorate implements Serializable {
         this.designerPhone = designerPhone;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "Decorate{" +
@@ -163,6 +175,7 @@ public class Decorate implements Serializable {
         ", description=" + description +
         ", designerName=" + designerName +
         ", designerPhone=" + designerPhone +
+        ", status" + status +
         "}";
     }
 }
