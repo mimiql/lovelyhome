@@ -4,10 +4,10 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 
-import java.time.LocalDate;
+import java.sql.Date;
+import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * <p>
@@ -84,6 +84,11 @@ public class User implements Serializable {
      * 地址
      */
     private String address;
+
+    /**
+     * 头像
+     */
+    private String headImage;
 
 
     public Integer getUserId() {
@@ -182,6 +187,14 @@ public class User implements Serializable {
         this.address = address;
     }
 
+    public String getHeadImage() {
+        return headImage;
+    }
+
+    public void setHeadImage(String headImage) {
+        this.headImage = headImage;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -193,10 +206,11 @@ public class User implements Serializable {
         ", idCard=" + idCard +
         ", email=" + email +
         ", sex=" + sex +
-        ", brithdate=" + brithdate +
+        ", brithdata=" + brithdate +
         ", wechatNum=" + wechatNum +
         ", qqNum=" + qqNum +
         ", address=" + address +
+        ", head_image=" + headImage +
         "}";
     }
 }

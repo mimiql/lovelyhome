@@ -16,10 +16,13 @@ public class UploadUtil {
             return false;
         }
 
-        String fileName = file.getOriginalFilename();
-        File destination = new File(destinationPath + fileName);
+        File destination = new File(destinationPath + file.getOriginalFilename());
         try {
-            file.transferTo(destination);
+            System.out.println("dfgdgdfg" + destination.getAbsolutePath());
+            if(!destination.exists() && !destination.isDirectory()){
+                destination.mkdirs();
+            }
+            file.transferTo(destination.getAbsoluteFile());
             return true;
         } catch (IOException e) {
             e.printStackTrace();
