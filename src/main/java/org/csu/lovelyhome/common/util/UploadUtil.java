@@ -18,7 +18,6 @@ public class UploadUtil {
 
         File destination = new File(destinationPath + file.getOriginalFilename());
         try {
-            System.out.println("dfgdgdfg" + destination.getAbsolutePath());
             if(!destination.exists() && !destination.isDirectory()){
                 destination.mkdirs();
             }

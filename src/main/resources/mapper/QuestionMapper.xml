@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.csu.lovelyhome.mapper.QuestionMapper">
-
+    <select id="getAllQuestionsByBuildingId" parameterType="java.lang.Integer" resultType="org.csu.lovelyhome.entity.Question">
+        SELECT * FROM QUESTION WHERE BUILDING_ID = #{BuildingId} AND TYPE = 1
+    </select>
+    <select id="getResponsesByQuestionId" parameterType="java.lang.Integer" resultType="org.csu.lovelyhome.entity.Question">
+        SELECT * FROM QUESTION WHERE QUESTION_ID IN (SELECT RESPONSE_ID FROM RELATE_QUESTION WHERE QUESTION_ID = #{QuestionId})
+    </select>
+    <select id="getFirstResponseByQuestionId" parameterType="java.lang.Integer" resultType="org.csu.lovelyhome.entity.Question">
+        SELECT * FROM QUESTION WHERE QUESTION_ID IN (SELECT RESPONSE_ID FROM RELATE_QUESTION WHERE QUESTION_ID = #{QuestionId})
+    </select>
+    <select id="getNumOfResponseByQuestionId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+         SELECT COUNT (*) FROM QUESTION WHERE QUESTION_ID IN (SELECT RESPONSE_ID FROM RELATE_QUESTION WHERE QUESTION_ID = #{QuestionId})
+    </select>
 </mapper>

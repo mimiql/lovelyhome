@@ -79,6 +79,10 @@ public class Building implements Serializable {
      */
     private Integer userId;
 
+    /**
+     * 楼盘图片
+     */
+    private String picture;
 
     public Integer getBuildingId() {
         return buildingId;
@@ -176,6 +180,14 @@ public class Building implements Serializable {
         this.userId = userId;
     }
 
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
     @Override
     public String toString() {
         return "Building{" +
@@ -191,6 +203,7 @@ public class Building implements Serializable {
         ", desc=" + description +
         ", status=" + status +
         ", userId=" + userId +
+        ", picture=" + picture +
         "}";
     }
 }
