@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -83,6 +84,11 @@ public class Building implements Serializable {
      * 楼盘图片
      */
     private String picture;
+
+    /**
+     * 楼盘发布时间
+     */
+    private Date publishTime;
 
     public Integer getBuildingId() {
         return buildingId;
@@ -188,6 +194,14 @@ public class Building implements Serializable {
         this.picture = picture;
     }
 
+    public Date getPublishTime() {
+        return publishTime;
+    }
+
+    public void setPublishTime(Date publishTime) {
+        this.publishTime = publishTime;
+    }
+
     @Override
     public String toString() {
         return "Building{" +
@@ -204,6 +218,7 @@ public class Building implements Serializable {
         ", status=" + status +
         ", userId=" + userId +
         ", picture=" + picture +
+        ", publishTime=" + publishTime +
         "}";
     }
 }

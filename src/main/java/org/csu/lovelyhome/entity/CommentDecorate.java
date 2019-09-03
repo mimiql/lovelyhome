@@ -3,8 +3,9 @@ package org.csu.lovelyhome.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
+
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -33,7 +34,7 @@ public class CommentDecorate implements Serializable {
     /**
      * 时间
      */
-    private LocalDateTime time;
+    private Date time;
 
     /**
      * 内容
@@ -55,6 +56,15 @@ public class CommentDecorate implements Serializable {
      */
     private Integer decorateId;
 
+    /**
+     * 状态：0正在审核，1已发布
+     */
+    private Integer status;
+
+    /**
+     * 图片
+     */
+    private String picture;
 
     public Integer getCommentId() {
         return commentId;
@@ -72,11 +82,11 @@ public class CommentDecorate implements Serializable {
         this.userId = userId;
     }
 
-    public LocalDateTime getTime() {
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(LocalDateTime time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 
@@ -112,6 +122,21 @@ public class CommentDecorate implements Serializable {
         this.decorateId = decorateId;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
     @Override
     public String toString() {
         return "CommentDecorate{" +
@@ -122,6 +147,8 @@ public class CommentDecorate implements Serializable {
         ", likeNum=" + likeNum +
         ", type=" + type +
         ", decorateId=" + decorateId +
+        ", status=" + status +
+         ", picture=" + picture +
         "}";
     }
 }

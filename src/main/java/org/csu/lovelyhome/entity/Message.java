@@ -3,8 +3,8 @@ package org.csu.lovelyhome.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -30,7 +30,7 @@ public class Message implements Serializable {
 
     private Integer type;
 
-    private LocalDateTime time;
+    private Date time;
 
     private Integer isTransport;
 
@@ -75,11 +75,11 @@ public class Message implements Serializable {
         this.type = type;
     }
 
-    public LocalDateTime getTime() {
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(LocalDateTime time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 

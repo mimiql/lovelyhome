@@ -3,8 +3,8 @@ package org.csu.lovelyhome.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -38,12 +38,12 @@ public class Collection implements Serializable {
     /**
      * 收藏时间
      */
-    private LocalDateTime time;
+    private Date time;
 
     /**
      * 收藏类型：1楼盘 2户型 3出租房 4装修方案
      */
-    private String type;
+    private Integer type;
 
 
     public Integer getCollectId() {
@@ -70,19 +70,19 @@ public class Collection implements Serializable {
         this.objectId = objectId;
     }
 
-    public LocalDateTime getTime() {
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(LocalDateTime time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 
-    public String getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 

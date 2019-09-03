@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 
 import java.sql.Date;
-import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 
@@ -89,6 +88,11 @@ public class User implements Serializable {
      * 头像
      */
     private String headImage;
+
+    /**
+     * 用户状态：0冻结 1正常
+     */
+    private Integer status;
 
 
     public Integer getUserId() {
@@ -195,6 +199,14 @@ public class User implements Serializable {
         this.headImage = headImage;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -211,6 +223,7 @@ public class User implements Serializable {
         ", qqNum=" + qqNum +
         ", address=" + address +
         ", head_image=" + headImage +
+        ", status=" + status +
         "}";
     }
 }

@@ -3,8 +3,8 @@ package org.csu.lovelyhome.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -33,8 +33,7 @@ public class Logininfo implements Serializable {
     /**
      * 登录时间
      */
-    private LocalDateTime loginTime;
-
+    private Date loginTime;
 
     public Integer getLoginInfoId() {
         return loginInfoId;
@@ -52,11 +51,11 @@ public class Logininfo implements Serializable {
         this.userId = userId;
     }
 
-    public LocalDateTime getLoginTime() {
+    public Date getLoginTime() {
         return loginTime;
     }
 
-    public void setLoginTime(LocalDateTime loginTime) {
+    public void setLoginTime(Date loginTime) {
         this.loginTime = loginTime;
     }
 

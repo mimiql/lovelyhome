@@ -9,9 +9,10 @@ import org.csu.lovelyhome.service.IBuildingService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.rmi.runtime.NewThreadAction;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,7 +41,7 @@ public class BuildingServiceImpl extends ServiceImpl<BuildingMapper, Building> i
 
     public void saveOtherResponse(int buildingId, int questionId, int userId, String content){
         Question question = new Question();
-        question.setTime(LocalDateTime.now());
+        question.setTime(new Date());
         question.setType(0);
         question.setLikeNum(0);
         question.setUserId(userId);
@@ -59,7 +60,7 @@ public class BuildingServiceImpl extends ServiceImpl<BuildingMapper, Building> i
         commentBuilding.setBuildingId(buildingId);
         commentBuilding.setContent(content);
         commentBuilding.setLikeNum(0);
-        commentBuilding.setTime(LocalDateTime.now());
+        commentBuilding.setTime(new Date());
         commentBuilding.setType(0);
         commentBuilding.setUserId(userId);
         commentBuildingMapper.insert(commentBuilding);
@@ -75,7 +76,7 @@ public class BuildingServiceImpl extends ServiceImpl<BuildingMapper, Building> i
         commentBuilding.setBuildingId(buildingId);
         commentBuilding.setContent(content);
         commentBuilding.setLikeNum(0);
-        commentBuilding.setTime(LocalDateTime.now());
+        commentBuilding.setTime(new Date());
         commentBuilding.setType(1);
         commentBuilding.setUserId(userId);
 
@@ -89,7 +90,7 @@ public class BuildingServiceImpl extends ServiceImpl<BuildingMapper, Building> i
         question.setUserId(userId);
         question.setContent(content);
         question.setType(1);
-        question.setTime(LocalDateTime.now());
+        question.setTime(new Date());
 
         questionMapper.insert(question);
     }

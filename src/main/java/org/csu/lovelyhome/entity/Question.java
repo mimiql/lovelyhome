@@ -3,8 +3,8 @@ package org.csu.lovelyhome.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -33,7 +33,7 @@ public class Question implements Serializable {
     /**
      * 提问或回复时间
      */
-    private LocalDateTime time;
+    private Date time;
 
     /**
      * 内容
@@ -55,6 +55,15 @@ public class Question implements Serializable {
      */
     private Integer buildingId;
 
+    /**
+     * 状态：0正在审核，1已发布
+     */
+
+    private Integer status;
+    /**
+     * 图片
+     */
+    private String picture;
 
     public Integer getQuestionId() {
         return questionId;
@@ -72,11 +81,11 @@ public class Question implements Serializable {
         this.userId = userId;
     }
 
-    public LocalDateTime getTime() {
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(LocalDateTime time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 
@@ -112,6 +121,22 @@ public class Question implements Serializable {
         this.buildingId = buildingId;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
     @Override
     public String toString() {
         return "Question{" +
@@ -122,6 +147,8 @@ public class Question implements Serializable {
         ", likeNum=" + likeNum +
         ", type=" + type +
         ", buildingId=" + buildingId +
+        ", status=" + status +
+         ", picture=" + picture +
         "}";
     }
 }

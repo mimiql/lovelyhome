@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ * 装修方案提问回复关系表
  * </p>
  *
  * @author lqm

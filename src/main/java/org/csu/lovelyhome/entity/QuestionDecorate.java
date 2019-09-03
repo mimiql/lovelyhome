@@ -1,8 +1,8 @@
 package org.csu.lovelyhome.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -30,7 +30,7 @@ public class QuestionDecorate implements Serializable {
     /**
      * 时间
      */
-    private LocalDateTime time;
+    private Date time;
 
     /**
      * 提问内容
@@ -52,6 +52,15 @@ public class QuestionDecorate implements Serializable {
      */
     private Integer decorateId;
 
+    /**
+     * 装修方案id
+     */
+    private Integer status;
+
+    /**
+     * 图片
+     */
+    private String picture;
 
     public Integer getQuestionId() {
         return questionId;
@@ -69,11 +78,11 @@ public class QuestionDecorate implements Serializable {
         this.userId = userId;
     }
 
-    public LocalDateTime getTime() {
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(LocalDateTime time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 
@@ -109,6 +118,22 @@ public class QuestionDecorate implements Serializable {
         this.decorateId = decorateId;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
     @Override
     public String toString() {
         return "QuestionDecorate{" +
@@ -119,6 +144,8 @@ public class QuestionDecorate implements Serializable {
         ", likeNum=" + likeNum +
         ", type=" + type +
         ", decorateId=" + decorateId +
+        ", status=" + status +
+         ", picture=" + picture +
         "}";
     }
 }
