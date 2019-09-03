@@ -42,7 +42,7 @@ public class HouseController extends BaseController {
     }
 
     @GetMapping("/filterHouses")
-    public PageInfo<House> filterHouses(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum, @RequestBody FiltHouseParam filtHouseParam){
+    public PageInfo<House> filterHouses(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum, FiltHouseParam filtHouseParam){
         List<House> houseList = houseService.getHousesByCondition(filtHouseParam);
         PageHelper.startPage(pageNum,5);
         return new PageInfo<House>(houseList);

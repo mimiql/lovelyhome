@@ -4,10 +4,12 @@ package org.csu.lovelyhome.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.ApiOperation;
 import org.csu.lovelyhome.base.BaseController;
 import org.csu.lovelyhome.base.Response;
 import org.csu.lovelyhome.entity.*;
 import org.csu.lovelyhome.pojo.param.FiltBuildingParam;
+import org.csu.lovelyhome.pojo.vo.BuildingInformationVo;
 import org.csu.lovelyhome.service.impl.BuildingServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -84,7 +86,7 @@ public class BuildingController extends BaseController {
     }
 
     @GetMapping("/filterBuildings")
-    public PageInfo<Building> filterBuildings(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum,@RequestBody FiltBuildingParam filtBuildingParam){
+    public PageInfo<Building> filterBuildings(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum,FiltBuildingParam filtBuildingParam){
         PageHelper.startPage(pageNum,5);
         List<Building> buildingList = buildingService.getAllBuildingsByCondition(filtBuildingParam);
         PageInfo<Building> pageInfo = new PageInfo<Building>(buildingList);
@@ -128,5 +130,11 @@ public class BuildingController extends BaseController {
     @GetMapping("/{building_Id}/question/{question_Id}/responses")
     public List<Question> questionResponses(@PathVariable("building_Id") int building_Id, @PathVariable("question_Id") int question_Id){
         return buildingService.getResponsesByQuestionId(question_Id);
+    }
+
+    @ApiOperation(value = "发布的楼盘信息", notes = "获取发布的楼盘信息")
+    @GetMapping("/{building_Id}/buildingInformation}")
+    public BuildingInformationVo buildingInformationVo(@PathVariable("building_Id") int building_Id){
+        return buildingService.getBuildingInformationById(building_Id);
     }
 }

@@ -2,13 +2,11 @@ package org.csu.lovelyhome.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import io.swagger.annotations.ApiOperation;
 import org.csu.lovelyhome.base.BaseController;
 import org.csu.lovelyhome.base.Response;
 import org.csu.lovelyhome.entity.*;
-import org.csu.lovelyhome.service.impl.BuildingServiceImpl;
-import org.csu.lovelyhome.service.impl.DecorateServiceImpl;
-import org.csu.lovelyhome.service.impl.HouseServiceImpl;
-import org.csu.lovelyhome.service.impl.UserServiceImpl;
+import org.csu.lovelyhome.service.impl.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +32,10 @@ public class AdminController extends BaseController {
     private HouseServiceImpl houseService;
     @Autowired
     private DecorateServiceImpl decorateService;
+    @Autowired
+    private HuxingServiceImpl huxingService;
 
+    @ApiOperation(value = "删除用户信息",notes = "根据用户ID删除用户信息")
     @DeleteMapping("/userManage/{user_id}")
     public Response userManage(@PathVariable("user_id") int user_id){
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<User>().eq("user_id", user_id);
@@ -44,8 +45,14 @@ public class AdminController extends BaseController {
     }
 
     @PostMapping("/buildingManage/{user_id}")
-    public Response buildingPublish(@PathVariable("user_id") int user_id, Building building, List<Huxing> huxingList){
-        //还不清楚怎么写
+    public Response buildingPublish(@PathVariable("user_id") int user_id, @RequestBody Building building, @RequestBody List<Huxing> huxingList){
+        building.setUserId(user_id);
+        buildingService.save(building);
+
+        for(Huxing huxing : huxingList){
+            huxing.setBuildingId(building.getBuildingId());
+            huxingService.save(huxing);
+        }
         return success("发布成功");
     }
 
@@ -55,6 +62,22 @@ public class AdminController extends BaseController {
         return success("删除成功");
     }
 
+    @ApiOperation(value = "修改楼盘信息",notes = "根据楼盘ID修改楼盘信息")
+    @PutMapping("/buildingManage/modification/{building_id}")
+    public Response buildingModification(@PathVariable("building_id") int building_id, @RequestBody Building building, @RequestBody List<Huxing> huxingList){
+        QueryWrapper<Building> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("building_id", building_id);
+        buildingService.update(building, queryWrapper);
+
+        for(Huxing huxing : huxingList){
+            QueryWrapper<Huxing> huxingQueryWrapper = new QueryWrapper<>();
+            huxingQueryWrapper.eq("huxing_id", huxing.getHuxingId());
+            huxingService.update(huxing, huxingQueryWrapper);
+        }
+        return success("楼盘更改成功！");
+    }
+
+    @ApiOperation(value = "审核租房",notes = "根据户型ID审核租房")
     @PutMapping("/houseManage/{house_id}")
     public Response housePublish(@PathVariable("house_id") int house_id){
         QueryWrapper<House> queryWrapper = new QueryWrapper<>();
@@ -72,6 +95,7 @@ public class AdminController extends BaseController {
         return success("发布装修方案成功！");
     }
 
+    @ApiOperation(value = "这是个空的实现",notes = "lqm写的为主")
     @PutMapping("/decorateManage/{decorate_id}/modification")
     public Response decorationModification(@PathVariable("decorate_id") int decorate_id){
         //先别写
@@ -84,6 +108,7 @@ public class AdminController extends BaseController {
         return success("删除该评论成功！");
     }
 
+    @ApiOperation(value = "这是个空的实现",notes = "lqm写的为主")
     @DeleteMapping("/forumManage/commentDecorate/{id}")
     public Response commentDecorate(@PathVariable("id") int id){
         //没写

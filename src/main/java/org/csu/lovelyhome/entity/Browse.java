@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -38,7 +39,7 @@ public class Browse implements Serializable {
     /**
      * 浏览时间
      */
-    private LocalDateTime time;
+    private Date time;
 
     /**
      * 浏览类型 1楼盘 2户型 3出租房 4装修方案
@@ -70,11 +71,11 @@ public class Browse implements Serializable {
         this.objectId = objectId;
     }
 
-    public LocalDateTime getTime() {
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(LocalDateTime time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 
