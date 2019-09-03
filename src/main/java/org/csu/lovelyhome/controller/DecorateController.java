@@ -12,14 +12,11 @@ import org.csu.lovelyhome.base.Response;
 import org.csu.lovelyhome.config.ConstantConfig;
 import org.csu.lovelyhome.entity.*;
 import org.csu.lovelyhome.pojo.param.FiltDecorateParam;
-import org.csu.lovelyhome.pojo.vo.QuestionDecorateVO;
 import org.csu.lovelyhome.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,15 +37,8 @@ public class DecorateController extends BaseController {
     @Autowired
     private FileService fileService;
     @Autowired
-    private ICommentDecorateService commentDecorateService;
-    @Autowired
-    private IRelateDecorateService relateDecorateService;
-    @Autowired
-    private IQuestionDecorateService questionDecorateService;
-    @Autowired
-    private IRelateQuestionDecorateService relateQuestionDecorateService;
-    @Autowired
     private ConstantConfig constantConfig;
+
     @GetMapping("/all")
     public Response decorations(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
         PageHelper.startPage(pageNum,5);
@@ -148,7 +138,7 @@ public class DecorateController extends BaseController {
     }
 
     @ApiOperation(value = "删除",notes = "删除装修方案")
-    @PostMapping("/cancel/{id}")
+    @DeleteMapping("/{id}")
     public Response cancelDecoration(@PathVariable int id) {
         if (decorateService.removeById(id)) {
             return success();
@@ -183,180 +173,6 @@ public class DecorateController extends BaseController {
         decorate.setStatus(1);
         decorateService.updateById(decorate);
         return success("解冻成功");
-    }
-
-    @ApiOperation(value = "新增装修方案评论", notes = "插入装修方案评论")
-    @PostMapping("/comment")
-    public Response newCommentForDecorate(@RequestBody CommentDecorate commentDecorate){
-        commentDecorate.setType(1);
-        commentDecorate.setTime(new Date());
-        if (commentDecorateService.save(commentDecorate)){
-            fail("评论失败");
-        }
-        return success("评论成功");
-    }
-
-    @ApiOperation(value = "装修方案评论回复", notes = "装修方案评论回复插入")
-    @PostMapping("/commentReply/{commentId}")
-    public Response newCommentForDecorate(@RequestBody CommentDecorate commentDecorate, @PathVariable int commentId){
-        commentDecorate.setType(0);
-        commentDecorate.setTime(new Date());
-        commentDecorateService.save(commentDecorate);
-
-        RelateDecorate relateDecorate = new RelateDecorate();
-        relateDecorate.setCommentId(commentId);
-        relateDecorate.setResponseId(commentDecorate.getCommentId());
-        relateDecorateService.save(relateDecorate);
-
-        return success("回复成功");
-    }
-
-
-    @ApiOperation(value = "新增装修方案提问", notes = "插入装修方案提问")
-    @PostMapping("/question")
-    public Response newQuestionForDecorate(@RequestBody QuestionDecorate questionDecorate){
-        questionDecorate.setType(1);
-        questionDecorate.setTime(new Date());
-        if (questionDecorateService.save(questionDecorate)){
-            success("评论成功");
-        }
-        return fail("评论失败");
-    }
-
-    @ApiOperation(value = "装修方案提问回复", notes = "装修方案提问回复插入")
-    @PostMapping("/questionReply/{questionId}")
-    public Response newCommentForDecorate(@RequestBody QuestionDecorate questionDecorate, @PathVariable int questionId){
-        questionDecorate.setType(0);
-        questionDecorate.setTime(new Date());
-        questionDecorateService.save(questionDecorate);
-
-        RelateQuestionDecorate relateQuestionDecorate = new RelateQuestionDecorate();
-        relateQuestionDecorate.setQuestionId(questionId);
-        relateQuestionDecorate.setResponseId(questionDecorate.getQuestionId());
-        relateQuestionDecorateService.save(relateQuestionDecorate);
-
-        return success("回复成功");
-    }
-
-    @ApiOperation(value = "点赞装修方案评论或评论回复", notes = "修改装修方案评论或回复点赞数目")
-    @PutMapping("/commentLike/{commentId}")
-    public Response likeCommentForDecorate(@PathVariable int commentId){
-        CommentDecorate commentDecorate = commentDecorateService.getById(commentId);
-        commentDecorate.setLikeNum(commentDecorate.getLikeNum() + 1);
-        commentDecorateService.updateById(commentDecorate);
-        return success("点赞成功");
-    }
-
-    @ApiOperation(value = "点赞装修方案提问或提问回复", notes = "修改装修方案提问或回复点赞数目")
-    @PutMapping("/questionLike/{questionId}")
-    public Response likeQuestionForDecorate(@PathVariable int questionId){
-        QuestionDecorate questionDecorate = questionDecorateService.getById(questionId);
-        if (questionDecorate == null){
-            return fail("提问ID" + questionId + "不存在");
-        }
-        questionDecorate.setLikeNum(questionDecorate.getLikeNum() + 1);
-        questionDecorateService.updateById(questionDecorate);
-        return success("点赞成功");
-    }
-
-    @ApiOperation(value = "获取装修方案评论", notes = "根据装修方案ID获取评论")
-    @GetMapping("/comment/{decorateId}")
-    public Response getCommentByDecorateId(@PathVariable int decorateId){
-        QueryWrapper<CommentDecorate> wrapper = new QueryWrapper<>();
-        wrapper.eq("decorate_id", decorateId).eq("type",1 );
-        List<CommentDecorate> commentDecorates = commentDecorateService.list(wrapper);
-        return success(commentDecorates);
-    }
-
-    @ApiOperation(value = "获取装修方案评论回复", notes = "根据评论ID获取评论回复")
-    @GetMapping("/commentReply/{commentId}")
-    public Response getCommentReplyByCommentId(@PathVariable int commentId){
-        QueryWrapper<RelateDecorate> wrapper = new QueryWrapper<>();
-        wrapper.eq("comment_id", commentId);
-        List<RelateDecorate> relateDecorates = relateDecorateService.list(wrapper);
-        List<CommentDecorate> commentDecorates = new ArrayList<>();
-        for (RelateDecorate relateDecorate : relateDecorates){
-            CommentDecorate commentDecorate = commentDecorateService.getById(relateDecorate.getResponseId());
-            if(commentDecorate != null){
-                commentDecorates.add(commentDecorate);
-            }
-        }
-        return success(commentDecorates);
-    }
-
-    @ApiOperation(value = "获取装修方案提问", notes = "根据装修方案ID获取提问")
-    @GetMapping("/question/{decorateId}")
-    public Response getQuestionByDecorateId(@PathVariable int decorateId){
-        QueryWrapper<QuestionDecorate> wrapper = new QueryWrapper<>();
-        wrapper.eq("decorate_id", decorateId).eq("type",1 );
-        List<QuestionDecorate> questionDecorates = questionDecorateService.list(wrapper);
-        List<QuestionDecorateVO> questionDecorateVOS = new ArrayList<>();
-        for (QuestionDecorate questionDecorate : questionDecorates){
-            QuestionDecorateVO questionDecorateVO = new QuestionDecorateVO();
-            questionDecorateVO.setQuestionDecorate(questionDecorate);
-            //找到提问的最新一条回复
-            QueryWrapper<QuestionDecorate> wrapper1 = new QueryWrapper<>();
-            wrapper1.eq("question_id", questionDecorate.getQuestionId());
-            wrapper1.orderByDesc("time");
-            QuestionDecorate answerDecorate = questionDecorateService.getOne(wrapper1);
-            questionDecorateVO.setAnswerDecorate(answerDecorate);
-
-            questionDecorateVOS.add(questionDecorateVO);
-        }
-        return success(questionDecorateVOS);
-    }
-
-
-    @ApiOperation(value = "获取装修方案提问回复", notes = "根据提问ID获取提问回复")
-    @GetMapping("/questionReply/{questionId}")
-    public Response getQuestionReplyByQuestionId(@PathVariable int questionId){
-        QueryWrapper<RelateQuestionDecorate> wrapper = new QueryWrapper<>();
-        wrapper.eq("question_id", questionId);
-        List<RelateQuestionDecorate> relateQuestionDecorates = relateQuestionDecorateService.list(wrapper);
-        List<QuestionDecorate> questionDecorates = new ArrayList<>();
-        for(RelateQuestionDecorate relateQuestionDecorate : relateQuestionDecorates){
-            QuestionDecorate questionDecorate = questionDecorateService.getById(relateQuestionDecorate.getResponseId());
-            if(questionDecorate != null){
-                questionDecorates.add(questionDecorate);
-            }
-        }
-        return success(questionDecorates);
-    }
-
-    @ApiOperation(value = "获取用户发出的装修方案的评论", notes = "根据UserID获取用户发出的对装修方案所有的评论")
-    @GetMapping("/comment/user/{userId}")
-    public Response getCommentByUserId(@PathVariable int userId){
-        QueryWrapper<CommentDecorate> wrapper = new QueryWrapper<>();
-        wrapper.eq("user_id",userId).eq("type",1 );
-        List<CommentDecorate> commentDecorates = commentDecorateService.list(wrapper);
-        return success(commentDecorates);
-    }
-
-    @ApiOperation(value = "获取用户发出的装修方案的提问", notes = "根据UserID获取用户发出的对装修方案所有的提问")
-    @GetMapping("/question/user/{userId}")
-    public Response getQuestionByUserId(@PathVariable int userId){
-        QueryWrapper<QuestionDecorate> wrapper = new QueryWrapper<>();
-        wrapper.eq("user_id",userId).eq("type",1 );
-        List<QuestionDecorate> questionDecorates = questionDecorateService.list(wrapper);
-        return success(questionDecorates);
-    }
-
-    @ApiOperation(value = "获取用户发出的装修方案的评论回复", notes = "根据UserID获取用户发出的对装修方案所有的评论回复")
-    @GetMapping("/commentReply/user/{userId}")
-    public Response getCommentReplyByUserId(@PathVariable int userId){
-        QueryWrapper<CommentDecorate> wrapper = new QueryWrapper<>();
-        wrapper.eq("user_id",userId).eq("type",0);
-        List<CommentDecorate> commentDecorates = commentDecorateService.list(wrapper);
-        return success(commentDecorates);
-    }
-
-    @ApiOperation(value = "获取用户发出的装修方案的提问回复", notes = "根据UserID获取用户发出的对装修方案所有的提问回复")
-    @GetMapping("/questionReply/user/{userId}")
-    public Response getQuestionReplyByUserId(@PathVariable int userId){
-        QueryWrapper<QuestionDecorate> wrapper = new QueryWrapper<>();
-        wrapper.eq("user_id",userId).eq("type",0 );
-        List<QuestionDecorate> questionDecorates = questionDecorateService.list(wrapper);
-        return success(questionDecorates);
     }
 
 }
