@@ -4,6 +4,8 @@ package org.csu.lovelyhome.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.csu.lovelyhome.base.BaseController;
+import org.csu.lovelyhome.base.Response;
 import org.csu.lovelyhome.entity.*;
 import org.csu.lovelyhome.pojo.param.FiltBuildingParam;
 import org.csu.lovelyhome.service.impl.BuildingServiceImpl;
@@ -23,30 +25,38 @@ import java.util.List;
 @RestController
 @RequestMapping("/building")
 @CrossOrigin
-public class BuildingController {
+public class BuildingController extends BaseController {
     @Autowired
     private BuildingServiceImpl buildingService;
 
     @PostMapping("/{building_Id}/comment/{commentId}/{userId}")
-    public void commentResponse(@PathVariable("building_Id") int building_Id, @PathVariable("userId") int userId,
-                                @PathVariable("commentId") int commentId, @RequestParam("content") String content){
+    public Response commentResponse(@PathVariable("building_Id") int building_Id, @PathVariable("userId") int userId,
+                                    @PathVariable("commentId") int commentId, @RequestParam("content") String content){
         buildingService.saveSelfResponse(building_Id, commentId, userId, content);
+
+        return success("回复成功");
     }
 
     @PostMapping("/{building_Id}/question/{questionId}/{userId}")
-    public void questionResponse(@PathVariable("building_Id") int building_Id, @PathVariable("userId") int userId,
+    public Response questionResponse(@PathVariable("building_Id") int building_Id, @PathVariable("userId") int userId,
                                  @PathVariable("questionId") int questionId, @RequestParam("content") String content){
         buildingService.saveOtherResponse(building_Id, questionId, userId, content);
+
+        return success("回答成功！");
     }
 
     @PostMapping("/{building_Id}/question/{userId}")
-    public void question(@PathVariable("building_Id") int building_Id, @PathVariable("userId") int userId, @RequestParam("content") String content){
+    public Response question(@PathVariable("building_Id") int building_Id, @PathVariable("userId") int userId, @RequestParam("content") String content){
         buildingService.saveQuestion(building_Id, userId, content);
+
+        return success("提问成功！");
     }
 
     @PostMapping("/{building_Id}/comment/{userId}")
-    public void comment(@PathVariable("building_Id") int building_Id, @PathVariable("userId") int userId, @RequestParam("content") String content){
+    public Response comment(@PathVariable("building_Id") int building_Id, @PathVariable("userId") int userId, @RequestParam("content") String content){
         buildingService.saveComment(building_Id, userId, content);
+
+        return success("评论成功！");
     }
 
     @GetMapping("/{building_Id}")
@@ -74,7 +84,7 @@ public class BuildingController {
     }
 
     @GetMapping("/filterBuildings")
-    public PageInfo<Building> filterBuildings(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum, @RequestBody FiltBuildingParam filtBuildingParam){
+    public PageInfo<Building> filterBuildings(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum,@RequestBody FiltBuildingParam filtBuildingParam){
         PageHelper.startPage(pageNum,5);
         List<Building> buildingList = buildingService.getAllBuildingsByCondition(filtBuildingParam);
         PageInfo<Building> pageInfo = new PageInfo<Building>(buildingList);

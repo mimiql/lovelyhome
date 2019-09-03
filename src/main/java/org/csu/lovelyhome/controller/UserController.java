@@ -310,5 +310,12 @@ public class UserController extends BaseController {
         question.setLikeNum(question.getLikeNum() + 1);
         questionService.save(question);
     }
+
+    @DeleteMapping("/{user_id}/collection/{id}")
+    public void collectionCancel(@PathVariable("user_id") int user_id, @PathVariable("id") int id, @RequestParam("type") int type){
+        QueryWrapper<Collection> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id", user_id).eq("object_id", id).eq("type", type);
+        collectionService.remove(queryWrapper);
+    }
 }
 
