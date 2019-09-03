@@ -1,9 +1,20 @@
 package org.csu.lovelyhome.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.csu.lovelyhome.base.BaseController;
+import org.csu.lovelyhome.base.Response;
+import org.csu.lovelyhome.common.util.UploadUtil;
+import org.csu.lovelyhome.entity.House;
+import org.csu.lovelyhome.pojo.param.FiltHouseParam;
+import org.csu.lovelyhome.service.impl.HouseServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 /**
  * <p>
@@ -15,7 +26,51 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/house")
-public class HouseController {
+public class HouseController extends BaseController {
 
+    private static final String DESTINATION = "src/main/resources/static/images/houseImages/";
+
+    @Autowired
+    private HouseServiceImpl houseService;
+
+    @GetMapping("/houses/{keyWords}")
+    public List<House> houses(@PathVariable("keyWords") String keyWords){
+        QueryWrapper<House> queryWrapper = new QueryWrapper<House>();
+        queryWrapper.like("name", keyWords).or().like("province", keyWords).or().like("city", keyWords)
+                .or().like("district", keyWords).or().like("street", keyWords);
+        return houseService.list(queryWrapper);
+    }
+
+    @GetMapping("/filterHouses")
+    public PageInfo<House> filterHouses(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum, FiltHouseParam filtHouseParam){
+        List<House> houseList = houseService.getHousesByCondition(filtHouseParam);
+        PageHelper.startPage(pageNum,5);
+        return new PageInfo<House>(houseList);
+    }
+
+    @GetMapping("/{houseId}")
+    public House house(@PathVariable("houseId") String houseId){
+        QueryWrapper<House> queryWrapper = new QueryWrapper<House>();
+        queryWrapper.eq("house_id", houseId);
+        return houseService.getOne(queryWrapper);
+    }
+
+    @PostMapping("/{userId}")
+    public Response newHouse(@PathVariable("userId") int userId, @RequestParam("files") MultipartFile[] multipartFiles, @RequestBody House house){
+        house.setStatus(2);
+        houseService.save(house);
+        QueryWrapper<House> queryWrapper = new QueryWrapper<House>();
+        queryWrapper.eq("house_id", house.getHouseId());
+        StringBuilder imagePath = new StringBuilder();
+        if(multipartFiles.length != 0){
+            for(MultipartFile file : multipartFiles){
+                UploadUtil.save(file, DESTINATION + userId + "/" + house.getHouseId() + "/");
+                imagePath.append("/images/houseImages/" + userId + "/" + house.getHouseId() + "/" + file.getOriginalFilename() + " ");
+            }
+        }
+        house.setPicture(imagePath.toString());
+        houseService.update(house, queryWrapper);
+        return success("待审核！");
+    }
 }
 

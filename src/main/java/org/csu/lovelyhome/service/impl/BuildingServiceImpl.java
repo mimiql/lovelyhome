@@ -5,6 +5,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.csu.lovelyhome.entity.*;
 import org.csu.lovelyhome.mapper.*;
+import org.csu.lovelyhome.pojo.param.FiltBuildingParam;
+import org.csu.lovelyhome.pojo.vo.BuildingInformationVo;
 import org.csu.lovelyhome.service.IBuildingService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -145,4 +147,23 @@ public class BuildingServiceImpl extends ServiceImpl<BuildingMapper, Building> i
 
         return buildingDetail;
     }
+
+    public List<Building> getAllBuildingsByCondition(FiltBuildingParam filtBuildingParam){
+        return buildingMapper.getAllBuildingsByCondition(filtBuildingParam);
+    }
+
+    public BuildingInformationVo getBuildingInformationById(int building_Id){
+        QueryWrapper<Building> buildingQueryWrapper = new QueryWrapper<>();
+        buildingQueryWrapper.eq("building_id", building_Id);
+        Building building = buildingMapper.selectOne(buildingQueryWrapper);
+        QueryWrapper<Huxing> huxingQueryWrapper = new QueryWrapper<>();
+        huxingQueryWrapper.eq("building_id", building_Id);
+        List<Huxing> huxingList = huxingMapper.selectList(huxingQueryWrapper);
+
+        BuildingInformationVo buildingInformationVo = new BuildingInformationVo();
+        buildingInformationVo.setBuilding(building);
+        buildingInformationVo.setHuxingList(huxingList);
+
+        return buildingInformationVo;
+     }
 }

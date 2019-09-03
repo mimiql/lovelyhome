@@ -35,7 +35,7 @@ public class RelateQuestion implements Serializable {
     private Integer responseId;
 
     /**
-     * 类型：1楼盘 2装修方案
+     * 类型 1 楼盘，2 装修方案
      */
     private Integer type;
 
@@ -77,7 +77,7 @@ public class RelateQuestion implements Serializable {
         "relateId=" + relateId +
         ", questionId=" + questionId +
         ", responseId=" + responseId +
-        ", type" +  type +
+        ", type=" + type +
         "}";
     }
 }

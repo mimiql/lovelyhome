@@ -5,16 +5,16 @@
         SELECT PHONE FROM USER
     </select>
     <select id="getCollectionBuildingByUserId" parameterType="java.lang.Integer" resultType="org.csu.lovelyhome.entity.Building">
-        SELECT * FROM BUILDING WHERE BUILDING_ID IN (SELECT OBJECT_ID FROM COLLECTION WHERE USER_ID = #{userId}) TYPE = 1
+        SELECT * FROM BUILDING WHERE BUILDING_ID IN (SELECT OBJECT_ID FROM COLLECTION WHERE USER_ID = #{userId} AND TYPE = 1)
     </select>
     <select id="getCollectionHuxingByUserId" parameterType="java.lang.Integer" resultType="org.csu.lovelyhome.entity.Huxing">
-        SELECT * FROM Huxing WHERE HUXING_ID IN (SELECT OBJECT_ID FROM COLLECTION WHERE USER_ID = #{userId}) TYPE = 2
+        SELECT * FROM Huxing WHERE HUXING_ID IN (SELECT OBJECT_ID FROM COLLECTION WHERE USER_ID = #{userId} AND TYPE = 2)
     </select>
     <select id="getCollectionHouseByUserId" parameterType="java.lang.Integer" resultType="org.csu.lovelyhome.entity.House">
-        SELECT * FROM HOUSE WHERE HOUSE_ID IN (SELECT OBJECT_ID FROM COLLECTION WHERE USER_ID = #{userId}) TYPE = 3
+        SELECT * FROM HOUSE WHERE HOUSE_ID IN (SELECT OBJECT_ID FROM COLLECTION WHERE USER_ID = #{userId} AND TYPE = 3)
     </select>
     <select id="getCollectionDecorateByUserId" parameterType="java.lang.Integer" resultType="org.csu.lovelyhome.entity.Decorate">
-        SELECT * FROM DECORATE WHERE DECORATE_ID IN (SELECT OBJECT_ID FROM COLLECTION WHERE USER_ID = #{userId}) TYPE = 4
+        SELECT * FROM DECORATE WHERE DECORATE_ID IN (SELECT OBJECT_ID FROM COLLECTION WHERE USER_ID = #{userId} AND TYPE = 4)
     </select>
     <select id="getPublishHouseByUserId" resultType="org.csu.lovelyhome.entity.House">
         SELECT * FROM HOUSE WHERE USER_ID = #{user_id} AND STATUS != 2

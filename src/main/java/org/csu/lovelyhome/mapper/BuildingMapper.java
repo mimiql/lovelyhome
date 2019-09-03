@@ -3,6 +3,7 @@ package org.csu.lovelyhome.mapper;
 import org.apache.ibatis.annotations.Param;
 import org.csu.lovelyhome.entity.Building;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.csu.lovelyhome.pojo.param.FiltBuildingParam;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -21,4 +22,6 @@ public interface BuildingMapper extends BaseMapper<Building> {
     List<Building> getAllBuildingsByPrice();
 
     List<String> getBuildingNamesByKeyWords(@Param("keywords") String keywords);
+
+    List<Building> getAllBuildingsByCondition(FiltBuildingParam filtBuildingParam);
 }
