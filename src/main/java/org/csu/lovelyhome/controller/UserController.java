@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -241,7 +242,7 @@ public class UserController extends BaseController {
         collection.setObjectId(buildingId);
         collection.setType(1);
         collection.setUserId(user_id);
-        collection.setTime(LocalDateTime.now());
+        collection.setTime(new Date());
 
         collectionService.save(collection);
     }
@@ -252,7 +253,7 @@ public class UserController extends BaseController {
         collection.setObjectId(huxingId);
         collection.setType(2);
         collection.setUserId(user_id);
-        collection.setTime(LocalDateTime.now());
+        collection.setTime(new Date());
 
         collectionService.save(collection);
     }
@@ -263,7 +264,7 @@ public class UserController extends BaseController {
         collection.setObjectId(houseId);
         collection.setType(3);
         collection.setUserId(user_id);
-        collection.setTime(LocalDateTime.now());
+        collection.setTime(new Date());
 
         collectionService.save(collection);
     }
@@ -274,7 +275,7 @@ public class UserController extends BaseController {
         collection.setObjectId(decorateId);
         collection.setType(4);
         collection.setUserId(user_id);
-        collection.setTime(LocalDateTime.now());
+        collection.setTime(new Date());
 
         collectionService.save(collection);
     }
