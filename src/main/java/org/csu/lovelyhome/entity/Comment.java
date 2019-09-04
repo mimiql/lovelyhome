@@ -10,6 +10,7 @@ public class Comment {
 
     private List<CommentBuilding> commentBuildings;
     private List<CommentDecorate> commentDecorates;
+    private List<CommentHouse> commentHouses;
 
     public List<CommentBuilding> getCommentBuildings() {
         return commentBuildings;
@@ -25,5 +26,13 @@ public class Comment {
 
     public void setCommentDecorates(List<CommentDecorate> commentDecorates) {
         this.commentDecorates = commentDecorates;
+    }
+
+    public List<CommentHouse> getCommentHouses() {
+        return commentHouses;
+    }
+
+    public void setCommentHouses(List<CommentHouse> commentHouses) {
+        this.commentHouses = commentHouses;
     }
 }
