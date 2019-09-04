@@ -100,6 +100,11 @@ public class UserController extends BaseController {
         return userService.getOne(queryWrapper);
     }
 
+    @GetMapping("/all")
+    public List<User> users(){
+        return userService.list();
+    }
+
     @PutMapping("/{user_id}")
     public Response userModification(@PathVariable("user_id") int user_id, @RequestParam("file") MultipartFile file, User user){
         QueryWrapper<User> queryWrapper = new QueryWrapper<User>().eq("user_id", user_id);

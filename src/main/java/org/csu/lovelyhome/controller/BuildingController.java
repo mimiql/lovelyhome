@@ -33,32 +33,32 @@ public class BuildingController extends BaseController {
 
     @PostMapping("/{building_Id}/comment/{commentId}/{userId}")
     public Response commentResponse(@PathVariable("building_Id") int building_Id, @PathVariable("userId") int userId,
-                                    @PathVariable("commentId") int commentId, @RequestParam("content") String content){
-        buildingService.saveSelfResponse(building_Id, commentId, userId, content);
+                                    @PathVariable("commentId") int commentId, @RequestBody CommentBuilding commentBuilding){
+        buildingService.saveSelfResponse(building_Id, commentId, userId, commentBuilding);
 
-        return success("回复成功");
+        return success("回复成功，待审核！");
     }
 
     @PostMapping("/{building_Id}/question/{questionId}/{userId}")
     public Response questionResponse(@PathVariable("building_Id") int building_Id, @PathVariable("userId") int userId,
-                                 @PathVariable("questionId") int questionId, @RequestParam("content") String content){
-        buildingService.saveOtherResponse(building_Id, questionId, userId, content);
+                                 @PathVariable("questionId") int questionId, @RequestBody Question question){
+        buildingService.saveOtherResponse(building_Id, questionId, userId, question);
 
-        return success("回答成功！");
+        return success("回答成功，待审核！");
     }
 
     @PostMapping("/{building_Id}/question/{userId}")
-    public Response question(@PathVariable("building_Id") int building_Id, @PathVariable("userId") int userId, @RequestParam("content") String content){
-        buildingService.saveQuestion(building_Id, userId, content);
+    public Response question(@PathVariable("building_Id") int building_Id, @PathVariable("userId") int userId, @RequestBody Question question){
+        buildingService.saveQuestion(building_Id, userId, question);
 
-        return success("提问成功！");
+        return success("提问成功，待审核！");
     }
 
     @PostMapping("/{building_Id}/comment/{userId}")
-    public Response comment(@PathVariable("building_Id") int building_Id, @PathVariable("userId") int userId, @RequestParam("content") String content){
-        buildingService.saveComment(building_Id, userId, content);
+    public Response comment(@PathVariable("building_Id") int building_Id, @PathVariable("userId") int userId, @RequestBody CommentBuilding commentBuilding){
+        buildingService.saveComment(building_Id, userId, commentBuilding);
 
-        return success("评论成功！");
+        return success("评论成功，待审核！");
     }
 
     @GetMapping("/{building_Id}")

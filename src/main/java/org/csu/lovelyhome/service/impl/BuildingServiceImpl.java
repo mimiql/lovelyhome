@@ -41,14 +41,12 @@ public class BuildingServiceImpl extends ServiceImpl<BuildingMapper, Building> i
     @Autowired
     private RelateQuestionMapper relateQuestionMapper;
 
-    public void saveOtherResponse(int buildingId, int questionId, int userId, String content){
-        Question question = new Question();
+    public void saveOtherResponse(int buildingId, int questionId, int userId, Question question){
         question.setTime(new Date());
         question.setType(0);
         question.setLikeNum(0);
         question.setUserId(userId);
         question.setBuildingId(buildingId);
-        question.setContent(content);
         questionMapper.insert(question);
 
         RelateQuestion relateQuestion = new RelateQuestion();
@@ -57,10 +55,8 @@ public class BuildingServiceImpl extends ServiceImpl<BuildingMapper, Building> i
         relateQuestionMapper.insert(relateQuestion);
     }
 
-    public void saveSelfResponse(int buildingId, int commentId, int userId, String content){
-        CommentBuilding commentBuilding = new CommentBuilding();
+    public void saveSelfResponse(int buildingId, int commentId, int userId, CommentBuilding commentBuilding){
         commentBuilding.setBuildingId(buildingId);
-        commentBuilding.setContent(content);
         commentBuilding.setLikeNum(0);
         commentBuilding.setTime(new Date());
         commentBuilding.setType(0);
@@ -73,10 +69,8 @@ public class BuildingServiceImpl extends ServiceImpl<BuildingMapper, Building> i
         relateBuildingMapper.insert(relateBuilding);
     }
 
-    public void saveComment(int buildingId, int userId, String content){
-        CommentBuilding commentBuilding = new CommentBuilding();
+    public void saveComment(int buildingId, int userId, CommentBuilding commentBuilding){
         commentBuilding.setBuildingId(buildingId);
-        commentBuilding.setContent(content);
         commentBuilding.setLikeNum(0);
         commentBuilding.setTime(new Date());
         commentBuilding.setType(1);
@@ -85,12 +79,10 @@ public class BuildingServiceImpl extends ServiceImpl<BuildingMapper, Building> i
         commentBuildingMapper.insert(commentBuilding);
     }
 
-    public void saveQuestion(int buildingId, int userId, String content){
-        Question question = new Question();
+    public void saveQuestion(int buildingId, int userId, Question question){
         question.setBuildingId(buildingId);
         question.setLikeNum(0);
         question.setUserId(userId);
-        question.setContent(content);
         question.setType(1);
         question.setTime(new Date());
 

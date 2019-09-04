@@ -51,7 +51,7 @@ public class CommentHouse implements Serializable {
     private Integer likeNum;
 
     /**
-     * 类型：1评论 2回复
+     * 类型：1评论 0回复
      */
     private Integer type;
 
