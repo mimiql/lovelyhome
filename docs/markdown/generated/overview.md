@@ -17,8 +17,15 @@ lovelyhome项目API描述
 
 ### 标签
 
+* admin-controller : Admin Controller
 * building-controller : Building Controller
+* collection-controller : 收藏模块相关API
+* comment-decorate-controller : 装修模块论坛模块会回复模块
+* comment-house-controller : Comment House Controller
 * decorate-controller : 装修模块
+* house-controller : House Controller
+* question-decorate-controller : 装修模块论坛模块提问模块
+* question-house-controller : Question House Controller
 * user-controller : User Controller
 * verification-controller : Verification Controller
 
