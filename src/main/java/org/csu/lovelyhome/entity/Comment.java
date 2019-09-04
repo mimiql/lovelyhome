@@ -3,7 +3,7 @@ package org.csu.lovelyhome.entity;
 import java.util.List;
 
 /**
- * 个人中心的所有怕评论
+ * 个人中心的所有的评论
  * @author zjx by 2019/9/2
  */
 public class Comment {

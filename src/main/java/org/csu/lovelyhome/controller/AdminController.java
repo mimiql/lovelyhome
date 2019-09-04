@@ -114,5 +114,8 @@ public class AdminController extends BaseController {
         //没写
         return success("删除该评论成功！");
     }
+
+//    @ApiOperation(value = "审核", notes = "")
+//    @PutMapping("/forumManage/commentDecorate/{id}")
 }
 

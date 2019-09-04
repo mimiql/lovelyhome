@@ -11,6 +11,7 @@
     <groupId>org.csu</groupId>
     <artifactId>lovelyhome</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>war</packaging>
     <name>lovelyhome</name>
     <description>Demo project for Spring Boot</description>
 
@@ -189,6 +190,16 @@
             <artifactId>aliyun-sdk-oss</artifactId>
             <version>3.5.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>RELEASE</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -196,6 +207,13 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <warName>lovelyhome</warName>
+                </configuration>
             </plugin>
         </plugins>
     </build>

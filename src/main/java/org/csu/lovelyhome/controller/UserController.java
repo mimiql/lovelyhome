@@ -108,6 +108,11 @@ public class UserController extends BaseController {
         return userService.getOne(queryWrapper);
     }
 
+    @GetMapping("/all")
+    public List<User> users(){
+        return userService.list();
+    }
+
     @ApiOperation(value = "修改用户头像",notes = "修改用户头像")
     @PutMapping("/{user_id}")
     public Response userModification(@PathVariable("user_id") int user_id, @RequestParam("file") MultipartFile file, User user){
