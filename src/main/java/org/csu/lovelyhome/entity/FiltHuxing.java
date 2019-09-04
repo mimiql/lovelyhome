@@ -58,7 +58,7 @@ public class FiltHuxing implements Serializable {
     /**
      * 房间总数
      */
-    private String rooms;
+    private Integer rooms;
 
 
     public Integer getFiltId() {
@@ -117,11 +117,11 @@ public class FiltHuxing implements Serializable {
         this.floorsSpace = floorsSpace;
     }
 
-    public String getRooms() {
+    public Integer getRooms() {
         return rooms;
     }
 
-    public void setRooms(String rooms) {
+    public void setRooms(Integer rooms) {
         this.rooms = rooms;
     }
 

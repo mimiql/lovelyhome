@@ -41,7 +41,7 @@ public class CommentHouseController extends BaseController {
         response.setLikeNum(0);
         response.setTime(new Date());
         response.setType(Constant.RESPONSE_TYPE);
-        response.setStatus(Constant.STATUS_VERIFICATION);
+        response.setStatus(Constant.STATUS_PUBLISHED);
         commentHouseService.save(response);
 
         RelateHouse relateHouse = new RelateHouse();

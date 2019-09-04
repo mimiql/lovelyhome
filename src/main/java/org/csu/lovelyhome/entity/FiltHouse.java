@@ -27,7 +27,7 @@ public class FiltHouse implements Serializable {
     private Integer filtId;
 
     /**
-     * 用于id
+     * 用户id
      */
     private Integer userId;
 
@@ -44,12 +44,12 @@ public class FiltHouse implements Serializable {
     /**
      * 价格，即租金
      */
-    private BigDecimal price;
+    private String price;
 
     /**
      * 房间数
      */
-    private String rooms;
+    private Integer rooms;
 
     /**
      * 朝向
@@ -89,19 +89,19 @@ public class FiltHouse implements Serializable {
         this.address = address;
     }
 
-    public BigDecimal getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
-    public String getRooms() {
+    public Integer getRooms() {
         return rooms;
     }
 
-    public void setRooms(String rooms) {
+    public void setRooms(Integer rooms) {
         this.rooms = rooms;
     }
 

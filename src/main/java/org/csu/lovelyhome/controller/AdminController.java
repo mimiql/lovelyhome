@@ -50,13 +50,44 @@ public class AdminController extends BaseController {
     @Autowired
     private QuestionDecorateServiceImpl questionDecorateService;
 
+    @ApiOperation(value = "批量删除用户信息", notes = "根据数组ID批量删除用户信息")
+    @DeleteMapping("/userManage/patchDeletingIds")
+    public Response patchDeletingIds(String[] deleteIdArray){
+        for(String id : deleteIdArray){
+            QueryWrapper<User> userQueryWrapper = new QueryWrapper<User>().eq("user_id", id);
+            userService.remove(userQueryWrapper);
+        }
+
+        return success("删除成功!");
+    }
+
+    @ApiOperation(value = "冻结用户", notes = "根据ID冻结用户")
+    @PutMapping("/userManage/freezingUser/{user_id}")
+    public Response freezingUser(@PathVariable("user_id") int user_id){
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<User>().eq("user_id", user_id);
+        User user = userService.getOne(userQueryWrapper);
+        user.setStatus(Constant.FREEZING_STATUS);
+        userService.update(user, userQueryWrapper);
+
+        return success("成功冻结该用户！");
+    }
+
+    @ApiOperation(value = "解冻用户", notes = "根据ID解冻用户")
+    @PutMapping("/userManage/freezedUser/{user_id}")
+    public Response freezedUser(@PathVariable("user_id") int user_id){
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<User>().eq("user_id", user_id);
+        User user = userService.getOne(userQueryWrapper);
+        user.setStatus(Constant.NORMAL_STATUS);
+        userService.update(user, userQueryWrapper);
+
+        return success("成功解冻该用户！");
+    }
 
     @ApiOperation(value = "删除用户信息",notes = "根据用户ID删除用户信息")
     @DeleteMapping("/userManage/{user_id}")
     public Response userManage(@PathVariable("user_id") int user_id){
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<User>().eq("user_id", user_id);
         userService.remove(userQueryWrapper);
-        //还没写完，还要级联删除
         return success("删除成功");
     }
 
@@ -74,7 +105,7 @@ public class AdminController extends BaseController {
 
     @DeleteMapping("/buildingManage/{building_id}")
     public Response buildingDeleting(@PathVariable("building_id") int building_id){
-        //先不写
+        buildingService.remove(new QueryWrapper<Building>().eq("building_id", building_id));
         return success("删除成功");
     }
 
@@ -111,28 +142,11 @@ public class AdminController extends BaseController {
         return success("发布装修方案成功！");
     }
 
-    @ApiOperation(value = "这是个空的实现",notes = "lqm写的为主")
-    @PutMapping("/decorateManage/{decorate_id}/modification")
-    public Response decorationModification(@PathVariable("decorate_id") int decorate_id){
-        //先别写
-        return success("修改装修方案成功！");
-    }
-
     @DeleteMapping("/forumManage/commentBuilding/{id}")
     public Response commentBuilding(@PathVariable("id") int id){
-        //没写
+        commentBuildingService.remove(new QueryWrapper<CommentBuilding>().eq("comment_id", id));
         return success("删除该评论成功！");
     }
-
-    @ApiOperation(value = "这是个空的实现",notes = "lqm写的为主")
-    @DeleteMapping("/forumManage/commentDecorate/{id}")
-    public Response commentDecorate(@PathVariable("id") int id){
-        //没写
-        return success("删除该评论成功！");
-    }
-
-//    @ApiOperation(value = "审核楼盘", notes = "")
-////    @PutMapping("/forumManage/commentDecorate/{id}")
 
     @ApiOperation(value = "查看楼盘", notes = "查看楼盘的评论论坛")
     @GetMapping("/forumManage/commentBuilding")

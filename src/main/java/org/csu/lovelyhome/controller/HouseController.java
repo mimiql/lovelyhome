@@ -41,11 +41,13 @@ public class HouseController extends BaseController {
         return houseService.list(queryWrapper);
     }
 
-    @GetMapping("/filterHouses")
-    public PageInfo<House> filterHouses(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum, FiltHouseParam filtHouseParam){
-        List<House> houseList = houseService.getHousesByCondition(filtHouseParam);
-        PageHelper.startPage(pageNum,5);
-        return new PageInfo<House>(houseList);
+    @GetMapping("/filterHouses/{user_id}")
+    public List<House> filterHouses(@PathVariable("user_id") int user_id, @RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum, FiltHouseParam filtHouseParam){
+        if(user_id == 0){
+            return houseService.getHousesByCondition(filtHouseParam);
+        }else{
+            return houseService.getHousesByCondition(user_id, filtHouseParam);
+        }
     }
 
     @GetMapping("/{houseId}")

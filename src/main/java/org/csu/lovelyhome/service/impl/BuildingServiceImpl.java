@@ -1,6 +1,7 @@
 package org.csu.lovelyhome.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import org.csu.lovelyhome.common.constant.Constant;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.csu.lovelyhome.entity.*;
@@ -44,6 +45,7 @@ public class BuildingServiceImpl extends ServiceImpl<BuildingMapper, Building> i
     public void saveOtherResponse(int buildingId, int questionId, int userId, Question question){
         question.setTime(new Date());
         question.setType(0);
+        question.setStatus(Constant.STATUS_PUBLISHED);
         question.setLikeNum(0);
         question.setUserId(userId);
         question.setBuildingId(buildingId);
@@ -60,6 +62,7 @@ public class BuildingServiceImpl extends ServiceImpl<BuildingMapper, Building> i
         commentBuilding.setLikeNum(0);
         commentBuilding.setTime(new Date());
         commentBuilding.setType(0);
+        commentBuilding.setStatus(Constant.STATUS_PUBLISHED);
         commentBuilding.setUserId(userId);
         commentBuildingMapper.insert(commentBuilding);
 
@@ -74,6 +77,7 @@ public class BuildingServiceImpl extends ServiceImpl<BuildingMapper, Building> i
         commentBuilding.setLikeNum(0);
         commentBuilding.setTime(new Date());
         commentBuilding.setType(1);
+        commentBuilding.setStatus(Constant.STATUS_VERIFICATION);
         commentBuilding.setUserId(userId);
 
         commentBuildingMapper.insert(commentBuilding);
@@ -84,6 +88,7 @@ public class BuildingServiceImpl extends ServiceImpl<BuildingMapper, Building> i
         question.setLikeNum(0);
         question.setUserId(userId);
         question.setType(1);
+        question.setStatus(Constant.STATUS_VERIFICATION);
         question.setTime(new Date());
 
         questionMapper.insert(question);

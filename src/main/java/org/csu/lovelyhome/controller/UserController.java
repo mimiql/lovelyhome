@@ -9,6 +9,7 @@ import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.ApiOperation;
 import org.csu.lovelyhome.base.BaseController;
 import org.csu.lovelyhome.base.Response;
+import org.csu.lovelyhome.common.constant.Constant;
 import org.csu.lovelyhome.common.util.UploadUtil;
 import org.csu.lovelyhome.entity.*;
 import org.csu.lovelyhome.service.ILogininfoService;
@@ -63,18 +64,21 @@ public class UserController extends BaseController {
             return fail("用户名不存在");
         }else{
             if(password.equals(user.getPassword())){
-                String token = JWT.create().withAudience(phone)
-                        .sign(Algorithm.HMAC256(password));
+                if(user.getStatus() == Constant.NORMAL_STATUS){
+                    String token = JWT.create().withAudience(phone)
+                            .sign(Algorithm.HMAC256(password));
 //                stringRedisTemplate.opsForValue().set(token, token);
-                //将登陆日志插入数据库
-                Logininfo logininfo = new Logininfo();
-                logininfo.setLoginTime(new Date());
-                logininfo.setUserId(user.getUserId());
-                logininfoService.save(logininfo);
-                return success(token);
-            }
-            else{
-                return success("密码错误！");
+                    //将登陆日志插入数据库
+                    Logininfo logininfo = new Logininfo();
+                    logininfo.setLoginTime(new Date());
+                    logininfo.setUserId(user.getUserId());
+                    logininfoService.save(logininfo);
+                    return success(token);
+                }else{
+                    return fail("对不起，你的账户已经被冻结!");
+                }
+            }else{
+                return fail("密码错误！");
             }
         }
     }
@@ -108,6 +112,7 @@ public class UserController extends BaseController {
         return userService.getOne(queryWrapper);
     }
 
+    @ApiOperation(value = "获取所有用户信息",notes = "获取所有用户信息")
     @GetMapping("/all")
     public List<User> users(){
         return userService.list();
@@ -136,38 +141,26 @@ public class UserController extends BaseController {
 
     @ApiOperation(value = "获取用户收藏户型",notes = "根据用户id获取用户所收藏户型")
     @GetMapping("/{user_id}/collection/huxings")
-    public PageInfo<Huxing> collectionHuxings(@PathVariable("user_id") int user_id, @RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
-        PageHelper.startPage(pageNum,3);
-        List<Huxing> huxingList = userService.getCollectionHuxingByUserId(user_id);
-        PageInfo<Huxing> pageInfo = new PageInfo<Huxing>(huxingList);
-        return pageInfo;
+    public List<Huxing> collectionHuxings(@PathVariable("user_id") int user_id){
+        return userService.getCollectionHuxingByUserId(user_id);
     }
 
     @ApiOperation(value = "获取用户收藏出租房",notes = "根据用户id获取用户所收藏出租房")
     @GetMapping("/{user_id}/collection/houses")
-    public PageInfo<House> collectionHouses(@PathVariable("user_id") int user_id, @RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
-        PageHelper.startPage(pageNum,3);
-        List<House> houseList = userService.getCollectionHouseByUserId(user_id);
-        PageInfo<House> pageInfo = new PageInfo<House>(houseList);
-        return pageInfo;
+    public List<House> collectionHouses(@PathVariable("user_id") int user_id){
+        return userService.getCollectionHouseByUserId(user_id);
     }
 
     @ApiOperation(value = "获取用户收藏装修方案",notes = "根据用户id获取用户所收藏装修方案")
     @GetMapping("/{user_id}/collection/decorations")
-    public PageInfo<Decorate> collectionDecorations(@PathVariable("user_id") int user_id, @RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
-        PageHelper.startPage(pageNum,3);
-        List<Decorate> decorateList = userService.getCollectionDecorateByUserId(user_id);
-        PageInfo<Decorate> pageInfo = new PageInfo<Decorate>(decorateList);
-        return pageInfo;
+    public List<Decorate> collectionDecorations(@PathVariable("user_id") int user_id){
+        return userService.getCollectionDecorateByUserId(user_id);
     }
 
     @ApiOperation(value = "获取用户已上市出租房",notes = "根据用户id获取用户已上市出租房")
     @GetMapping("/{user_id}/houses")
-    public PageInfo<House> houses(@PathVariable("user_id") int user_id, @RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
-        PageHelper.startPage(pageNum,3);
-        List<House> houseList = userService.getPublishHousesByUserId(user_id);
-        PageInfo<House> pageInfo = new PageInfo<House>(houseList);
-        return pageInfo;
+    public List<House> houses(@PathVariable("user_id") int user_id){
+        return userService.getPublishHousesByUserId(user_id);
     }
 
     @ApiOperation(value = "获取用户出租房",notes = "根据用户id和出租房状态获取用户出租房")
