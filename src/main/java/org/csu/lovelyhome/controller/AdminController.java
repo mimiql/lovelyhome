@@ -2,9 +2,11 @@ package org.csu.lovelyhome.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import io.swagger.annotations.ApiOperation;
 import org.csu.lovelyhome.base.BaseController;
 import org.csu.lovelyhome.base.Response;
+import org.csu.lovelyhome.common.constant.Constant;
 import org.csu.lovelyhome.entity.*;
 import org.csu.lovelyhome.service.impl.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +19,12 @@ import java.util.List;
  * 管理员信息表 前端控制器
  * </p>
  *
- * @author lqm
+ * @author lqm、zjx
  * @since 2019-08-31
  */
 @RestController
 @RequestMapping("/admin")
+@CrossOrigin
 public class AdminController extends BaseController {
 
     @Autowired
@@ -34,6 +37,19 @@ public class AdminController extends BaseController {
     private DecorateServiceImpl decorateService;
     @Autowired
     private HuxingServiceImpl huxingService;
+    @Autowired
+    private CommentBuildingServiceImpl commentBuildingService;
+    @Autowired
+    private QuestionServiceImpl questionService;
+    @Autowired
+    private CommentHouseServiceImpl commentHouseService;
+    @Autowired
+    private QuestionHouseServiceImpl questionHouseService;
+    @Autowired
+    private CommentDecorateServiceImpl commentDecorateService;
+    @Autowired
+    private QuestionDecorateServiceImpl questionDecorateService;
+
 
     @ApiOperation(value = "删除用户信息",notes = "根据用户ID删除用户信息")
     @DeleteMapping("/userManage/{user_id}")
@@ -115,7 +131,194 @@ public class AdminController extends BaseController {
         return success("删除该评论成功！");
     }
 
-//    @ApiOperation(value = "审核", notes = "")
-//    @PutMapping("/forumManage/commentDecorate/{id}")
+//    @ApiOperation(value = "审核楼盘", notes = "")
+////    @PutMapping("/forumManage/commentDecorate/{id}")
+
+    @ApiOperation(value = "查看楼盘", notes = "查看楼盘的评论论坛")
+    @GetMapping("/forumManage/commentBuilding")
+    public List<CommentBuilding> forumCommentBuilding(@RequestParam("status") int status){
+        QueryWrapper<CommentBuilding> queryWrapper = new QueryWrapper<>();
+        if (Constant.STATUS_PUBLISHED.equals(status) || Constant.STATUS_VERIFICATION.equals(status)){
+            queryWrapper.eq("status", status);
+        }
+
+        queryWrapper.eq("type", Constant.COMMENT_TYPE);
+
+        return commentBuildingService.list(queryWrapper);
+    }
+
+    @ApiOperation(value = "查看楼盘", notes = "查看楼盘的问题论坛")
+    @GetMapping("/forumManage/questionBuilding")
+    public List<Question> forumQuestionBuilding(@RequestParam("status") int status){
+        QueryWrapper<Question> queryWrapper = new QueryWrapper<>();
+        if (Constant.STATUS_PUBLISHED.equals(status) || Constant.STATUS_VERIFICATION.equals(status)){
+            queryWrapper.eq("status", status);
+        }
+
+        queryWrapper.eq("type", Constant.QUESTION_TYPE);
+        return questionService.list(queryWrapper);
+    }
+
+    @ApiOperation(value = "查看出租房", notes = "查看出租房的评论论坛")
+    @GetMapping("/forumManage/commentHouse")
+    public List<CommentHouse> forumCommentHouse(@RequestParam("status") int status){
+        QueryWrapper<CommentHouse> queryWrapper = new QueryWrapper<>();
+        if (Constant.STATUS_PUBLISHED.equals(status) || Constant.STATUS_VERIFICATION.equals(status)){
+            queryWrapper.eq("status", status);
+        }
+
+        queryWrapper.eq("type", Constant.COMMENT_TYPE);
+        return commentHouseService.list(queryWrapper);
+    }
+
+    @ApiOperation(value = "查看出租房", notes = "查看出租房的问题论坛")
+    @GetMapping("/forumManage/questionHouse")
+    public List<QuestionHouse> forumQuestionHouse(@RequestParam("status") int status){
+        QueryWrapper<QuestionHouse> queryWrapper = new QueryWrapper<>();
+        if (Constant.STATUS_PUBLISHED.equals(status) || Constant.STATUS_VERIFICATION.equals(status)){
+            queryWrapper.eq("status", status);
+        }
+
+        queryWrapper.eq("type", Constant.QUESTION_TYPE);
+        return questionHouseService.list(queryWrapper);
+    }
+
+    @ApiOperation(value = "查看装修方案", notes = "查看装修方案的评论论坛")
+    @GetMapping("/forumManage/commentDecoration")
+    public List<CommentDecorate> forumCommentDecoration(@RequestParam("status") int status){
+        QueryWrapper<CommentDecorate> queryWrapper = new QueryWrapper<>();
+        if (Constant.STATUS_PUBLISHED.equals(status) || Constant.STATUS_VERIFICATION.equals(status)){
+            queryWrapper.eq("status", status);
+        }
+
+        queryWrapper.eq("type", Constant.COMMENT_TYPE);
+        return commentDecorateService.list(queryWrapper);
+    }
+
+    @ApiOperation(value = "查看装修方案", notes = "查看装修方案的问题的论坛")
+    @GetMapping("/forumManage/questionDecoration")
+    public List<QuestionDecorate> forumQuestionDecoration(@RequestParam("status") int status){
+        QueryWrapper<QuestionDecorate> queryWrapper = new QueryWrapper<>();
+        if (Constant.STATUS_PUBLISHED.equals(status) || Constant.STATUS_VERIFICATION.equals(status)){
+            queryWrapper.eq("status", status);
+        }
+
+        queryWrapper.eq("type", Constant.QUESTION_TYPE);
+        return questionDecorateService.list(queryWrapper);
+    }
+
+    @ApiOperation(value = "审核楼盘", notes = "审核楼盘的评论论坛")
+    @PutMapping("/forumManage/commentBuilding/Verification/{id}")
+    public void forumCommentBuildingVerification(@PathVariable("id") int id){
+        QueryWrapper<CommentBuilding> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("comment_id", id);
+        CommentBuilding commentBuilding = commentBuildingService.getOne(queryWrapper);
+        commentBuilding.setStatus(Constant.STATUS_PUBLISHED);
+        commentBuildingService.update(commentBuilding, queryWrapper);
+    }
+
+    @ApiOperation(value = "审核楼盘", notes = "审核楼盘的问题论坛")
+    @PutMapping("/forumManage/questionBuilding/Verification/{id}")
+    public void forumQuestionBuildingVerification(@PathVariable("id") int id){
+        QueryWrapper<Question> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("question_id", id);
+        Question question = questionService.getOne(queryWrapper);
+        question.setStatus(Constant.STATUS_PUBLISHED);
+        questionService.update(question, queryWrapper);
+    }
+
+    @ApiOperation(value = "审核出租房", notes = "审核出租房的评论论坛")
+    @PutMapping("/forumManage/commentHouse/Verification/{id}")
+    public void forumCommentHouseVerification(@PathVariable("id") int id){
+        QueryWrapper<CommentHouse> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("comment_id", id);
+        CommentHouse commentHouse = commentHouseService.getOne(queryWrapper);
+        commentHouse.setStatus(Constant.STATUS_PUBLISHED);
+        commentHouseService.update(commentHouse, queryWrapper);
+    }
+
+    @ApiOperation(value = "审核出租房", notes = "审核出租房的问题论坛")
+    @PutMapping("/forumManage/questionHouse/Verification/{id}")
+    public void forumQuestionHouseVerification(@PathVariable("id") int id){
+        QueryWrapper<QuestionHouse> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("comment_id", id);
+        QuestionHouse questionHouse = questionHouseService.getOne(queryWrapper);
+        questionHouse.setStatus(Constant.STATUS_PUBLISHED);
+        questionHouseService.update(questionHouse, queryWrapper);
+    }
+
+    @ApiOperation(value = "审核装修方案", notes = "审核装修方案的评论论坛")
+    @PutMapping("/forumManage/commentDecoration/Verification/{id}")
+    public void forumCommentDecorationVerification(@PathVariable("id") int id){
+        QueryWrapper<CommentDecorate> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("comment_id", id);
+        CommentDecorate commentDecorate = commentDecorateService.getOne(queryWrapper);
+        commentDecorate.setStatus(Constant.STATUS_PUBLISHED);
+        commentDecorateService.update(commentDecorate, queryWrapper);
+    }
+
+    @ApiOperation(value = "审核装修方案", notes = "审核装修方案的问题论坛")
+    @PutMapping("/forumManage/questionDecoration/Verification/{id}")
+    public void forumQuestionDecorationVerification(@PathVariable("id") int id){
+        QueryWrapper<QuestionDecorate> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("question_id", id);
+        QuestionDecorate questionDecorate = questionDecorateService.getOne(queryWrapper);
+        questionDecorate.setStatus(Constant.STATUS_PUBLISHED);
+        questionDecorateService.update(questionDecorate, queryWrapper);
+    }
+
+    @ApiOperation(value = "删除楼盘的评论")
+    @DeleteMapping("/forumManage/commentBuilding/deleting/{id}")
+    public Response forumCommentBuildingDeleting(@PathVariable("id") int id){
+        QueryWrapper<CommentBuilding> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("comment_id", id);
+        commentBuildingService.remove(queryWrapper);
+        return success("删除成功！");
+    }
+
+    @ApiOperation(value = "删除楼盘的提问")
+    @DeleteMapping("/forumManage/questionBuilding/deleting/{id}")
+    public Response forumQuestionBuildingDeleting(@PathVariable("id") int id){
+        QueryWrapper<Question> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("question_id", id);
+        questionService.remove(queryWrapper);
+        return success("删除成功！");
+    }
+
+    @ApiOperation(value = "删除租房的评论")
+    @DeleteMapping("/forumManage/commentHouse/deleting/{id}")
+    public Response forumCommentHouseDeleting(@PathVariable("id") int id){
+        QueryWrapper<CommentHouse> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("comment_id", id);
+        commentHouseService.remove(queryWrapper);
+        return success("删除成功！");
+    }
+
+    @ApiOperation(value = "删除租房的提问")
+    @DeleteMapping("/forumManage/questionHouse/deleting/{id}")
+    public Response forumQuestionHouseDeleting(@PathVariable("id") int id){
+        QueryWrapper<QuestionHouse> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("question_id", id);
+        questionHouseService.remove(queryWrapper);
+        return success("删除成功！");
+    }
+
+    @ApiOperation(value = "删除装修方案的评论")
+    @DeleteMapping("/forumManage/commentDecoration/deleting/{id}")
+    public Response forumCommentDecorationDeleting(@PathVariable("id") int id){
+        QueryWrapper<CommentDecorate> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("comment_id", id);
+        commentDecorateService.remove(queryWrapper);
+        return success("删除成功！");
+    }
+
+    @ApiOperation(value = "删除装修方案的提问")
+    @DeleteMapping("/forumManage/questionDecoration/deleting/{id}")
+    public Response forumQuestionDecorationDeleting(@PathVariable("id") int id){
+        QueryWrapper<QuestionDecorate> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("question_id", id);
+        questionDecorateService.remove(queryWrapper);
+        return success("删除成功！");
+    }
 }
 
