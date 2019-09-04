@@ -1,6 +1,7 @@
 package org.csu.lovelyhome.service.impl;
 
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.ApiOperation;
 import org.csu.lovelyhome.entity.*;
 import org.csu.lovelyhome.mapper.UserMapper;
 import org.csu.lovelyhome.service.IUserService;
@@ -68,10 +69,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public Comment getCommentByUserId(int user_id){
         List<CommentBuilding> commentBuildingList = userMapper.getCommentBuildingByUserId(user_id);
         List<CommentDecorate> commentDecorateList = userMapper.getCommentDecorateByUserId(user_id);
+        List<CommentHouse> commentHouseList = userMapper.getCommentHouseByUserId(user_id);
         Comment comment = new Comment();
         comment.setCommentBuildings(commentBuildingList);
         comment.setCommentDecorates(commentDecorateList);
-
+        comment.setCommentHouses(commentHouseList);
         return comment;
     }
 

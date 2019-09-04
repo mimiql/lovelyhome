@@ -38,6 +38,8 @@ public interface UserMapper extends BaseMapper<User> {
 
     List<CommentDecorate> getCommentDecorateByUserId(int user_id);
 
+    List<CommentHouse> getCommentHouseByUserId(int user_id);
+
     List<Building> getBrowsingBuildingByUserId(int userId);
 
     List<Huxing> getBrowsingHuxingByUserId(int userId);
