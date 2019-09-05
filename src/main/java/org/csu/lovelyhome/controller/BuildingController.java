@@ -4,17 +4,23 @@ package org.csu.lovelyhome.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sun.org.apache.regexp.internal.RE;
 import io.swagger.annotations.ApiOperation;
+import net.bytebuddy.asm.Advice;
+import org.apache.commons.collections4.Get;
 import org.csu.lovelyhome.base.BaseController;
 import org.csu.lovelyhome.base.Response;
+import org.csu.lovelyhome.config.TagConstant;
 import org.csu.lovelyhome.entity.*;
 import org.csu.lovelyhome.pojo.param.FiltBuildingParam;
 import org.csu.lovelyhome.pojo.vo.BuildingInformationVo;
+import org.csu.lovelyhome.pojo.vo.BuildingTagNumVO;
 import org.csu.lovelyhome.service.impl.BuildingServiceImpl;
 import org.csu.lovelyhome.service.impl.FiltHuxingServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -194,5 +200,48 @@ public class BuildingController extends BaseController {
     @GetMapping("/{building_Id}/buildingInformation}")
     public BuildingInformationVo buildingInformationVo(@PathVariable("building_Id") int building_Id){
         return buildingService.getBuildingInformationById(building_Id);
+    }
+
+    @ApiOperation(value = "返回楼盘六个标签的各个数目",notes = "返回楼盘六个标签的各个数目")
+    @GetMapping("tag/num")
+    public  Response  getTagNum(){
+        List<BuildingTagNumVO> buildingTagNumVOS = new ArrayList<>();
+        BuildingTagNumVO buildingTagNumVO1 = new BuildingTagNumVO();
+        buildingTagNumVO1.setTag(TagConstant.getCONVENIENTTRAFFIC());
+        buildingTagNumVO1.setNum(buildingService.getTagNum(buildingTagNumVO1.getTag()));
+        buildingTagNumVOS.add(buildingTagNumVO1);
+
+        BuildingTagNumVO buildingTagNumVO2 = new BuildingTagNumVO();
+        buildingTagNumVO2.setTag(TagConstant.getDININGANDDREWING());
+        buildingTagNumVO2.setNum(buildingService.getTagNum(buildingTagNumVO2.getTag()));
+        buildingTagNumVOS.add(buildingTagNumVO2);
+
+        BuildingTagNumVO buildingTagNumVO3 = new BuildingTagNumVO();
+        buildingTagNumVO3.setTag(TagConstant.getFULLENTERAINMENT());
+        buildingTagNumVO3.setNum(buildingService.getTagNum(buildingTagNumVO3.getTag()));
+        buildingTagNumVOS.add(buildingTagNumVO3);
+
+        BuildingTagNumVO buildingTagNumVO4 = new BuildingTagNumVO();
+        buildingTagNumVO4.setTag(TagConstant.getINANYTIME());
+        buildingTagNumVO4.setNum(buildingService.getTagNum(buildingTagNumVO4.getTag()));
+        buildingTagNumVOS.add(buildingTagNumVO4);
+
+        BuildingTagNumVO buildingTagNumVO5 = new BuildingTagNumVO();
+        buildingTagNumVO5.setTag(TagConstant.getNOPARKING());
+        buildingTagNumVO5.setNum(buildingService.getTagNum(buildingTagNumVO5.getTag()));
+        buildingTagNumVOS.add(buildingTagNumVO5);
+
+        BuildingTagNumVO buildingTagNumVO6 = new BuildingTagNumVO();
+        buildingTagNumVO6.setTag(TagConstant.getTWOLIESOUTH());
+        buildingTagNumVO6.setNum(buildingService.getTagNum(buildingTagNumVO6.getTag()));
+        buildingTagNumVOS.add(buildingTagNumVO6);
+
+        return success(buildingTagNumVOS);
+    }
+
+    @ApiOperation(value = "根据户型标签获取楼盘",notes = "返回户型存在该标签的楼盘")
+    @GetMapping("Building/tag/{tag}")
+    public Response getTagBuildings(@PathVariable String tag){
+        return success(buildingService.getTagBuildings(tag));
     }
 }

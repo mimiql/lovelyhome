@@ -24,4 +24,8 @@ public interface BuildingMapper extends BaseMapper<Building> {
     List<String> getBuildingNamesByKeyWords(@Param("keywords") String keywords);
 
     List<Building> getAllBuildingsByCondition(FiltBuildingParam filtBuildingParam);
+
+    Integer getTagNum(String tag);
+
+    List<Building> getTagBuildings(String tag);
 }
