@@ -239,7 +239,7 @@ public class BuildingController extends BaseController {
         return success(buildingTagNumVOS);
     }
 
-    @ApiOperation(value = "根据户型标签获取楼盘",notes = "返回户型存在该标签的楼盘")
+    @ApiOperation(value = "根据户型标签获取楼盘",notes = "返回户型存在该标签的楼盘,注意标签时字符串传进来的")
     @GetMapping("Building/tag/{tag}")
     public Response getTagBuildings(@PathVariable String tag){
         return success(buildingService.getTagBuildings(tag));
