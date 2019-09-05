@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.csu.lovelyhome.mapper.CommentBuildingMapper">
     <select id="getCommentsByBuildingId" parameterType="java.lang.Integer" resultType="org.csu.lovelyhome.entity.CommentBuilding">
-        SELECT * FROM COMMENT_BUILDING WHERE BUILDING_ID = #{BuildingId} AND TYPE = 1
+        SELECT * FROM comment_building WHERE BUILDING_ID = #{BuildingId} AND TYPE = 1
     </select>
     <select id="getResponsesByCommentId" parameterType="java.lang.Integer" resultType="org.csu.lovelyhome.entity.CommentBuilding">
-        SELECT * FROM COMMENT_BUILDING WHERE COMMENT_ID IN (SELECT RESPONSE_ID FROM RELATE_BUILDING WHERE COMMENT_ID = #{CommentId})
+        SELECT * FROM comment_building WHERE COMMENT_ID IN (SELECT RESPONSE_ID FROM RELATE_BUILDING WHERE COMMENT_ID = #{CommentId})
     </select>
 </mapper>

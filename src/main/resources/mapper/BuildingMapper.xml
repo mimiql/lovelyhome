@@ -2,16 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.csu.lovelyhome.mapper.BuildingMapper">
     <select id="getAllBuildingsByPrice" resultType="org.csu.lovelyhome.entity.Building">
-        SELECT * FROM BUILDING ORDER BY PRICE ASC
+        SELECT * FROM building ORDER BY PRICE ASC
     </select>
     <select id="getBuildingNamesByKeyWords" parameterType="java.lang.String" resultType="java.lang.String">
-        SELECT NAME FROM BUILDING
+        SELECT NAME FROM building
         <if test='keywords != "%null%"'>
             WHERE NAME LIKE '%' || #{keywords} || '%'
         </if>
     </select>
     <select id="getAllBuildingsByCondition" parameterType="org.csu.lovelyhome.pojo.param.FiltBuildingParam" resultType="org.csu.lovelyhome.entity.Building">
-        SELECT * FROM BUILDING WHERE 1 = 1
+        SELECT * FROM building WHERE 1 = 1
         <if test="filtBuildingParam.position != null">
             AND DISTRICT = #{filtBuildingParam.position}
         </if>
@@ -22,7 +22,7 @@
             AND PRICE >= #{filtBuildingParam.maxUnitPrice}
         </if>
         <if test="filtBuildingParam.minTotalPrice != null">
-            AND BUILDING_ID IN (SELECT BUILDING_ID FROM HUXING WHERE TOTAL_PRICE >= #{filtBuildingParam.minTotalPrice})
+            AND Building_ID IN (SELECT BUILDING_ID FROM HUXING WHERE TOTAL_PRICE >= #{filtBuildingParam.minTotalPrice})
         </if>
         <if test="filtBuildingParam.maxTotalPrice  != null">
             AND BUILDING_ID IN (SELECT BUILDING_ID FROM HUXING WHERE #{filtBuildingParam.maxTotalPrice} >= TOTAL_PRICE)
