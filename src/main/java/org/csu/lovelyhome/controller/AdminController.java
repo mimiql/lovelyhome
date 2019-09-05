@@ -40,9 +40,9 @@ public class AdminController extends BaseController {
     public Response userManage(@PathVariable("user_id") int user_id){
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<User>().eq("user_id", user_id);
         userService.remove(userQueryWrapper);
-        //还没写完，还要级联删除
         return success("删除成功");
     }
+
 
     @PostMapping("/buildingManage/{user_id}")
     public Response buildingPublish(@PathVariable("user_id") int user_id, @RequestBody Building building, @RequestBody List<Huxing> huxingList){
