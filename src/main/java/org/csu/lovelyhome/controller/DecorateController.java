@@ -13,10 +13,12 @@ import org.csu.lovelyhome.config.ConstantConfig;
 import org.csu.lovelyhome.entity.*;
 import org.csu.lovelyhome.pojo.param.FiltDecorateParam;
 import org.csu.lovelyhome.service.*;
+import org.csu.lovelyhome.service.impl.FiltDecorateServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,6 +40,8 @@ public class DecorateController extends BaseController {
     private FileService fileService;
     @Autowired
     private ConstantConfig constantConfig;
+    @Autowired
+    private FiltDecorateServiceImpl filtDecorateService;
 
     @GetMapping("/all")
     public Response decorations(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
@@ -48,39 +52,60 @@ public class DecorateController extends BaseController {
     }
 
     @ApiOperation(value = "筛选查询",notes = "根据筛选条件查询装修方案")
-    @GetMapping("/filt")
-    public Response decorations(@RequestBody FiltDecorateParam param){
+    @GetMapping("/filt/{user_id}")
+    public Response decorations(@PathVariable("user_id") int user_id, @RequestBody FiltDecorateParam param){
+        FiltDecorate filtDecorate = new FiltDecorate();
+        filtDecorate.setUserId(user_id);
+        filtDecorate.setTime(new Date());
         PageHelper.startPage(param.getPageNum(), param.getPageSize());
         QueryWrapper<Decorate> wrapper = new QueryWrapper<>();
         if (!StringUtils.isEmpty(param.getStyle())){
             wrapper.like("style", "%"+param.getStyle()+"%");
+            filtDecorate.setStyle(param.getStyle());
         }
         Double minFloorSpace = param.getMinFloorSpace();
         Double maxFloorSpace = param.getMaxFloorSpace();
+        String str = "";
         if (minFloorSpace != 0){
             wrapper.ge("floor_space", minFloorSpace);
+            str += minFloorSpace + "%";
         }
         if (maxFloorSpace != 0){
             wrapper.le("floor_space", maxFloorSpace);
+            str += maxFloorSpace;
         }
+
+        filtDecorate.setFloorsSpace(str);
         Double minBudget = param.getMinBudget();
         Double maxBudget = param.getMaxBudget();
+        str = "";
         if (minBudget != 0){
             wrapper.ge("budget", minBudget);
+            str += minBudget + "%";
         }
         if (maxBudget != 0){
             wrapper.le("budget", maxBudget);
+            str += maxBudget;
         }
+
+        filtDecorate.setBudget(str);
         Integer rooms = param.getRooms();
         if (rooms != 0){
             wrapper.eq("rooms", rooms);
+            filtDecorate.setRooms(rooms);
         }
         Integer roomType = param.getRoomType();
         if (roomType != 0){
             wrapper.eq("room_type", roomType);
+            filtDecorate.setRoomType(roomType);
         }
         List<Decorate> decorates = decorateService.list(wrapper);
         PageInfo<Decorate> pageInfo = new PageInfo<Decorate>(decorates);
+
+        if(user_id != 0){
+            filtDecorateService.save(filtDecorate); //用户有登录才记录
+        }
+
         return success(pageInfo);
     }
 

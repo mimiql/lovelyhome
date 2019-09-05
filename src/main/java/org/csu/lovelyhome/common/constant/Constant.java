@@ -10,4 +10,6 @@ public class Constant {
     public final static Integer COMMENT_TYPE = 1;
     public final static Integer QUESTION_TYPE = 1;
     public final static Integer RESPONSE_TYPE = 0;
+    public final static Integer FREEZING_STATUS = 0;
+    public final static Integer NORMAL_STATUS = 1;
 }

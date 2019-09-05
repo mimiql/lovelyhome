@@ -14,15 +14,29 @@ import org.springframework.web.filter.CorsFilter;
 
 @SpringBootApplication
 @MapperScan("org.csu.lovelyhome.mapper")
-public class LovelyHomeApplication{
-//extends SpringBootServletInitializer
-//    @Override
-//    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-//        return builder.sources(LovelyHomeApplication.class);
-//    }
+public class LovelyHomeApplication extends SpringBootServletInitializer {
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        return builder.sources(LovelyHomeApplication.class);
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(LovelyHomeApplication.class, args);
+    }
+
+    @Bean
+    public FilterRegistrationBean corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedOrigin("*");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        source.registerCorsConfiguration("/**", config); // CORS 配置对所有接口都有效
+        FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
+        bean.setOrder(0);
+        return bean;
     }
 
 }

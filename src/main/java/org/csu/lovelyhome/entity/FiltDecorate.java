@@ -48,7 +48,7 @@ public class FiltDecorate implements Serializable {
     /**
      * 面积
      */
-    private Double floorsSpace;
+    private String floorsSpace; //用%分隔开最小值和最大值
 
     /**
      * 风格
@@ -58,7 +58,7 @@ public class FiltDecorate implements Serializable {
     /**
      * 预算
      */
-    private Double budget;
+    private String budget;  //用%分隔开最小值和最大值
 
 
     public Integer getFiltId() {
@@ -101,11 +101,11 @@ public class FiltDecorate implements Serializable {
         this.rooms = rooms;
     }
 
-    public Double getFloorsSpace() {
+    public String getFloorsSpace() {
         return floorsSpace;
     }
 
-    public void setFloorsSpace(Double floorsSpace) {
+    public void setFloorsSpace(String floorsSpace) {
         this.floorsSpace = floorsSpace;
     }
 
@@ -117,11 +117,11 @@ public class FiltDecorate implements Serializable {
         this.style = style;
     }
 
-    public Double getBudget() {
+    public String getBudget() {
         return budget;
     }
 
-    public void setBudget(Double budget) {
+    public void setBudget(String budget) {
         this.budget = budget;
     }
 

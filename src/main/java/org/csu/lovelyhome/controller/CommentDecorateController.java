@@ -46,7 +46,7 @@ public class CommentDecorateController extends BaseController {
         return success("评论成功");
     }
 
-    @ApiOperation(value = "发布装修方案评论或回复", notes = "插入装修方案评论或回复")
+    @ApiOperation(value = "发布装修方案评论或回复", notes = "发布装修方案评论或回复")
     @PutMapping("/publish/{commentId}")
     public Response publishCommentForDecorate(@PathVariable int commentId){
         CommentDecorate commentDecorate = commentDecorateService.getById(commentId);
