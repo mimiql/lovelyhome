@@ -57,6 +57,4 @@
             </if>
         )
     </select>
-
-    Integer (String tag);
 </mapper>

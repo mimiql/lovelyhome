@@ -7,7 +7,6 @@ import java.util.List;
 
 public class BuildingParam extends Building {
     List<Huxing> huxings;
-
     public Building toBuilding(){
         Building building = new Building();
         building.setUserId(this.getUserId());
@@ -24,8 +23,7 @@ public class BuildingParam extends Building {
         building.setStreet(this.getStreet() != null ? this.getStreet():null);
         return building;
     }
-
-    public List<Huxing> getHuxings() {
+        public List<Huxing> getHuxings() {
         return huxings;
     }
 

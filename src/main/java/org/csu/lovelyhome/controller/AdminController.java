@@ -13,6 +13,7 @@ import org.csu.lovelyhome.service.impl.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -96,12 +97,15 @@ public class AdminController extends BaseController {
     @PostMapping("/buildingManage/{user_id}")
     public Response buildingPublish(@PathVariable("user_id") int user_id,BuildingParam buildingParam){
         Building building = buildingParam.toBuilding();
-        List<Huxing> huxingList = buildingParam.getHuxings();
+        List<Huxing> huxingList =buildingParam.getHuxings();
         building.setUserId(user_id);
+        building.setPublishTime(new Date());
+        building.setStatus(1);
         buildingService.save(building);
 
         for(Huxing huxing : huxingList){
             huxing.setBuildingId(building.getBuildingId());
+            huxing.setStatus(1);
             huxingService.save(huxing);
         }
         return success("发布成功");
