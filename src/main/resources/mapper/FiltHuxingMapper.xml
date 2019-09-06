@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.csu.lovelyhome.mapper.FiltHuxingMapper">
-
+    <select id="getAllPositionNames" resultType="java.lang.String">
+        SELECT ADDRESS FROM filt_huxing
+    </select>
+    <select id="getAllAvePrices" resultType="java.lang.String">
+        SELECT AVE_PRICE FROM filt_huxing
+    </select>
+    <select id="getAllTotalPrices" resultType="java.lang.String">
+        SELECT TOTAL_PRICE FROM filt_huxing
+    </select>
+    <select id="getAllAreas" resultType="java.lang.String">
+        SELECT FLOORS_SPACE FROM filt_huxing
+    </select>
 </mapper>
