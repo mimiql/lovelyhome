@@ -8,6 +8,7 @@ import org.csu.lovelyhome.base.BaseController;
 import org.csu.lovelyhome.base.Response;
 import org.csu.lovelyhome.common.constant.Constant;
 import org.csu.lovelyhome.entity.*;
+import org.csu.lovelyhome.pojo.param.BuildingParam;
 import org.csu.lovelyhome.service.impl.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -93,7 +94,9 @@ public class AdminController extends BaseController {
 
 
     @PostMapping("/buildingManage/{user_id}")
-    public Response buildingPublish(@PathVariable("user_id") int user_id, @RequestBody Building building, @RequestBody List<Huxing> huxingList){
+    public Response buildingPublish(@PathVariable("user_id") int user_id,BuildingParam buildingParam){
+        Building building = buildingParam.toBuilding();
+        List<Huxing> huxingList = buildingParam.getHuxings();
         building.setUserId(user_id);
         buildingService.save(building);
 
