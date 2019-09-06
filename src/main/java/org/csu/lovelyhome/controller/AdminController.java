@@ -3,6 +3,7 @@ package org.csu.lovelyhome.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.csu.lovelyhome.base.BaseController;
 import org.csu.lovelyhome.base.Response;
@@ -24,6 +25,7 @@ import java.util.List;
  * @author lqm、zjx
  * @since 2019-08-31
  */
+@Api(value = "后台管理相关API",description = "后台管理模块")
 @RestController
 @RequestMapping("/admin")
 @CrossOrigin
@@ -54,12 +56,21 @@ public class AdminController extends BaseController {
 
     @ApiOperation(value = "批量删除用户信息", notes = "根据数组ID批量删除用户信息")
     @DeleteMapping("/userManage/patchDeletingIds")
-    public Response patchDeletingIds(String[] deleteIdArray){
-        for(String id : deleteIdArray){
+    public Response patchDeletingIds(Integer[] deleteIdArray){
+        for(int id : deleteIdArray){
             QueryWrapper<User> userQueryWrapper = new QueryWrapper<User>().eq("user_id", id);
             userService.remove(userQueryWrapper);
         }
+        return success("删除成功!");
+    }
 
+    @ApiOperation(value = "批量删除楼盘信息", notes = "根据数组ID批量删除楼盘信息")
+    @DeleteMapping("/buildingManage/patchDeletingIds")
+    public Response patchDeletingbuildingIds(Integer[] deleteIdArray){
+        for(int id : deleteIdArray){
+            QueryWrapper<Building> buildingQueryWrapper = new QueryWrapper<Building>().eq("building_id", id);
+            buildingService.remove(buildingQueryWrapper);
+        }
         return success("删除成功!");
     }
 
@@ -93,7 +104,7 @@ public class AdminController extends BaseController {
         return success("删除成功");
     }
 
-
+    @ApiOperation(value = "发布楼盘信息",notes = "发布楼盘信息")
     @PostMapping("/buildingManage/{user_id}")
     public Response buildingPublish(@PathVariable("user_id") int user_id,BuildingParam buildingParam){
         Building building = buildingParam.toBuilding();
@@ -111,6 +122,7 @@ public class AdminController extends BaseController {
         return success("发布成功");
     }
 
+    @ApiOperation(value = "删除楼盘信息",notes = "根据楼盘ID删除楼盘信息")
     @DeleteMapping("/buildingManage/{building_id}")
     public Response buildingDeleting(@PathVariable("building_id") int building_id){
         buildingService.remove(new QueryWrapper<Building>().eq("building_id", building_id));

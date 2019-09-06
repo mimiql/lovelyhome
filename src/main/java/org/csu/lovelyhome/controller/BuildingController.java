@@ -77,6 +77,11 @@ public class BuildingController extends BaseController {
         return buildingService.getOne(queryWrapper);
     }
 
+    @GetMapping("/allList")
+    public List<Building> buildings(){
+        return buildingService.list();
+    }
+
     @GetMapping("/all")
     public PageInfo<Building> buildings(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
         PageHelper.startPage(pageNum,5);
