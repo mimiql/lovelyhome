@@ -41,4 +41,20 @@
             ORDER BY PRICE ASC
         </if>
     </select>
+
+    <select id="getTagNum" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT count(DISTINCT building_id) FROM huxing
+        <if test='tag != "%null%"'>
+            WHERE tag LIKE '%' || #{tag} || '%'
+        </if>
+    </select>
+
+    <select id="getTagBuildings" parameterType="java.lang.String" resultType="org.csu.lovelyhome.entity.Building">
+        select * from building where building_id in
+        (SELECT DISTINCT building_id FROM huxing
+            <if test='tag != "%null%"'>
+                WHERE tag LIKE '%' || #{tag} || '%'
+            </if>
+        )
+    </select>
 </mapper>

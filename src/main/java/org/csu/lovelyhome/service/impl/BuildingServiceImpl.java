@@ -163,4 +163,12 @@ public class BuildingServiceImpl extends ServiceImpl<BuildingMapper, Building> i
 
         return buildingInformationVo;
      }
+
+     public Integer getTagNum(String tag){
+        return buildingMapper.getTagNum(tag);
+     }
+
+     public List<Building>  getTagBuildings(String tag){
+        return buildingMapper.getTagBuildings(tag);
+     }
 }
