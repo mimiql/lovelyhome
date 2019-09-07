@@ -1,6 +1,7 @@
 package org.csu.lovelyhome.controller;
 
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.csu.lovelyhome.base.BaseController;
 import org.csu.lovelyhome.base.Response;
@@ -24,6 +25,8 @@ import java.util.Date;
  */
 @RestController
 @RequestMapping("/question-house")
+@CrossOrigin
+@Api(value = "租房提问相关API",description = "租房提问相关API")
 public class QuestionHouseController extends BaseController {
     @Autowired
     QuestionHouseServiceImpl questionHouseService;

@@ -7,15 +7,13 @@ import org.csu.lovelyhome.base.Response;
 import org.csu.lovelyhome.pojo.vo.CityVO;
 import org.csu.lovelyhome.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/city")
+@CrossOrigin
 @Api(value = "获取中国城市接口",description = "获取中国省份、城市、县级城市相关接口")
 public class CityController extends BaseController {
 

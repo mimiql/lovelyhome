@@ -1,6 +1,7 @@
 package org.csu.lovelyhome.controller;
 
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.csu.lovelyhome.service.impl.FiltHuxingServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/filt-huxing")
 @CrossOrigin
+@Api(value = "过滤户型条件的相关API",description = "过滤户型条件的相关API")
 public class FiltHuxingController {
 
     @Autowired

@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.csu.lovelyhome.base.BaseController;
 import org.csu.lovelyhome.base.Response;
@@ -34,6 +35,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 @CrossOrigin
+@Api(value = "用户相关API",description = "用户相关API")
 public class UserController extends BaseController {
 
     private static final String DESTINATION = "src/main/resources/static/images/headImage/";
@@ -53,7 +55,7 @@ public class UserController extends BaseController {
     @Autowired
     private ILogininfoService logininfoService;
 
-
+    @ApiOperation(value = "用户登录",notes = "用户登录")
     @PostMapping("/login")
     public Response login(@RequestBody JSONObject account){
         String phone = (String) account.get("phone");
@@ -83,6 +85,7 @@ public class UserController extends BaseController {
         }
     }
 
+    @ApiOperation(value = "用户注册",notes = "用户注册")
     @PostMapping("/newUser")
     public Response newUser(@RequestBody JSONObject account, HttpSession session){
         String imageCheckCode = (String) account.get("imageCheckCode");
@@ -106,6 +109,7 @@ public class UserController extends BaseController {
         }
     }
 
+    @ApiOperation(value = "根据用户Id获取用户信息",notes = "根据用户Id获取用户信息")
     @GetMapping("/{user_id}")
     public User user(@PathVariable("user_id") int user_id){
         QueryWrapper<User> queryWrapper = new QueryWrapper<User>().eq("user_id", user_id);

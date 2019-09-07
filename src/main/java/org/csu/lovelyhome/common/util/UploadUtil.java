@@ -6,13 +6,13 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- *  用于文件上传
+ *  用于文件上传的工具类
  *  Created by zjx on 2019/8/31
  */
 public class UploadUtil {
 
     public static boolean save(MultipartFile file , String destinationPath){
-        if (file.isEmpty()) {
+        if (file != null && file.isEmpty()) {
             return false;
         }
 

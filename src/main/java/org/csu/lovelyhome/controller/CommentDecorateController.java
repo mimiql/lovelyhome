@@ -26,6 +26,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/commentDecorate")
+@CrossOrigin
 @Api(value = "装修方案评论相关API",description = "装修模块论坛模块会回复模块")
 public class CommentDecorateController extends BaseController {
 

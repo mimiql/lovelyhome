@@ -165,12 +165,14 @@ public class AdminController extends BaseController {
         return success("审核通过！");
     }
 
+    @ApiOperation(value = "发布装修方案",notes = "发布装修方案")
     @PostMapping("/decorateManage/publish")
     public Response decorationPublish(@RequestBody Decorate decorate){
         decorateService.save(decorate);
         return success("发布装修方案成功！");
     }
 
+    @ApiOperation(value = "删除评论",notes = "根据ID删除评论")
     @DeleteMapping("/forumManage/commentBuilding/{id}")
     public Response commentBuilding(@PathVariable("id") int id){
         commentBuildingService.remove(new QueryWrapper<CommentBuilding>().eq("comment_id", id));

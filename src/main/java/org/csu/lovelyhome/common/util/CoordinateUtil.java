@@ -11,6 +11,10 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.text.DecimalFormat;
 
+/**
+ * @author zjx
+ * 根据位置获取经纬度的工具类
+ */
 public class CoordinateUtil {
     private static final String AK = "IYvMboCMG9Kx5dDfQO9Mnxpad50Tz984";
 

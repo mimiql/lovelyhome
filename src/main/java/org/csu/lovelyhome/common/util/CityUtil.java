@@ -12,6 +12,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+/**
+ * 请求第三方接口获取省市信息的工具类
+ */
 public class CityUtil {
 
     private static String base = "http://guolin.tech/api/china";

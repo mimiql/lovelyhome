@@ -1,5 +1,8 @@
 package org.csu.lovelyhome.common.constant;
 
+/**
+ * 定义的一些公用常量
+ */
 public class Constant {
     public final static Integer COLLECTION_OR_BROWSING_TYPE_BUILDING = 1;
     public final static Integer COLLECTION_OR_BROWSING_TYPE_HUXING = 2;

@@ -23,7 +23,8 @@ public class BuildingParam extends Building {
         building.setStreet(this.getStreet() != null ? this.getStreet():null);
         return building;
     }
-        public List<Huxing> getHuxings() {
+
+    public List<Huxing> getHuxings() {
         return huxings;
     }
 
