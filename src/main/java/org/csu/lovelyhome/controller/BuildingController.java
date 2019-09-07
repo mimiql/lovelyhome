@@ -77,6 +77,15 @@ public class BuildingController extends BaseController {
         return buildingService.getOne(queryWrapper);
     }
 
+    @ApiOperation(value = "获取所有楼盘", notes = "根据城市名获取所有楼盘")
+    @GetMapping("/allDistricts")
+    public List<Building> buildingDistricts(@RequestParam("city") String city){
+        QueryWrapper<Building> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("city", city);
+
+        return buildingService.list(queryWrapper);
+    }
+
     @GetMapping("/allList")
     public List<Building> buildings(){
         return buildingService.list();

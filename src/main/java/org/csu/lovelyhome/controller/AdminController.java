@@ -8,8 +8,10 @@ import io.swagger.annotations.ApiOperation;
 import org.csu.lovelyhome.base.BaseController;
 import org.csu.lovelyhome.base.Response;
 import org.csu.lovelyhome.common.constant.Constant;
+import org.csu.lovelyhome.common.util.CoordinateUtil;
 import org.csu.lovelyhome.entity.*;
 import org.csu.lovelyhome.pojo.param.BuildingParam;
+import org.csu.lovelyhome.pojo.vo.PointVO;
 import org.csu.lovelyhome.service.impl.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -112,6 +114,12 @@ public class AdminController extends BaseController {
         building.setUserId(user_id);
         building.setPublishTime(new Date());
         building.setStatus(1);
+        PointVO pointVO = CoordinateUtil.getCoordinate(building.getCity() + building.getDistrict() + building.getStreet());
+        PointVO districtPointVO = CoordinateUtil.getCoordinate(building.getCity() + building.getDistrict());
+        building.setLongitude(pointVO.getLongitude());
+        building.setLatitude(pointVO.getLatitude());
+        building.setDistrictLongitude(districtPointVO.getLongitude());
+        building.setDistrictLatitude(districtPointVO.getLatitude());
         buildingService.save(building);
 
         for(Huxing huxing : huxingList){

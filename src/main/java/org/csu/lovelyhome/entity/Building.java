@@ -90,6 +90,26 @@ public class Building implements Serializable {
      */
     private Date publishTime;
 
+    /**
+     * 具体楼盘经度
+     */
+    private Double longitude;
+
+    /**
+     * 具体楼盘纬度
+     */
+    private Double latitude;
+
+    /**
+     * 所在地区的经度
+     */
+    private Double districtLongitude;
+
+    /**
+     * 所在地区的纬度
+     */
+    private Double districtLatitude;
+
     public Integer getBuildingId() {
         return buildingId;
     }
@@ -202,6 +222,38 @@ public class Building implements Serializable {
         this.publishTime = publishTime;
     }
 
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getDistrictLongitude() {
+        return districtLongitude;
+    }
+
+    public Double getDistrictLatitude() {
+        return districtLatitude;
+    }
+
+    public void setDistrictLongitude(Double districtLongitude) {
+        this.districtLongitude = districtLongitude;
+    }
+
+    public void setDistrictLatitude(Double districtLatitude) {
+        this.districtLatitude = districtLatitude;
+    }
+
     @Override
     public String toString() {
         return "Building{" +
@@ -219,6 +271,10 @@ public class Building implements Serializable {
         ", userId=" + userId +
         ", picture=" + picture +
         ", publishTime=" + publishTime +
+        ", longitude=" + longitude +
+        ", latitude=" + latitude +
+        ", districtLongitude=" + districtLongitude +
+        ", districtLatitude=" + districtLatitude +
         "}";
     }
 }
