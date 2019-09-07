@@ -117,6 +117,7 @@ public class AdminController extends BaseController {
         for(Huxing huxing : huxingList){
             huxing.setBuildingId(building.getBuildingId());
             huxing.setStatus(1);
+            huxing.setUseId(user_id);
             huxingService.save(huxing);
         }
         return success("发布成功");
