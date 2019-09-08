@@ -13,12 +13,14 @@ import org.csu.lovelyhome.base.BaseController;
 import org.csu.lovelyhome.base.Response;
 import org.csu.lovelyhome.common.constant.Constant;
 import org.csu.lovelyhome.common.util.UploadUtil;
+import org.csu.lovelyhome.common.util.VerificationUtil;
 import org.csu.lovelyhome.entity.*;
 import org.csu.lovelyhome.pojo.param.UserParam;
 import org.csu.lovelyhome.service.ILogininfoService;
 import org.csu.lovelyhome.service.impl.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -127,10 +129,24 @@ public class UserController extends BaseController {
         return userService.list();
     }
 
-    @ApiOperation(value = "修改用户头像",notes = "修改用户头像")
+    @ApiOperation(value = "修改用户信息",notes = "修改用户信息")
     @PutMapping("/{user_id}")
     public Response userModification(@PathVariable("user_id") int user_id, @RequestParam("file") MultipartFile file, User user){
         QueryWrapper<User> queryWrapper = new QueryWrapper<User>().eq("user_id", user_id);
+
+        if(user.getBrithdate() != null && !VerificationUtil.isDate(user.getBrithdate().toString())){
+            return fail("生日输入错误！");
+        }
+        if(user.getEmail() != null && !VerificationUtil.isEmail(user.getEmail())){
+            return fail("输入邮箱错误！");
+        }
+        if(user.getPhone() != null && !VerificationUtil.isMobileExact(user.getPhone())){
+            return fail("输入的手机号错误！");
+        }
+        if(user.getIdCard() != null && !VerificationUtil.isIdCard(user.getIdCard())) {
+            return fail("输入的身份证号错误！");
+        }
+
         if(!file.isEmpty()){
             UploadUtil.save(file, DESTINATION + user_id + "/");
             user.setHeadImage("/images/headImage/" + user_id + "/"  + file.getOriginalFilename());
