@@ -28,6 +28,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/collection")
+@CrossOrigin
 @Api(value = "收藏模块相关API", description = "收藏模块相关API")
 public class CollectionController extends BaseController {
 
@@ -63,6 +64,7 @@ public class CollectionController extends BaseController {
         return success(collections);
     }
 
+    @ApiOperation(value = "某用户点击收藏了某楼盘",notes = "某用户点击收藏了某楼盘")
     @PostMapping("/{user_id}/buildingCollection/{buildingId}")
     public void buildingCollection(@PathVariable("user_id") int user_id, @PathVariable("buildingId") int buildingId){
         Collection collection = new Collection();
@@ -74,6 +76,7 @@ public class CollectionController extends BaseController {
         collectionService.save(collection);
     }
 
+    @ApiOperation(value = "某用户点击收藏了某户型",notes = "某用户点击收藏了某户型")
     @PostMapping("/{user_id}/huxingCollection/{huxingId}")
     public void huxingCollection(@PathVariable("user_id") int user_id, @PathVariable("huxingId") int huxingId){
         Collection collection = new Collection();
@@ -85,6 +88,7 @@ public class CollectionController extends BaseController {
         collectionService.save(collection);
     }
 
+    @ApiOperation(value = "某用户点击收藏了某租房",notes = "某用户点击收藏了某租房")
     @PostMapping("/{user_id}/houseCollection/{houseId}")
     public void houseCollection(@PathVariable("user_id") int user_id, @PathVariable("houseId") int houseId){
         Collection collection = new Collection();

@@ -11,6 +11,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
+/**
+ * 生成随机验证码的工具类
+ */
 public class RandomValidateCodeUtil {
     public static final String RANDOMCODEKEY= "RANDOMVALIDATECODEKEY";//放到session中的key
     private String randString = "0123456789";//随机产生只有数字的字符串 private String

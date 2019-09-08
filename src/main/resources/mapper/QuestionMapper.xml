@@ -8,9 +8,9 @@
         SELECT * FROM question WHERE QUESTION_ID IN (SELECT RESPONSE_ID FROM relate_question WHERE QUESTION_ID = #{QuestionId})
     </select>
     <select id="getFirstResponseByQuestionId" parameterType="java.lang.Integer" resultType="org.csu.lovelyhome.entity.Question">
-        SELECT * FROM question WHERE QUESTION_ID IN (SELECT RESPONSE_ID FROM relate_question WHERE QUESTION_ID = #{QuestionId})
+        SELECT * FROM question WHERE QUESTION_ID IN (SELECT RESPONSE_ID FROM relate_question WHERE QUESTION_ID = #{QuestionId}) Limit 1
     </select>
     <select id="getNumOfResponseByQuestionId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-         SELECT COUNT (*) FROM question WHERE QUESTION_ID IN (SELECT RESPONSE_ID FROM relate_question WHERE QUESTION_ID = #{QuestionId})
+         SELECT COUNT(*) FROM question WHERE QUESTION_ID IN (SELECT RESPONSE_ID FROM relate_question WHERE QUESTION_ID = #{QuestionId})
     </select>
 </mapper>

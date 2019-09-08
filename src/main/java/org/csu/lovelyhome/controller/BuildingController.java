@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sun.org.apache.regexp.internal.RE;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import net.bytebuddy.asm.Advice;
 import org.apache.commons.collections4.Get;
@@ -32,6 +33,7 @@ import java.util.List;
  * @author lqm、zjx
  * @since 2019-08-31
  */
+@Api(value = "楼盘相关API",description = "楼盘模块")
 @RestController
 @RequestMapping("/building")
 @CrossOrigin
@@ -41,6 +43,7 @@ public class BuildingController extends BaseController {
     @Autowired
     private FiltHuxingServiceImpl filtHuxingService;
 
+    @ApiOperation(value = "回复楼盘评论", notes = "用户对某楼盘下的评论进行回复")
     @PostMapping("/{building_Id}/comment/{commentId}/{userId}")
     public Response commentResponse(@PathVariable("building_Id") int building_Id, @PathVariable("userId") int userId,
                                     @PathVariable("commentId") int commentId, @RequestBody CommentBuilding commentBuilding){
@@ -49,6 +52,7 @@ public class BuildingController extends BaseController {
         return success("回复成功！");
     }
 
+    @ApiOperation(value = "回答楼盘问题", notes = "用户对某楼盘下的问题进行回答")
     @PostMapping("/{building_Id}/question/{questionId}/{userId}")
     public Response questionResponse(@PathVariable("building_Id") int building_Id, @PathVariable("userId") int userId,
                                  @PathVariable("questionId") int questionId, @RequestBody Question question){
@@ -57,6 +61,7 @@ public class BuildingController extends BaseController {
         return success("回答成功！");
     }
 
+    @ApiOperation(value = "在楼盘提问", notes = "用户在楼盘提问")
     @PostMapping("/{building_Id}/question/{userId}")
     public Response question(@PathVariable("building_Id") int building_Id, @PathVariable("userId") int userId, @RequestBody Question question){
         buildingService.saveQuestion(building_Id, userId, question);
@@ -64,6 +69,7 @@ public class BuildingController extends BaseController {
         return success("提问成功，待审核！");
     }
 
+    @ApiOperation(value = "在楼盘评论", notes = "用户在楼盘评论")
     @PostMapping("/{building_Id}/comment/{userId}")
     public Response comment(@PathVariable("building_Id") int building_Id, @PathVariable("userId") int userId, @RequestBody CommentBuilding commentBuilding){
         buildingService.saveComment(building_Id, userId, commentBuilding);
@@ -71,12 +77,29 @@ public class BuildingController extends BaseController {
         return success("评论成功，待审核！");
     }
 
+    @ApiOperation(value = "根据楼盘Id获取楼盘信息", notes = "根据楼盘Id获取楼盘信息")
     @GetMapping("/{building_Id}")
     public Building building(@PathVariable("building_Id") int building_Id) {
         QueryWrapper<Building> queryWrapper = new QueryWrapper<Building>().eq("building_id", building_Id);
         return buildingService.getOne(queryWrapper);
     }
 
+    @ApiOperation(value = "获取地区名所有楼盘", notes = "根据地区名获取所有楼盘")
+    @GetMapping("/allDistricts")
+    public List<Building> buildingDistricts(@RequestParam("city") String city){
+        QueryWrapper<Building> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("city", city);
+
+        return buildingService.list(queryWrapper);
+    }
+
+    @ApiOperation(value = "获取所有楼盘信息后端不分页", notes = "获取所有楼盘信息后端不分页")
+    @GetMapping("/allList")
+    public List<Building> buildings(){
+        return buildingService.list();
+    }
+
+    @ApiOperation(value = "获取所有楼盘信息后端分页", notes = "获取所有楼盘信息后端分页")
     @GetMapping("/all")
     public PageInfo<Building> buildings(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
         PageHelper.startPage(pageNum,5);
@@ -86,6 +109,7 @@ public class BuildingController extends BaseController {
         return pageInfo;
     }
 
+    @ApiOperation(value = "根据价格对楼盘进行排序", notes = "根据价格对楼盘进行排序")
     @GetMapping("/sortPriceAll")
     public PageInfo<Building> sortPriceBuildings(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
         PageHelper.startPage(pageNum,5);
@@ -95,6 +119,7 @@ public class BuildingController extends BaseController {
         return pageInfo;
     }
 
+    @ApiOperation(value = "根据时间对楼盘进行排序", notes = "根据时间对楼盘进行排序")
     @GetMapping("/sortTimeAll")
     public List<Building> sortTimeBuilding(){
         QueryWrapper<Building> buildingQueryWrapper = new QueryWrapper<>();
@@ -102,6 +127,7 @@ public class BuildingController extends BaseController {
         return buildingService.list(buildingQueryWrapper);
     }
 
+    @ApiOperation(value = "对某用户在楼盘下的筛选条件进行记录，若未登录user_id传个0", notes = "对某用户在楼盘下的筛选条件进行记录，若未登录user_id传个0")
     @GetMapping("/filterBuildings/{user_id}")
     public PageInfo<Building> filterBuildings(@PathVariable("user_id") int user_id, @RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum,FiltBuildingParam filtBuildingParam){
         FiltHuxing filtHuxing = new FiltHuxing();
@@ -158,11 +184,13 @@ public class BuildingController extends BaseController {
         return pageInfo;
     }
 
+    @ApiOperation(value = "根据关键词自动补全提示所有相关内容", notes = "根据关键词自动补全提示所有相关内容")
     @GetMapping("/buildingNames/{buildingNameKeyWords}")
     public List<String> buildingNames(@PathVariable("buildingNameKeyWords") String buildingNameKeyWords) {
         return buildingService.getBuildingNamesByKeyWords(buildingNameKeyWords);
     }
 
+    @ApiOperation(value = "根据关键词搜索所有楼盘信息", notes = "根据关键词搜索所有楼盘信息")
     @GetMapping("/buildings/{keyWords}")
     public List<Building> buildings(@PathVariable("keyWords") String keyWords){
         QueryWrapper<Building> queryWrapper = new QueryWrapper<Building>();
@@ -171,26 +199,31 @@ public class BuildingController extends BaseController {
         return buildingService.list(queryWrapper);
     }
 
+    @ApiOperation(value = "根据楼盘ID获取整个楼盘页面的展示信息", notes = "根据楼盘ID获取整个楼盘页面的展示信息")
     @GetMapping("/{building_Id}/buildingDetail")
     public BuildingDetail buildingDetail(@PathVariable("building_Id") int building_Id){
         return buildingService.getBuildingDetailByBuildingId(building_Id);
     }
 
+    @ApiOperation(value = "根据楼盘ID获取该楼盘的所有户型", notes = "根据楼盘ID获取该楼盘的所有户型")
     @GetMapping("/{building_Id}/huxings")
     public List<Huxing> huxings(@PathVariable("building_Id") int building_Id){
         return buildingService.getAllHuXingByBuildingId(building_Id);
     }
 
+    @ApiOperation(value = "根据楼盘ID和户型ID获取该户型信息", notes = "根据楼盘ID和户型ID获取该户型信息")
     @GetMapping("/{building_Id}/huxing/{huxing_Id}")
     public Huxing huxing(@PathVariable("building_Id") int building_Id, @PathVariable("huxing_Id") int huxing_Id){
         return buildingService.getHuXingByBuildingIdAndHuxingId(building_Id, huxing_Id);
     }
 
+    @ApiOperation(value = "获取某楼盘某评论下的所有回复", notes = "获取某楼盘某评论下的所有回复")
     @GetMapping("/{building_Id}/comment/{comment_Id}/responses")
     public List<CommentBuilding> commentResponses(@PathVariable("building_Id") int building_Id, @PathVariable("comment_Id") int comment_Id){
         return buildingService.getResponsesByCommentId(comment_Id);
     }
 
+    @ApiOperation(value = "获取某楼盘某问题下的所有回复", notes = "获取某楼盘某问题下的所有回复")
     @GetMapping("/{building_Id}/question/{question_Id}/responses")
     public List<Question> questionResponses(@PathVariable("building_Id") int building_Id, @PathVariable("question_Id") int question_Id){
         return buildingService.getResponsesByQuestionId(question_Id);

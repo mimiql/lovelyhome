@@ -43,6 +43,7 @@ public class DecorateController extends BaseController {
     @Autowired
     private FiltDecorateServiceImpl filtDecorateService;
 
+    @ApiOperation(value = "获取所有装修方案有分页",notes = "获取所有装修方案有分页")
     @GetMapping("/all")
     public Response decorations(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
         PageHelper.startPage(pageNum,5);
@@ -51,7 +52,13 @@ public class DecorateController extends BaseController {
         return success(pageInfo);
     }
 
-    @ApiOperation(value = "筛选查询",notes = "根据筛选条件查询装修方案")
+    @ApiOperation(value = "获取所有装修方案没分页",notes = "获取所有装修方案没分页")
+    @GetMapping("/allList")
+    public List<Decorate> decorations(){
+        return decorateService.list();
+    }
+
+    @ApiOperation(value = "筛选查询有分页，如果用户未登录user_id传个0",notes = "根据筛选条件查询装修方案")
     @GetMapping("/filt/{user_id}")
     public Response decorations(@PathVariable("user_id") int user_id, @RequestBody FiltDecorateParam param){
         FiltDecorate filtDecorate = new FiltDecorate();

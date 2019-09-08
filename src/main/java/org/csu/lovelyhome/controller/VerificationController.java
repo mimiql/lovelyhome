@@ -1,5 +1,7 @@
 package org.csu.lovelyhome.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.csu.lovelyhome.common.util.RandomValidateCodeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,11 +19,13 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @CrossOrigin
 @RequestMapping("/verification")
+@Api(value = "验证码相关API",description = "验证码相关API")
 public class VerificationController {
 
     /**
      * 生成验证码
      */
+    @ApiOperation(value = "生成验证码",notes = "生成验证码")
     @RequestMapping(value = "/")
     public void verification(HttpServletRequest request, HttpServletResponse response) {
         try {

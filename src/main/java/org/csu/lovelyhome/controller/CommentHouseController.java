@@ -1,6 +1,7 @@
 package org.csu.lovelyhome.controller;
 
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.csu.lovelyhome.base.BaseController;
 import org.csu.lovelyhome.base.Response;
@@ -21,11 +22,13 @@ import java.util.Date;
  * 出租房评论及回复记录表 前端控制器
  * </p>
  *
- * @author lqm
+ * @author lqm、zjx
  * @since 2019-09-03
  */
 @RestController
 @RequestMapping("/comment-house")
+@CrossOrigin
+@Api(value = "租房评论相关API",description = "租房评论及回复相关API")
 public class CommentHouseController extends BaseController {
     @Autowired
     private CommentHouseServiceImpl commentHouseService;
