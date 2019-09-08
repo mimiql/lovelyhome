@@ -1,6 +1,7 @@
 package org.csu.lovelyhome.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.aliyuncs.ecs.model.v20140526.DescribeImageSharePermissionResponse;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -13,10 +14,12 @@ import org.csu.lovelyhome.base.Response;
 import org.csu.lovelyhome.common.constant.Constant;
 import org.csu.lovelyhome.common.util.UploadUtil;
 import org.csu.lovelyhome.entity.*;
+import org.csu.lovelyhome.pojo.param.UserParam;
 import org.csu.lovelyhome.service.ILogininfoService;
 import org.csu.lovelyhome.service.impl.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -57,9 +60,9 @@ public class UserController extends BaseController {
 
     @ApiOperation(value = "用户登录",notes = "用户登录")
     @PostMapping("/login")
-    public Response login(@RequestBody JSONObject account){
-        String phone = (String) account.get("phone");
-        String password = (String) account.get("password");
+    public Response login(@RequestBody @Validated UserParam param){
+        String phone = param.getPhone().trim();
+        String password = param.getPassword();
         QueryWrapper<User> queryWrapper = new QueryWrapper<User>().eq("phone", phone);
         User user = userService.getOne(queryWrapper);
         if(user == null){
@@ -71,41 +74,43 @@ public class UserController extends BaseController {
                             .sign(Algorithm.HMAC256(password));
 //                stringRedisTemplate.opsForValue().set(token, token);
                     //将登陆日志插入数据库
-                    Logininfo logininfo = new Logininfo();
-                    logininfo.setLoginTime(new Date());
-                    logininfo.setUserId(user.getUserId());
-                    logininfoService.save(logininfo);
-                    return success(token);
+//                    Logininfo logininfo = new Logininfo();
+//                    logininfo.setLoginTime(new Date());
+//                    logininfo.setUserId(user.getUserId());
+//                    logininfoService.save(logininfo);
+//                    return success(token);
+                    return success(token,"登录成功");
                 }else{
                     return fail("对不起，你的账户已经被冻结!");
                 }
             }else{
-                return fail("密码错误！");
+                return fail("密码错误!");
             }
         }
     }
 
     @ApiOperation(value = "用户注册",notes = "用户注册")
     @PostMapping("/newUser")
-    public Response newUser(@RequestBody JSONObject account, HttpSession session){
-        String imageCheckCode = (String) account.get("imageCheckCode");
-        String phone = (String) account.get("phone");
-        String password = (String) account.get("password");
+    public Response newUser(@RequestBody UserParam param, HttpSession session){
+//        String imageCheckCode = (String) account.get("imageCheckCode");
+        String phone = param.getPhone();
+        String password = param.getPassword();
+        String email = param.getEmail();
         List<String> phoneList = userService.getAllPhoneList();
         if(phoneList.contains(phone)){
             return fail("该手机号已注册！");
         }else{
-            if(imageCheckCode.equals(session.getAttribute("RANDOMCODEKEY"))) {
+//            if(imageCheckCode.equals(session.getAttribute("RANDOMCODEKEY"))) {
 //                password = new BCryptPasswordEncoder().encode(password);
-                User user = new User();
-                user.setPassword(password);
-                user.setPhone(phone);
-                userService.save(user);
-                return success("注册成功！");
-            }
-            else{
-                return fail("验证码错误！");
-            }
+//            }
+//            else{
+//                return fail("验证码错误！");
+//            }
+            User user = new User();
+            user.setPassword(password);
+            user.setPhone(phone);
+            userService.save(user);
+            return success("注册成功");
         }
     }
 
