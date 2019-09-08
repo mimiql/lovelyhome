@@ -16,6 +16,7 @@ import org.csu.lovelyhome.entity.*;
 import org.csu.lovelyhome.pojo.param.FiltBuildingParam;
 import org.csu.lovelyhome.pojo.vo.BuildingInformationVo;
 import org.csu.lovelyhome.pojo.vo.BuildingTagNumVO;
+import org.csu.lovelyhome.service.impl.BrowseServiceImpl;
 import org.csu.lovelyhome.service.impl.BuildingServiceImpl;
 import org.csu.lovelyhome.service.impl.FiltHuxingServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,8 @@ public class BuildingController extends BaseController {
     private BuildingServiceImpl buildingService;
     @Autowired
     private FiltHuxingServiceImpl filtHuxingService;
+    @Autowired
+    private BrowseServiceImpl browseService;
 
     @ApiOperation(value = "回复楼盘评论", notes = "用户对某楼盘下的评论进行回复")
     @PostMapping("/{building_Id}/comment/{commentId}/{userId}")
@@ -79,9 +82,14 @@ public class BuildingController extends BaseController {
 
     @ApiOperation(value = "根据楼盘Id获取楼盘信息", notes = "根据楼盘Id获取楼盘信息")
     @GetMapping("/{building_Id}")
-    public Building building(@PathVariable("building_Id") int building_Id) {
+    public Building building(@PathVariable("building_Id") int building_Id, @RequestParam(defaultValue = "0",value = "user_id") int user_id) {
         QueryWrapper<Building> queryWrapper = new QueryWrapper<Building>().eq("building_id", building_Id);
-        return buildingService.getOne(queryWrapper);
+        Building building = buildingService.getOne(queryWrapper);
+        //用户有登录就记录下它的浏览
+        if(user_id != 0){
+            browseService.save(user_id, building.getBuildingId(), 1);
+        }
+        return building;
     }
 
     @ApiOperation(value = "获取地区名所有楼盘", notes = "根据地区名获取所有楼盘")

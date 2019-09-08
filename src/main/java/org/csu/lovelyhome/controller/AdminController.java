@@ -56,6 +56,9 @@ public class AdminController extends BaseController {
     @Autowired
     private QuestionDecorateServiceImpl questionDecorateService;
 
+//    @ApiOperation(value = "", notes = "")
+//    @GetMapping("/fo")
+
     @ApiOperation(value = "批量删除用户信息", notes = "根据数组ID批量删除用户信息")
     @DeleteMapping("/userManage/patchDeletingIds")
     public Response patchDeletingIds(Integer[] deleteIdArray){
