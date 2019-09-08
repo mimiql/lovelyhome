@@ -105,6 +105,7 @@ public class AdminController extends BaseController {
 
         for(Huxing huxing : huxingList){
             huxing.setBuildingId(building.getBuildingId());
+            huxing.setUseId(building.getUserId());
             huxing.setStatus(1);
             huxingService.save(huxing);
         }
@@ -119,7 +120,9 @@ public class AdminController extends BaseController {
 
     @ApiOperation(value = "修改楼盘信息",notes = "根据楼盘ID修改楼盘信息")
     @PutMapping("/buildingManage/modification/{building_id}")
-    public Response buildingModification(@PathVariable("building_id") int building_id, @RequestBody Building building, @RequestBody List<Huxing> huxingList){
+    public Response buildingModification(@PathVariable("building_id") int building_id , BuildingParam buildingParam){
+        Building building = buildingParam.toBuilding();
+        List<Huxing> huxingList = buildingParam.getHuxings();
         QueryWrapper<Building> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("building_id", building_id);
         buildingService.update(building, queryWrapper);
