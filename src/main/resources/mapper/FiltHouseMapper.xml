@@ -2,4 +2,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.csu.lovelyhome.mapper.FiltHouseMapper">
 
+    <select id="getAllPositionNames" resultType="java.lang.String">
+        SELECT ADDRESS FROM filt_house
+    </select>
+
+    <select id="getAllAreas" resultType="java.lang.String">
+        SELECT FLOOR_SPACE FROM filt_house
+    </select>
+
+    <select id="getAllOrientions" resultType="java.lang.String">
+        SELECT ORIENTATION FROM filt_house
+    </select>
+
+    <select id="getAllAvePrices" resultType="java.lang.String">
+        SELECT PRICE FROM filt_house
+    </select>
+
+    <select id="getAllBathRoomNum" resultType="java.lang.Integer">
+        SELECT BATHROOM_NUM FROM filt_house
+    </select>
+
+    <select id="getAllBedRoomNum" resultType="java.lang.Integer">
+        SELECT BEDROOM_NUM FROM filt_house
+    </select>
+
+    <select id="getAllDrawingRoomNum" resultType="java.lang.Integer">
+        SELECT DRAWING_ROOM_NUM FROM filt_house
+    </select>
+
+    <select id="getAllToiletNum" resultType="java.lang.Integer">
+        SELECT TOILET_NUM FROM filt_house
+    </select>
 </mapper>

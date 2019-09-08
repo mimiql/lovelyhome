@@ -185,6 +185,16 @@ public class AdminController extends BaseController {
         return success("删除该评论成功！");
     }
 
+    @ApiOperation(value = "批量删除楼盘评论信息", notes = "根据数组ID批量删除楼盘评论信息")
+    @DeleteMapping("/forumManage/commentBuilding/patchDeletingIds")
+    public Response patchDeletingCommentBuildingIds(Integer[] deleteIdArray){
+        for(int id : deleteIdArray){
+            QueryWrapper<CommentBuilding> commentBuildingQueryWrapper = new QueryWrapper<CommentBuilding>().eq("comment_id", id);
+            commentBuildingService.remove(commentBuildingQueryWrapper);
+        }
+        return success("删除成功!");
+    }
+
     @ApiOperation(value = "查看楼盘", notes = "查看楼盘的评论论坛")
     @GetMapping("/forumManage/commentBuilding")
     public List<CommentBuilding> forumCommentBuilding(@RequestParam("status") int status){
@@ -259,13 +269,24 @@ public class AdminController extends BaseController {
     }
 
     @ApiOperation(value = "审核楼盘", notes = "审核楼盘的评论论坛")
-    @PutMapping("/forumManage/commentBuilding/Verification/{id}")
+    @PutMapping("/forumManage/commentBuilding//{id}")
     public void forumCommentBuildingVerification(@PathVariable("id") int id){
         QueryWrapper<CommentBuilding> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("comment_id", id);
         CommentBuilding commentBuilding = commentBuildingService.getOne(queryWrapper);
         commentBuilding.setStatus(Constant.STATUS_PUBLISHED);
         commentBuildingService.update(commentBuilding, queryWrapper);
+    }
+
+    @ApiOperation(value = "批量审核楼盘的评论", notes = "根据数组ID批量批量审核楼盘的评论")
+    @DeleteMapping("/forumManage/commentBuilding/patchVerificationIds")
+    public void patchCommentBuildingVerificationIds(Integer[] deleteIdArray){
+        for(int id : deleteIdArray){
+            QueryWrapper<CommentBuilding> queryWrapper = new QueryWrapper<CommentBuilding>().eq("comment_id", id);
+            CommentBuilding commentBuilding = commentBuildingService.getOne(queryWrapper);
+            commentBuilding.setStatus(Constant.STATUS_PUBLISHED);
+            commentBuildingService.update(commentBuilding, queryWrapper);
+        }
     }
 
     @ApiOperation(value = "审核楼盘", notes = "审核楼盘的问题论坛")
@@ -278,6 +299,17 @@ public class AdminController extends BaseController {
         questionService.update(question, queryWrapper);
     }
 
+    @ApiOperation(value = "批量审核楼盘的问题", notes = "根据数组ID批量批量审核楼盘的问题")
+    @DeleteMapping("/forumManage/questionBuilding/patchVerificationIds")
+    public void patchQuestionBuildingVerificationIds(Integer[] deleteIdArray){
+        for(int id : deleteIdArray){
+            QueryWrapper<Question> queryWrapper = new QueryWrapper<Question>().eq("question_id", id);
+            Question question = questionService.getOne(queryWrapper);
+            question.setStatus(Constant.STATUS_PUBLISHED);
+            questionService.update(question, queryWrapper);
+        }
+    }
+
     @ApiOperation(value = "审核出租房", notes = "审核出租房的评论论坛")
     @PutMapping("/forumManage/commentHouse/Verification/{id}")
     public void forumCommentHouseVerification(@PathVariable("id") int id){
@@ -288,14 +320,36 @@ public class AdminController extends BaseController {
         commentHouseService.update(commentHouse, queryWrapper);
     }
 
+    @ApiOperation(value = "批量审核出租房的评论", notes = "根据数组ID批量批量审核出租房的评论")
+    @DeleteMapping("/forumManage/commentHouse/patchVerificationIds")
+    public void patchCommentHouseVerificationIds(Integer[] deleteIdArray){
+        for(int id : deleteIdArray){
+            QueryWrapper<CommentHouse> queryWrapper = new QueryWrapper<CommentHouse>().eq("comment_id", id);
+            CommentHouse commentHouse = commentHouseService.getOne(queryWrapper);
+            commentHouse.setStatus(Constant.STATUS_PUBLISHED);
+            commentHouseService.update(commentHouse, queryWrapper);
+        }
+    }
+
     @ApiOperation(value = "审核出租房", notes = "审核出租房的问题论坛")
     @PutMapping("/forumManage/questionHouse/Verification/{id}")
     public void forumQuestionHouseVerification(@PathVariable("id") int id){
         QueryWrapper<QuestionHouse> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("comment_id", id);
+        queryWrapper.eq("question_id", id);
         QuestionHouse questionHouse = questionHouseService.getOne(queryWrapper);
         questionHouse.setStatus(Constant.STATUS_PUBLISHED);
         questionHouseService.update(questionHouse, queryWrapper);
+    }
+
+    @ApiOperation(value = "批量审核出租房的问题", notes = "根据数组ID批量批量审核出租房的问题")
+    @DeleteMapping("/forumManage/questionHouse/patchVerificationIds")
+    public void patchQuestionHouseVerificationIds(Integer[] deleteIdArray){
+        for(int id : deleteIdArray){
+            QueryWrapper<QuestionHouse> queryWrapper = new QueryWrapper<QuestionHouse>().eq("question_id", id);
+            QuestionHouse questionHouse = questionHouseService.getOne(queryWrapper);
+            questionHouse.setStatus(Constant.STATUS_PUBLISHED);
+            questionHouseService.update(questionHouse, queryWrapper);
+        }
     }
 
     @ApiOperation(value = "审核装修方案", notes = "审核装修方案的评论论坛")
@@ -308,6 +362,17 @@ public class AdminController extends BaseController {
         commentDecorateService.update(commentDecorate, queryWrapper);
     }
 
+    @ApiOperation(value = "批量审核装修方案的评论", notes = "根据数组ID批量批量审核装修方案的评论")
+    @DeleteMapping("/forumManage/commentDecoration/patchVerificationIds")
+    public void patchCommentDecorationVerificationIds(Integer[] deleteIdArray){
+        for(int id : deleteIdArray){
+            QueryWrapper<CommentDecorate> queryWrapper = new QueryWrapper<CommentDecorate>().eq("comment_id", id);
+            CommentDecorate commentDecorate = commentDecorateService.getOne(queryWrapper);
+            commentDecorate.setStatus(Constant.STATUS_PUBLISHED);
+            commentDecorateService.update(commentDecorate, queryWrapper);
+        }
+    }
+
     @ApiOperation(value = "审核装修方案", notes = "审核装修方案的问题论坛")
     @PutMapping("/forumManage/questionDecoration/Verification/{id}")
     public void forumQuestionDecorationVerification(@PathVariable("id") int id){
@@ -316,6 +381,17 @@ public class AdminController extends BaseController {
         QuestionDecorate questionDecorate = questionDecorateService.getOne(queryWrapper);
         questionDecorate.setStatus(Constant.STATUS_PUBLISHED);
         questionDecorateService.update(questionDecorate, queryWrapper);
+    }
+
+    @ApiOperation(value = "批量审核装修方案的问题", notes = "根据数组ID批量批量审核装修方案的问题")
+    @DeleteMapping("/forumManage/questionDecoration/patchVerificationIds")
+    public void patchQuestionDecorationVerificationIds(Integer[] deleteIdArray){
+        for(int id : deleteIdArray){
+            QueryWrapper<QuestionDecorate> queryWrapper = new QueryWrapper<QuestionDecorate>().eq("question_id", id);
+            QuestionDecorate questionDecorate = questionDecorateService.getOne(queryWrapper);
+            questionDecorate.setStatus(Constant.STATUS_PUBLISHED);
+            questionDecorateService.update(questionDecorate, queryWrapper);
+        }
     }
 
     @ApiOperation(value = "删除楼盘的评论")
@@ -336,6 +412,16 @@ public class AdminController extends BaseController {
         return success("删除成功！");
     }
 
+    @ApiOperation(value = "批量删除楼盘提问", notes = "根据数组ID批量删除楼盘提问")
+    @DeleteMapping("/forumManage/questionBuilding/patchDeletingIds")
+    public Response patchDeletingQuestionBuildingIds(Integer[] deleteIdArray){
+        for(int id : deleteIdArray){
+            QueryWrapper<Question> questionQueryWrapper = new QueryWrapper<Question>().eq("question_id", id);
+            questionService.remove(questionQueryWrapper);
+        }
+        return success("批量删除成功!");
+    }
+
     @ApiOperation(value = "删除租房的评论")
     @DeleteMapping("/forumManage/commentHouse/deleting/{id}")
     public Response forumCommentHouseDeleting(@PathVariable("id") int id){
@@ -343,6 +429,16 @@ public class AdminController extends BaseController {
         queryWrapper.eq("comment_id", id);
         commentHouseService.remove(queryWrapper);
         return success("删除成功！");
+    }
+
+    @ApiOperation(value = "批量删除租房的评论", notes = "根据数组ID批量删除租房的评论")
+    @DeleteMapping("/forumManage/commentHouse/patchDeletingIds")
+    public Response patchDeletingCommentHouseIds(Integer[] deleteIdArray){
+        for(int id : deleteIdArray){
+            QueryWrapper<CommentHouse> queryWrapper = new QueryWrapper<CommentHouse>().eq("comment_id", id);
+            commentHouseService.remove(queryWrapper);
+        }
+        return success("批量删除成功!");
     }
 
     @ApiOperation(value = "删除租房的提问")
@@ -354,6 +450,16 @@ public class AdminController extends BaseController {
         return success("删除成功！");
     }
 
+    @ApiOperation(value = "批量删除租房的提问", notes = "根据数组ID批量删除租房的提问")
+    @DeleteMapping("/forumManage/questionHouse/patchDeletingIds")
+    public Response patchDeletingQuestionHouseIds(Integer[] deleteIdArray){
+        for(int id : deleteIdArray){
+            QueryWrapper<QuestionHouse> queryWrapper = new QueryWrapper<QuestionHouse>().eq("question_id", id);
+            questionHouseService.remove(queryWrapper);
+        }
+        return success("批量删除成功!");
+    }
+
     @ApiOperation(value = "删除装修方案的评论")
     @DeleteMapping("/forumManage/commentDecoration/deleting/{id}")
     public Response forumCommentDecorationDeleting(@PathVariable("id") int id){
@@ -363,6 +469,16 @@ public class AdminController extends BaseController {
         return success("删除成功！");
     }
 
+    @ApiOperation(value = "批量删除装修方案的评论", notes = "根据数组ID批量删除装修方案的评论")
+    @DeleteMapping("/forumManage/commentDecoration/patchDeletingIds")
+    public Response patchDeletingCommentDecorationIds(Integer[] deleteIdArray){
+        for(int id : deleteIdArray){
+            QueryWrapper<CommentDecorate> queryWrapper = new QueryWrapper<CommentDecorate>().eq("comment_id", id);
+            commentDecorateService.remove(queryWrapper);
+        }
+        return success("批量删除成功!");
+    }
+
     @ApiOperation(value = "删除装修方案的提问")
     @DeleteMapping("/forumManage/questionDecoration/deleting/{id}")
     public Response forumQuestionDecorationDeleting(@PathVariable("id") int id){
@@ -370,6 +486,16 @@ public class AdminController extends BaseController {
         queryWrapper.eq("question_id", id);
         questionDecorateService.remove(queryWrapper);
         return success("删除成功！");
+    }
+
+    @ApiOperation(value = "批量删除装修方案的提问", notes = "根据数组ID批量删除装修方案的提问")
+    @DeleteMapping("/forumManage/questionDecoration/patchDeletingIds")
+    public Response patchDeletingQuestionDecorationIds(Integer[] deleteIdArray){
+        for(int id : deleteIdArray){
+            QueryWrapper<QuestionDecorate> queryWrapper = new QueryWrapper<QuestionDecorate>().eq("question_id", id);
+            questionDecorateService.remove(queryWrapper);
+        }
+        return success("批量删除成功!");
     }
 }
 
