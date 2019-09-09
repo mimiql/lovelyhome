@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.csu.lovelyhome.mapper.FiltDecorateMapper">
+    <select id="getAllStyleNames" resultType="java.lang.String">
+        SELECT STYLE FROM filt_decorate
+    </select>
+
+    <select id="getAllBudgets" resultType="java.lang.String">
+        SELECT BUDGET FROM filt_decorate
+    </select>
+
+    <select id="getAllArea" resultType="java.lang.String">
+        SELECT FLOORS_SPACE FROM filt_decorate
+    </select>
+
+    <select id="getAllType" resultType="java.lang.Integer">
+        SELECT ROOM_TYPE FROM filt_decorate
+    </select>
+
+    <select id="getAllHouseNums" resultType="java.lang.Integer">
+        SELECT ROOMS FROM filt_decorate
+    </select>
 
 </mapper>

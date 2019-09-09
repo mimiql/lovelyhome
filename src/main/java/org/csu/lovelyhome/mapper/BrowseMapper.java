@@ -1,7 +1,9 @@
 package org.csu.lovelyhome.mapper;
 
-import org.csu.lovelyhome.entity.Browse;
+import org.csu.lovelyhome.entity.*;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +15,11 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface BrowseMapper extends BaseMapper<Browse> {
 
+    List<Building> getBrowsingBuilding();
+
+    List<House> getBrowsingHouse();
+
+    List<Decorate> getBrowsingDecoration();
+
+    List<Huxing> getBrowsingHuxing();
 }

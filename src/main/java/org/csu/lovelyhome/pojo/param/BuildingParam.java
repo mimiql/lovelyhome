@@ -3,6 +3,7 @@ package org.csu.lovelyhome.pojo.param;
 import org.csu.lovelyhome.entity.Building;
 import org.csu.lovelyhome.entity.Huxing;
 
+import java.util.Date;
 import java.util.List;
 
 public class BuildingParam extends Building {
@@ -19,7 +20,7 @@ public class BuildingParam extends Building {
         building.setPicture(this.getPicture() != null ? this.getPicture():null);
         building.setPrice(this.getPrice() != null ? this.getPrice():null);
         building.setProvince(this.getProvince() != null ? this.getProvince():null);
-        building.setPublishTime(this.getPublishTime() != null ? this.getPublishTime():null);
+        building.setPublishTime(this.getPublishTime() != null ? this.getPublishTime():new Date());
         building.setStreet(this.getStreet() != null ? this.getStreet():null);
         return building;
     }

@@ -56,6 +56,31 @@ public class FiltHouse implements Serializable {
      */
     private String orientation;
 
+    /**
+     * 客厅数目
+     */
+    private Integer drawingRoomNum;
+
+    /**
+     * 卧室数目
+     */
+    private Integer bedroomNum;
+
+    /**
+     * 卫生间数目
+     */
+    private Integer toiletNum;
+
+    /**
+     * 浴室数目
+     */
+    private Integer bathroomNum;
+
+    /**
+     * 面积
+     */
+    private String floorSpace;
+
 
     public Integer getFiltId() {
         return filtId;
@@ -113,6 +138,46 @@ public class FiltHouse implements Serializable {
         this.orientation = orientation;
     }
 
+    public Integer getDrawingRoomNum() {
+        return drawingRoomNum;
+    }
+
+    public Integer getBedroomNum() {
+        return bedroomNum;
+    }
+
+    public Integer getToiletNum() {
+        return toiletNum;
+    }
+
+    public Integer getBathroomNum() {
+        return bathroomNum;
+    }
+
+    public String getFloorSpace() {
+        return floorSpace;
+    }
+
+    public void setDrawingRoomNum(Integer drawingRoomNum) {
+        this.drawingRoomNum = drawingRoomNum;
+    }
+
+    public void setBedroomNum(Integer bedroomNum) {
+        this.bedroomNum = bedroomNum;
+    }
+
+    public void setToiletNum(Integer toiletNum) {
+        this.toiletNum = toiletNum;
+    }
+
+    public void setBathroomNum(Integer bathroomNum) {
+        this.bathroomNum = bathroomNum;
+    }
+
+    public void setFloorSpace(String floorSpace) {
+        this.floorSpace = floorSpace;
+    }
+
     @Override
     public String toString() {
         return "FiltHouse{" +
@@ -123,6 +188,11 @@ public class FiltHouse implements Serializable {
         ", price=" + price +
         ", rooms=" + rooms +
         ", orientation=" + orientation +
+        ", drawingRoomNum=" + drawingRoomNum +
+        ", bedroomNum=" + bedroomNum +
+        ", toiletNum=" + toiletNum +
+        ", bathroomNum=" + bathroomNum +
+        ", floorSpace=" + floorSpace +
         "}";
     }
 }

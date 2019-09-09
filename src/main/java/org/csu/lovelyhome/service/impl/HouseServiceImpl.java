@@ -53,6 +53,30 @@ public class HouseServiceImpl extends ServiceImpl<HouseMapper, House> implements
             }
         }
 
+        if(filtHouseParam.getBathRoomNum() != null){
+            queryWrapper.eq("bathroom_num", filtHouseParam.getBathRoomNum());
+        }
+
+        if(filtHouseParam.getBedRoomNum() != null){
+            queryWrapper.eq("bedroom_num", filtHouseParam.getBedRoomNum());
+        }
+
+        if(filtHouseParam.getLivingRoomNum() != null){
+            queryWrapper.eq("drawing_room_num", filtHouseParam.getLivingRoomNum());
+        }
+
+        if(filtHouseParam.getToiletNum() != null){
+            queryWrapper.eq("toilet_num", filtHouseParam.getToiletNum());
+        }
+
+        if(filtHouseParam.getMinArea() != null){
+            queryWrapper.ge("floor_space", filtHouseParam.getMinArea());
+        }
+
+        if(filtHouseParam.getMaxArea() != null){
+            queryWrapper.le("floor_space", filtHouseParam.getMaxArea());
+        }
+
         return houseMapper.selectList(queryWrapper);
     }
 
@@ -88,6 +112,38 @@ public class HouseServiceImpl extends ServiceImpl<HouseMapper, House> implements
             }
             filtHouse.setRooms(filtHouseParam.getNumOfhuxing());
         }
+
+        if(filtHouseParam.getBathRoomNum() != null){
+            queryWrapper.eq("bathroom_num", filtHouseParam.getBathRoomNum());
+            filtHouse.setBathroomNum(filtHouseParam.getBathRoomNum());
+        }
+
+        if(filtHouseParam.getBedRoomNum() != null){
+            queryWrapper.eq("bedroom_num", filtHouseParam.getBedRoomNum());
+            filtHouse.setBedroomNum(filtHouseParam.getBathRoomNum());
+        }
+
+        if(filtHouseParam.getLivingRoomNum() != null){
+            queryWrapper.eq("drawing_room_num", filtHouseParam.getLivingRoomNum());
+            filtHouse.setDrawingRoomNum(filtHouseParam.getLivingRoomNum());
+        }
+
+        if(filtHouseParam.getToiletNum() != null){
+            queryWrapper.eq("toilet_num", filtHouseParam.getToiletNum());
+            filtHouse.setToiletNum(filtHouseParam.getToiletNum());
+        }
+
+        str = "";
+        if(filtHouseParam.getMinArea() != null){
+            queryWrapper.ge("floor_space", filtHouseParam.getMinArea());
+            str += filtHouseParam.getMinArea() + "%";
+        }
+
+        if(filtHouseParam.getMaxArea() != null){
+            queryWrapper.le("floor_space", filtHouseParam.getMaxArea());
+            str += filtHouseParam.getMaxArea() + "%";
+        }
+        filtHouse.setFloorSpace(str);
 
         filtHouseMapper.insert(filtHouse);
         return houseMapper.selectList(queryWrapper);
