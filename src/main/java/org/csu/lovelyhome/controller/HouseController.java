@@ -62,11 +62,17 @@ public class HouseController extends BaseController {
 
     @ApiOperation(value = "筛选租房，如果未登录user_id为0", notes = "筛选租房，如果未登录user_id为0")
     @GetMapping("/filterHouses/{user_id}")
-    public List<House> filterHouses(@PathVariable("user_id") int user_id, @RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum, FiltHouseParam filtHouseParam){
+    public PageInfo<House> filterHouses(@PathVariable("user_id") int user_id, @RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum, FiltHouseParam filtHouseParam){
         if(user_id == 0){
-            return houseService.getHousesByCondition(filtHouseParam);
+            PageHelper.startPage(pageNum,5);
+            List<House> houseList = houseService.getHousesByCondition(filtHouseParam);
+            PageInfo<House> pageInfo = new PageInfo<House>(houseList);
+            return pageInfo;
         }else{
-            return houseService.getHousesByCondition(user_id, filtHouseParam);
+            PageHelper.startPage(pageNum,5);
+            List<House> houseList = houseService.getHousesByCondition(user_id, filtHouseParam);
+            PageInfo<House> pageInfo = new PageInfo<House>(houseList);
+            return pageInfo;
         }
     }
 
@@ -85,6 +91,7 @@ public class HouseController extends BaseController {
         if(house == null){
             return fail("租房信息为空！");
         }
+        house.setUserId(userId);
         house.setStatus(2);
         houseService.save(house);
         QueryWrapper<House> queryWrapper = new QueryWrapper<>();
