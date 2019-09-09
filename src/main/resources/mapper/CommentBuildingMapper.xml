@@ -5,6 +5,6 @@
         SELECT * FROM comment_building WHERE BUILDING_ID = #{BuildingId} AND TYPE = 1
     </select>
     <select id="getResponsesByCommentId" parameterType="java.lang.Integer" resultType="org.csu.lovelyhome.entity.CommentBuilding">
-        SELECT * FROM comment_building WHERE COMMENT_ID IN (SELECT RESPONSE_ID FROM RELATE_BUILDING WHERE COMMENT_ID = #{CommentId})
+        SELECT * FROM comment_building WHERE COMMENT_ID IN (SELECT RESPONSE_ID FROM relate_building WHERE COMMENT_ID = #{CommentId})
     </select>
 </mapper>

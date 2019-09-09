@@ -8,7 +8,7 @@
         SELECT * FROM building WHERE BUILDING_ID IN (SELECT OBJECT_ID FROM collection WHERE USER_ID = #{userId} AND TYPE = 1)
     </select>
     <select id="getCollectionHuxingByUserId" parameterType="java.lang.Integer" resultType="org.csu.lovelyhome.entity.Huxing">
-        SELECT * FROM Huxing WHERE HUXING_ID IN (SELECT OBJECT_ID FROM collection WHERE USER_ID = #{userId} AND TYPE = 2)
+        SELECT * FROM huxing WHERE HUXING_ID IN (SELECT OBJECT_ID FROM collection WHERE USER_ID = #{userId} AND TYPE = 2)
     </select>
     <select id="getCollectionHouseByUserId" parameterType="java.lang.Integer" resultType="org.csu.lovelyhome.entity.House">
         SELECT * FROM house WHERE HOUSE_ID IN (SELECT OBJECT_ID FROM collection WHERE USER_ID = #{userId} AND TYPE = 3)
