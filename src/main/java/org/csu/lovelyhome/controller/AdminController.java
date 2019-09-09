@@ -560,5 +560,16 @@ public class AdminController extends BaseController {
         }
         return success("批量删除成功!");
     }
+
+    @ApiOperation(value = "批量删除装修方案", notes = "批量删除装修方案")
+    @DeleteMapping("/decorateManage/house/patchDeletingIds")
+    public Response decoratepatchDeletingIds(@RequestBody Integer[] ids){
+        for(int id : ids){
+            QueryWrapper<Decorate> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("decorate_id", id);
+            decorateService.remove(queryWrapper);
+        }
+        return success("批量删除成功!");
+    }
 }
 
