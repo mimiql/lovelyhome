@@ -60,7 +60,7 @@ public class DecorateController extends BaseController {
 
     @ApiOperation(value = "筛选查询有分页，如果用户未登录user_id传个0",notes = "根据筛选条件查询装修方案")
     @GetMapping("/filt/{user_id}")
-    public Response decorations(@PathVariable("user_id") int user_id, @RequestBody FiltDecorateParam param){
+    public PageInfo<Decorate> decorations(@PathVariable("user_id") int user_id, @RequestBody FiltDecorateParam param){
         FiltDecorate filtDecorate = new FiltDecorate();
         filtDecorate.setUserId(user_id);
         filtDecorate.setTime(new Date());
@@ -113,7 +113,7 @@ public class DecorateController extends BaseController {
             filtDecorateService.save(filtDecorate); //用户有登录才记录
         }
 
-        return success(pageInfo);
+        return pageInfo;
     }
 
     @ApiOperation(value = "上传图片",notes = "上传图片，可多张图片一起上传")

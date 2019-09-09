@@ -22,19 +22,19 @@
             AND PRICE >= #{filtBuildingParam.maxUnitPrice}
         </if>
         <if test="filtBuildingParam.minTotalPrice != null">
-            AND Building_ID IN (SELECT BUILDING_ID FROM HUXING WHERE TOTAL_PRICE >= #{filtBuildingParam.minTotalPrice})
+            AND Building_ID IN (SELECT BUILDING_ID FROM huxing WHERE TOTAL_PRICE >= #{filtBuildingParam.minTotalPrice})
         </if>
         <if test="filtBuildingParam.maxTotalPrice  != null">
-            AND BUILDING_ID IN (SELECT BUILDING_ID FROM HUXING WHERE #{filtBuildingParam.maxTotalPrice} >= TOTAL_PRICE)
+            AND BUILDING_ID IN (SELECT BUILDING_ID FROM huxing WHERE #{filtBuildingParam.maxTotalPrice} >= TOTAL_PRICE)
         </if>
         <if test="filtBuildingParam.minArea != null">
-            AND BUILDING_ID IN (SELECT BUILDING_ID FROM HUXING WHERE FLOOR_SPACE >= #{filtBuildingParam.minArea})
+            AND BUILDING_ID IN (SELECT BUILDING_ID FROM huxing WHERE FLOOR_SPACE >= #{filtBuildingParam.minArea})
         </if>
         <if test="filtBuildingParam.maxArea != null">
-            AND BUILDING_ID IN (SELECT BUILDING_ID FROM HUXING WHERE #{filtBuildingParam.maxArea} >= FLOOR_SPACE)
+            AND BUILDING_ID IN (SELECT BUILDING_ID FROM huxing WHERE #{filtBuildingParam.maxArea} >= FLOOR_SPACE)
         </if>
         <if test="filtBuildingParam.numOfhuxing != null">
-            AND BUILDING_ID IN (SELECT BUILDING_ID FROM HUXING WHERE BEDROOM_NUM = #{filtBuildingParam.maxArea} OR
+            AND BUILDING_ID IN (SELECT BUILDING_ID FROM huxing WHERE BEDROOM_NUM = #{filtBuildingParam.maxArea} OR
             BEDROOM_NUM > #{filtBuildingParam.maxArea})
         </if>
         <if test="filtBuildingParam.type == 1">

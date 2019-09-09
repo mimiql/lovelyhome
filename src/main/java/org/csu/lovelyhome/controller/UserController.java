@@ -1,6 +1,5 @@
 package org.csu.lovelyhome.controller;
 
-import com.aliyuncs.ecs.model.v20140526.DescribeImageSharePermissionResponse;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -8,9 +7,6 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
-import jdk.nashorn.internal.runtime.regexp.joni.WarnCallback;
 import org.csu.lovelyhome.base.BaseController;
 import org.csu.lovelyhome.base.Response;
 import org.csu.lovelyhome.common.constant.Constant;
@@ -61,6 +57,8 @@ public class UserController extends BaseController {
     private CommentBuildingServiceImpl commentBuildingService;
     @Autowired
     private CommentDecorateServiceImpl commentDecorateService;
+    @Autowired
+    private CommentHouseServiceImpl commentHouseService;
     @Autowired
     private QuestionServiceImpl questionService;
     @Autowired
@@ -266,7 +264,7 @@ public class UserController extends BaseController {
     @ApiOperation(value = "获取用户收藏楼盘",notes = "根据用户id获取用户所收藏楼盘")
     @GetMapping("/{user_id}/collection/buildings")
     public PageInfo<Building> collectionBuildings(@PathVariable("user_id") int user_id, @RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
-        PageHelper.startPage(pageNum,3);
+        PageHelper.startPage(pageNum,4);
         List<Building> buildingList = userService.getCollectionBuildingByUserId(user_id);
         PageInfo<Building> pageInfo = new PageInfo<Building>(buildingList);
         return pageInfo;
@@ -274,20 +272,29 @@ public class UserController extends BaseController {
 
     @ApiOperation(value = "获取用户收藏户型",notes = "根据用户id获取用户所收藏户型")
     @GetMapping("/{user_id}/collection/huxings")
-    public List<Huxing> collectionHuxings(@PathVariable("user_id") int user_id){
-        return userService.getCollectionHuxingByUserId(user_id);
+    public PageInfo<Huxing> collectionHuxings(@PathVariable("user_id") int user_id, @RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
+        PageHelper.startPage(pageNum,4);
+        List<Huxing> huxingList = userService.getCollectionHuxingByUserId(user_id);
+        PageInfo<Huxing> pageInfo = new PageInfo<Huxing>(huxingList);
+        return pageInfo;
     }
 
     @ApiOperation(value = "获取用户收藏出租房",notes = "根据用户id获取用户所收藏出租房")
     @GetMapping("/{user_id}/collection/houses")
-    public List<House> collectionHouses(@PathVariable("user_id") int user_id){
-        return userService.getCollectionHouseByUserId(user_id);
+    public PageInfo<House> collectionHouses(@PathVariable("user_id") int user_id, @RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
+        PageHelper.startPage(pageNum,4);
+        List<House> houseList = userService.getCollectionHouseByUserId(user_id);
+        PageInfo<House> pageInfo = new PageInfo<House>(houseList);
+        return pageInfo;
     }
 
     @ApiOperation(value = "获取用户收藏装修方案",notes = "根据用户id获取用户所收藏装修方案")
     @GetMapping("/{user_id}/collection/decorations")
-    public List<Decorate> collectionDecorations(@PathVariable("user_id") int user_id){
-        return userService.getCollectionDecorateByUserId(user_id);
+    public PageInfo<Decorate> collectionDecorations(@PathVariable("user_id") int user_id, @RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
+        PageHelper.startPage(pageNum,4);
+        List<Decorate> decorateList = userService.getCollectionDecorateByUserId(user_id);
+        PageInfo<Decorate> pageInfo = new PageInfo<Decorate>(decorateList);
+        return pageInfo;
     }
 
     @ApiOperation(value = "获取用户已上市出租房",notes = "根据用户id获取用户已上市出租房")
@@ -299,7 +306,7 @@ public class UserController extends BaseController {
     @ApiOperation(value = "获取用户出租房",notes = "根据用户id和出租房状态获取用户出租房")
     @GetMapping("/{user_id}/housesType")
     public PageInfo<House> statusHouses(@PathVariable("user_id") int user_id, @RequestParam("status") int status, @RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
-        PageHelper.startPage(pageNum,3);
+        PageHelper.startPage(pageNum,4);
         List<House> houseList = userService.getHousesByUserIdAndStatus(user_id, status);
         PageInfo<House> pageInfo = new PageInfo<House>(houseList);
         return pageInfo;
@@ -307,8 +314,8 @@ public class UserController extends BaseController {
 
     @ApiOperation(value = "获取用户楼盘提问",notes = "根据用户id获取用户楼盘提问")
     @GetMapping("/{user_id}/questions")
-    public PageInfo<Question> questions(@PathVariable("user_id") int user_id, @RequestParam(defaultValue = "3",value = "pageNum") Integer pageNum){
-        PageHelper.startPage(pageNum,3);
+    public PageInfo<Question> questions(@PathVariable("user_id") int user_id, @RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
+        PageHelper.startPage(pageNum,4);
         List<Question> questionList = userService.getQuestionByUserId(user_id);
         PageInfo<Question> pageInfo = new PageInfo<Question>(questionList);
         return pageInfo;
@@ -316,8 +323,8 @@ public class UserController extends BaseController {
 
     @ApiOperation(value = "获取用户楼盘提问回复",notes = "根据用户id获取用户楼盘提问回复")
     @GetMapping("/{user_id}/questions/responses")
-    public PageInfo<Question> questionResponses(@PathVariable("user_id") int user_id, @RequestParam(defaultValue = "3",value = "pageNum") Integer pageNum){
-        PageHelper.startPage(pageNum,3);
+    public PageInfo<Question> questionResponses(@PathVariable("user_id") int user_id, @RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
+        PageHelper.startPage(pageNum,4);
         List<Question> responseList = userService.getQuestionResponsesByUserId(user_id);
         PageInfo<Question> pageInfo = new PageInfo<Question>(responseList);
         return pageInfo;
@@ -331,8 +338,8 @@ public class UserController extends BaseController {
 
     @ApiOperation(value = "获取用户发出的所有楼盘评论",notes = "根据用户id获取用户发出所有楼盘评论")
     @GetMapping("/{user_id}/commentBuilding")
-    public PageInfo<CommentBuilding> commentBuilding(@PathVariable("user_id") int user_id, @RequestParam(defaultValue = "3",value = "pageNum") Integer pageNum){
-        PageHelper.startPage(pageNum,3);
+    public PageInfo<CommentBuilding> commentBuilding(@PathVariable("user_id") int user_id, @RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
+        PageHelper.startPage(pageNum,4);
         List<CommentBuilding> commentBuildingList = userService.getCommentBuildingByUserId(user_id);
         PageInfo<CommentBuilding> pageInfo = new PageInfo<CommentBuilding>(commentBuildingList);
         return pageInfo;
@@ -340,10 +347,22 @@ public class UserController extends BaseController {
 
     @ApiOperation(value = "获取用户发出的所有装修方案评论",notes = "根据用户id获取用户发出所有装修方案评论")
     @GetMapping("/{user_id}/commentDecorate")
-    public PageInfo<CommentDecorate> commentDecorate(@PathVariable("user_id") int user_id, @RequestParam(defaultValue = "3",value = "pageNum") Integer pageNum){
-        PageHelper.startPage(pageNum,3);
+    public PageInfo<CommentDecorate> commentDecorate(@PathVariable("user_id") int user_id, @RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
+        PageHelper.startPage(pageNum,4);
         List<CommentDecorate> commentDecorateList = userService.getCommentDecorateByUserId(user_id);
         PageInfo<CommentDecorate> pageInfo = new PageInfo<CommentDecorate>(commentDecorateList);
+        return pageInfo;
+    }
+
+    @ApiOperation(value = "获取用户发出的所有出租房评论",notes = "根据用户id获取用户发出所有出租房评论")
+    @GetMapping("/{user_id}/commentHouse")
+    public PageInfo<CommentHouse> commentHouse(@PathVariable("user_id") int user_id, @RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
+        PageHelper.startPage(pageNum,4);
+        QueryWrapper<CommentHouse> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id", user_id);
+        queryWrapper.eq("type", 1);
+        List<CommentHouse> commentHouseList = commentHouseService.list(queryWrapper);
+        PageInfo<CommentHouse> pageInfo = new PageInfo<>(commentHouseList);
         return pageInfo;
     }
 
@@ -398,7 +417,7 @@ public class UserController extends BaseController {
         QueryWrapper<CommentBuilding> commentBuildingQueryWrapper = new QueryWrapper<CommentBuilding>().eq("comment_id", id);
         CommentBuilding commentBuilding = commentBuildingService.getOne(commentBuildingQueryWrapper);
         commentBuilding.setLikeNum(commentBuilding.getLikeNum() + 1);
-        commentBuildingService.save(commentBuilding);
+        commentBuildingService.update(commentBuilding, commentBuildingQueryWrapper);
     }
 
     @ApiOperation(value = "点赞装修方案评论或回复",notes = "点赞装修方案评论或回复")
@@ -407,7 +426,7 @@ public class UserController extends BaseController {
         QueryWrapper<CommentDecorate> commentDecorateQueryWrapper = new QueryWrapper<CommentDecorate>().eq("comment_id", id);
         CommentDecorate commentDecorate = commentDecorateService.getOne(commentDecorateQueryWrapper);
         commentDecorate.setLikeNum(commentDecorate.getLikeNum() + 1);
-        commentDecorateService.save(commentDecorate);
+        commentDecorateService.update(commentDecorate, commentDecorateQueryWrapper);
     }
 
     @ApiOperation(value = "点赞楼盘提问或回复",notes = "点赞楼盘提问或回复")
@@ -416,7 +435,7 @@ public class UserController extends BaseController {
         QueryWrapper<Question> commentBuildingQueryWrapper = new QueryWrapper<Question>().eq("comment_id", id);
         Question question = questionService.getOne(commentBuildingQueryWrapper);
         question.setLikeNum(question.getLikeNum() + 1);
-        questionService.save(question);
+        questionService.update(question, commentBuildingQueryWrapper);
     }
 
     @ApiOperation(value = "点赞装修方案提问或回复",notes = "点赞装修方案提问或回复")
@@ -425,7 +444,7 @@ public class UserController extends BaseController {
         QueryWrapper<Question> questionQueryWrapper = new QueryWrapper<Question>().eq("comment_id", id);
         Question question = questionService.getOne(questionQueryWrapper);
         question.setLikeNum(question.getLikeNum() + 1);
-        questionService.save(question);
+        questionService.update(question, questionQueryWrapper);
     }
 
     @ApiOperation(value = "取消收藏",notes = "取消用户收藏，需传入取消收藏对象type")
