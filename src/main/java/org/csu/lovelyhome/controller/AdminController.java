@@ -60,8 +60,35 @@ public class AdminController extends BaseController {
     @Autowired
     private AdminServiceImpl adminService;
 
-//    @ApiOperation(value = "", notes = "")
-//    @GetMapping("/fo")
+    @ApiOperation(value = "返回所有租房", notes = "返回所有租房")
+    @GetMapping("/houseManage/house/all")
+    public List<House> housesAll(){
+        return houseService.list();
+    }
+
+    @ApiOperation(value = "批量审批租房", notes = "批量审批租房")
+    @PutMapping("/houseManage/house/patchVerificationIds")
+    public Response housespatchVerificationIds(@RequestBody Integer[] ids){
+        for(int id : ids){
+            QueryWrapper<House> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("house_id", id);
+            House house = houseService.getOne(queryWrapper);
+            house.setStatus(Constant.STATUS_PUBLISHED);
+            houseService.update(house, queryWrapper);
+        }
+        return success("审核成功!");
+    }
+
+    @ApiOperation(value = "批量删除租房", notes = "批量删除租房")
+    @DeleteMapping("/houseManage/house/patchDeletingIds")
+    public Response housespatchDeletingIds(@RequestBody Integer[] ids){
+        for(int id : ids){
+            QueryWrapper<House> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("house_id", id);
+            houseService.remove(queryWrapper);
+        }
+        return success("批量删除成功!");
+    }
 
     @ApiOperation(value = "批量删除用户信息", notes = "根据数组ID批量删除用户信息")
     @DeleteMapping("/userManage/patchDeletingIds")
