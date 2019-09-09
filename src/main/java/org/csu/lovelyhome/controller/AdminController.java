@@ -90,6 +90,15 @@ public class AdminController extends BaseController {
         return success("批量删除成功!");
     }
 
+    @ApiOperation(value = "根据id删除租房", notes = "根据id删除租房")
+    @DeleteMapping("/houseManage/house/{id}")
+    public Response houseDeletingIds(@PathVariable Integer id){
+        QueryWrapper<House> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("house_id", id);
+        houseService.remove(queryWrapper);
+        return success("删除成功!");
+    }
+
     @ApiOperation(value = "批量删除用户信息", notes = "根据数组ID批量删除用户信息")
     @DeleteMapping("/userManage/patchDeletingIds")
     public Response patchDeletingIds(@RequestBody Integer[] deleteIdArray){

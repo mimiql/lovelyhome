@@ -128,8 +128,8 @@ public class DecorateController extends BaseController {
                         System.out.println("file size:" + file.getSize());
                         String uploadUrl = constantConfig.getPREFIX() + fileService.uploadPicture(file);
                         if(picture != null){
-                            picture += uploadUrl + "$";
-                        }else picture = uploadUrl +"$";
+                            picture += uploadUrl;
+                        }else picture = uploadUrl;
 
                     }
                 }
