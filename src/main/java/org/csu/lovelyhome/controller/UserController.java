@@ -1,6 +1,5 @@
 package org.csu.lovelyhome.controller;
 
-import com.aliyuncs.ecs.model.v20140526.DescribeImageSharePermissionResponse;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -8,9 +7,6 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
-import jdk.nashorn.internal.runtime.regexp.joni.WarnCallback;
 import org.csu.lovelyhome.base.BaseController;
 import org.csu.lovelyhome.base.Response;
 import org.csu.lovelyhome.common.constant.Constant;
@@ -421,7 +417,7 @@ public class UserController extends BaseController {
         QueryWrapper<CommentBuilding> commentBuildingQueryWrapper = new QueryWrapper<CommentBuilding>().eq("comment_id", id);
         CommentBuilding commentBuilding = commentBuildingService.getOne(commentBuildingQueryWrapper);
         commentBuilding.setLikeNum(commentBuilding.getLikeNum() + 1);
-        commentBuildingService.save(commentBuilding);
+        commentBuildingService.update(commentBuilding, commentBuildingQueryWrapper);
     }
 
     @ApiOperation(value = "点赞装修方案评论或回复",notes = "点赞装修方案评论或回复")
@@ -430,7 +426,7 @@ public class UserController extends BaseController {
         QueryWrapper<CommentDecorate> commentDecorateQueryWrapper = new QueryWrapper<CommentDecorate>().eq("comment_id", id);
         CommentDecorate commentDecorate = commentDecorateService.getOne(commentDecorateQueryWrapper);
         commentDecorate.setLikeNum(commentDecorate.getLikeNum() + 1);
-        commentDecorateService.save(commentDecorate);
+        commentDecorateService.update(commentDecorate, commentDecorateQueryWrapper);
     }
 
     @ApiOperation(value = "点赞楼盘提问或回复",notes = "点赞楼盘提问或回复")
@@ -439,7 +435,7 @@ public class UserController extends BaseController {
         QueryWrapper<Question> commentBuildingQueryWrapper = new QueryWrapper<Question>().eq("comment_id", id);
         Question question = questionService.getOne(commentBuildingQueryWrapper);
         question.setLikeNum(question.getLikeNum() + 1);
-        questionService.save(question);
+        questionService.update(question, commentBuildingQueryWrapper);
     }
 
     @ApiOperation(value = "点赞装修方案提问或回复",notes = "点赞装修方案提问或回复")
@@ -448,7 +444,7 @@ public class UserController extends BaseController {
         QueryWrapper<Question> questionQueryWrapper = new QueryWrapper<Question>().eq("comment_id", id);
         Question question = questionService.getOne(questionQueryWrapper);
         question.setLikeNum(question.getLikeNum() + 1);
-        questionService.save(question);
+        questionService.update(question, questionQueryWrapper);
     }
 
     @ApiOperation(value = "取消收藏",notes = "取消用户收藏，需传入取消收藏对象type")
