@@ -221,7 +221,7 @@ public class CollectionController extends BaseController {
 
     @ApiOperation(value = "某用户点击收藏了某楼盘",notes = "某用户点击收藏了某楼盘")
     @PostMapping("/{user_id}/buildingCollection/{buildingId}")
-    public void buildingCollection(@PathVariable("user_id") int user_id, @PathVariable("buildingId") int buildingId){
+    public Response buildingCollection(@PathVariable("user_id") int user_id, @PathVariable("buildingId") int buildingId){
         Collection collection = new Collection();
         collection.setObjectId(buildingId);
         collection.setType(1);
@@ -229,6 +229,7 @@ public class CollectionController extends BaseController {
         collection.setTime(new Date());
 
         collectionService.save(collection);
+        return  success("收藏成功");
     }
 
     @ApiOperation(value = "某用户点击收藏了某户型",notes = "某用户点击收藏了某户型")

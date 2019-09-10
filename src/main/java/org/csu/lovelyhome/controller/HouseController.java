@@ -60,6 +60,14 @@ public class HouseController extends BaseController {
         return new PageInfo<>(houseList);
     }
 
+    @ApiOperation(value = "获取租所有房有分页", notes = "获取所有租房有分页")
+    @GetMapping("/housesList")
+    public PageInfo<House> houses(@RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum){
+        PageHelper.startPage(pageNum,5);
+        List<House> houseList = houseService.list();
+        return new PageInfo<>(houseList);
+    }
+
     @ApiOperation(value = "筛选租房，如果未登录user_id为0", notes = "筛选租房，如果未登录user_id为0")
     @GetMapping("/filterHouses/{user_id}")
     public PageInfo<House> filterHouses(@PathVariable("user_id") int user_id, @RequestParam(defaultValue = "1",value = "pageNum") Integer pageNum, FiltHouseParam filtHouseParam){
