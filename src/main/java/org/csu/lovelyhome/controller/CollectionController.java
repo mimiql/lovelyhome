@@ -264,9 +264,9 @@ public class CollectionController extends BaseController {
         wrapper.eq("object_id", buildingId);
         wrapper.eq("type",1);
         if(collectionService.remove(wrapper)){
-            return fail("取消收藏失败");
+            return success("取消收藏成功");
         }
-        return success("取消收藏成功");
+        return fail("取消收藏失败");
     }
 
     @ApiOperation(value = "取消收藏户型",notes = "用户取消收藏户型")
@@ -306,6 +306,20 @@ public class CollectionController extends BaseController {
             return fail("取消收藏失败");
         }
         return success("取消收藏成功");
+    }
+
+    @ApiOperation(value = "判断用户是否收藏装修楼盘",notes = "判断用户是否收藏楼盘")
+    @GetMapping("/isDecorateBuilding/{userId}/{buildingId}")
+    public Response isDecorateBuildingCollecteDecorate(@PathVariable int userId,@PathVariable int buildingId){
+        QueryWrapper<Collection> wrapper = new QueryWrapper<>();
+        wrapper.eq("user_id",userId );
+        wrapper.eq("object_id", buildingId);
+        wrapper.eq("type",1);
+        Collection collection = collectionService.getOne(wrapper);
+        if(collection == null){
+            return success("未收藏");
+        }
+        return success("收藏");
     }
 
 }
